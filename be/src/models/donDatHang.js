@@ -1,0 +1,32 @@
+"use strict";
+const { Model } = require("sequelize");
+module.exports = (sequelize, DataTypes) => {
+    class donDatHang extends Model {
+        /**
+         * Helper method for defining associations.
+         * This method is not a part of Sequelize lifecycle.
+         * The `models/index` file will call this method automatically.
+         */
+        static associate(models) {
+            // define association here
+        }
+    }
+    donDatHang.init(
+        {
+            Ngaydathang: DataTypes.DATEONLY,
+            Tongtien: DataTypes.DOUBLE,
+            Pttt: DataTypes.STRING(20),
+            Sdt: DataTypes.STRING(12),
+            Phuong: DataTypes.STRING(20),
+            Quan: DataTypes.STRING(20),
+            Thanhpho: DataTypes.STRING(20),
+            Ghichu: DataTypes.TEXT,
+            Trangthai: DataTypes.BOOLEAN,
+        },
+        {
+            sequelize,
+            modelName: "donDatHang",
+        }
+    );
+    return donDatHang;
+};
