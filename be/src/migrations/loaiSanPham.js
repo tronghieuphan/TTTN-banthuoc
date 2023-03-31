@@ -6,11 +6,14 @@ module.exports = {
             id: {
                 allowNull: false,
                 primaryKey: true,
-                type: Sequelize.STRING(15),
+                type: Sequelize.STRING(8),
             },
 
             Tenloai: {
                 type: Sequelize.STRING(20),
+            },
+            Madm: {
+                type: Sequelize.STRING(8),
             },
 
             createdAt: {

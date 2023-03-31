@@ -8,7 +8,12 @@ module.exports = (sequelize, DataTypes) => {
          * The `models/index` file will call this method automatically.
          */
         static associate(models) {
-            // define association here
+            sanPham.belongsTo(models.xuatXu, { foreignKey: "Maxx" });
+            sanPham.belongsTo(models.loaiSanPham, { foreignKey: "Maloai" });
+            sanPham.belongsTo(models.thuongHieu, { foreignKey: "Math" });
+            sanPham.belongsTo(models.nhaCungCap, { foreignKey: "Mancc" });
+            // sanPham.belongsToMany(models.donDatHang, { through: models.chiTietDonHang, foreignKey: "Masp" });
+            // sanPham.hasMany(models.hinhAnh, { foreignKey: "Maha" });
         }
     }
     sanPham.init(
@@ -21,6 +26,10 @@ module.exports = (sequelize, DataTypes) => {
             Congdung: DataTypes.TEXT,
             Giakm: DataTypes.INTEGER,
             Soluongtk: DataTypes.INTEGER,
+            Maloai: DataTypes.STRING(8),
+            Maxx: DataTypes.STRING(8),
+            Math: DataTypes.STRING(8),
+            Mancc: DataTypes.STRING(8),
         },
         {
             sequelize,

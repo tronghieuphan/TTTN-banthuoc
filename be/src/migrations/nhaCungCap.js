@@ -2,11 +2,11 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable("donDatHangs", {
+        await queryInterface.createTable("nhaCungCaps", {
             id: {
                 allowNull: false,
                 primaryKey: true,
-                type: Sequelize.STRING(15),
+                type: Sequelize.STRING(8),
             },
 
             Tenncc: {
@@ -38,6 +38,6 @@ module.exports = {
         });
     },
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable("donDatHangs");
+        await queryInterface.dropTable("nhaCungCaps");
     },
 };

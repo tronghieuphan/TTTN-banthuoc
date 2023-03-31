@@ -6,7 +6,7 @@ module.exports = {
             id: {
                 allowNull: false,
                 primaryKey: true,
-                type: Sequelize.STRING(15),
+                type: Sequelize.STRING(8),
             },
 
             Tensp: {
@@ -32,6 +32,18 @@ module.exports = {
             },
             Soluongtk: {
                 type: Sequelize.INTEGER,
+            },
+            Maloai: {
+                type: Sequelize.STRING(8),
+            },
+            Maxx: {
+                type: Sequelize.STRING(8),
+            },
+            Math: {
+                type: Sequelize.STRING(8),
+            },
+            Mancc: {
+                type: Sequelize.STRING(8),
             },
             createdAt: {
                 allowNull: false,

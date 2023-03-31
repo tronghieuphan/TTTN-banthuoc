@@ -6,7 +6,7 @@ module.exports = {
             id: {
                 allowNull: false,
                 primaryKey: true,
-                type: Sequelize.STRING(15),
+                type: Sequelize.STRING(8),
             },
 
             Tendm: {

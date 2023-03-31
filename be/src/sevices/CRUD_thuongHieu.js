@@ -103,7 +103,7 @@ let getByNameThuongHieu = (data) => {
         try {
             let thuongHieuByName = await db.thuongHieu.findAll({
                 where: {
-                    Tenth: data.Tenth,
+                    Tenth: data.datafind,
                 },
             });
             if (thuongHieuByName) {

@@ -2,14 +2,14 @@ import express from "express";
 import db from "../models/index";
 import randomId from "./randomId";
 
-//Hiển thị tất cả dxuất xứ
-let getAllXuatXu = async () => {
+//Hiển thị tất cả danh mục
+let getAllDanhMuc = async () => {
     return new Promise(async (resolve, reject) => {
         try {
-            let listXuatXu = await db.xuatXu.findAll();
-            let count = await db.xuatXu.count();
+            let listDanhMuc = await db.danhMuc.findAll();
+            let count = await db.danhMuc.count();
             if (count > 0) {
-                resolve(listXuatXu);
+                resolve(listDanhMuc);
             } else {
                 resolve("List null");
             }
@@ -19,24 +19,24 @@ let getAllXuatXu = async () => {
     });
 };
 
-//Thêm dxuất xứ
-let createXuatXu = async (data) => {
+//Thêm danh mục
+let createDanhMuc = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            console.log(">>>", data.Tenxx);
-            let xuatxu = await db.xuatXu.findOrCreate({
+            console.log(">>>", data.Tendm);
+            let danhmuc = await db.danhMuc.findOrCreate({
                 where: {
-                    Tenxx: data.Tenxx,
+                    Tendm: data.Tendm,
                 },
                 defaults: {
-                    id: randomId.randomId("XX"),
+                    id: randomId.randomId("DM"),
                 },
             });
-            console.log(">>>", xuatxu);
-            if (xuatxu[1]) {
+            console.log(danhmuc);
+            if (danhmuc[1]) {
                 resolve({ result: "Create Successfully" });
             } else {
-                resolve({ result: "Xuatxu Exist" });
+                resolve({ result: "Danhmuc Exist" });
             }
         } catch (e) {
             reject(e);
@@ -44,40 +44,40 @@ let createXuatXu = async (data) => {
     });
 };
 
-//Xóa xuất xứ
-let deleteXuatXu = async (Tenxx) => {
+//Xóa danh mục
+let deleteDanhMuc = async (tendm) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let Tenxx_delete = await db.xuatXu.findOne({
+            let tendm_delete = await db.danhMuc.findOne({
                 where: {
-                    Tenxx: Tenxx,
+                    Tendm: tendm,
                 },
             });
-            if (Tenxx_delete) {
-                await Tenxx_delete.destroy();
+            if (tendm_delete) {
+                await tendm_delete.destroy();
                 resolve("Delete Successful");
             } else {
-                resolve("Xuatxu not exist");
+                resolve("Danhmuc not exist");
             }
         } catch (e) {
             reject(e);
         }
     });
 };
-//Cập nhập xuất xứ
-let updateXuatXu = async (data) => {
+//Cập nhập danh mục
+let updateDanhMuc = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let findXuatXu = await db.xuatXu.findOne({
+            let findDanhMuc = await db.danhMuc.findOne({
                 where: {
                     id: data.Id,
                 },
             });
-            console.log("findXuatXu: ", findXuatXu);
-            if (findXuatXu) {
-                let upTh = await db.xuatXu.update(
+            console.log("findDanhMuc: ", findDanhMuc);
+            if (findDanhMuc) {
+                let updm = await db.danhMuc.update(
                     {
-                        Tenxx: data.Tenxx,
+                        Tendm: data.Tendm,
                     },
                     {
                         where: {
@@ -85,27 +85,27 @@ let updateXuatXu = async (data) => {
                         },
                     }
                 );
-                console.log(">>>", upTh);
-                resolve("Update XuatXu Successful");
+                console.log(">>>", updm);
+                resolve("Update DanhMuc Successful");
             } else {
-                resolve("XuatXu not exist");
+                resolve("DanhMuc not exist");
             }
         } catch (e) {
             reject(e);
         }
     });
 };
-//Tìm theo theo tên dxuất xứ
-let getByNameXuatXu = (data) => {
+//Tìm theo tên danh mục
+let getByNameDanhMuc = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let xuatXuByName = await db.xuatXu.findAll({
+            let danhMucByName = await db.danhMuc.findAll({
                 where: {
-                    Tenxx: data.datafind,
+                    Tendm: data.datafind,
                 },
             });
-            if (xuatXuByName) {
-                resolve(xuatXuByName);
+            if (danhMucByName) {
+                resolve(danhMucByName);
             } else {
                 resolve("Not Found");
             }
@@ -116,9 +116,9 @@ let getByNameXuatXu = (data) => {
 };
 
 module.exports = {
-    createXuatXu,
-    getAllXuatXu,
-    deleteXuatXu,
-    updateXuatXu,
-    getByNameXuatXu,
+    createDanhMuc,
+    getAllDanhMuc,
+    deleteDanhMuc,
+    updateDanhMuc,
+    getByNameDanhMuc,
 };

@@ -8,7 +8,9 @@ module.exports = (sequelize, DataTypes) => {
          * The `models/index` file will call this method automatically.
          */
         static associate(models) {
-            // define association here
+            donDatHang.belongsTo(models.nguoiDung, { foreignKey: "Mand" });
+            donDatHang.belongsTo(models.khuyenMai, { foreignKey: "Makm" });
+            // donDatHang.belongsToMany(models.sanPham, { through: models.chiTietDonHang, foreignKey: "Maddh" });
         }
     }
     donDatHang.init(
@@ -22,6 +24,8 @@ module.exports = (sequelize, DataTypes) => {
             Thanhpho: DataTypes.STRING(20),
             Ghichu: DataTypes.TEXT,
             Trangthai: DataTypes.BOOLEAN,
+            Mand: DataTypes.STRING(8),
+            Makm: DataTypes.STRING(8),
         },
         {
             sequelize,

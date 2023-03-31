@@ -12,10 +12,9 @@ let getAll_thuongHieu = async (req, res) => {
     res.status(200).json(thuonghieu);
 };
 let getName_thuongHieu = async (req, res) => {
-    let thuonghieu = await CRUD_thuongHieu.getByNameThuongHieu(req.body);
+    let thuonghieu = await CRUD_thuongHieu.getByNameThuongHieu(req.query);
     res.status(200).json(thuonghieu);
 };
-
 let delete_thuongHieu = async (req, res) => {
     let tenthuonghieu = req.params.tenth;
     let thuonghieu = await CRUD_thuongHieu.deleteThuongHieu(tenthuonghieu);

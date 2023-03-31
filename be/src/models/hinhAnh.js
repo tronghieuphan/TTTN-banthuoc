@@ -8,12 +8,13 @@ module.exports = (sequelize, DataTypes) => {
          * The `models/index` file will call this method automatically.
          */
         static associate(models) {
-            // define association here
+            // hinhAnh.belongsTo(models.sanPham, { foreignKey: "Maha" });
         }
     }
     hinhAnh.init(
         {
-            Url: DataTypes.STRING,
+            Url: DataTypes.TEXT,
+            Masp: DataTypes.STRING(15),
         },
         {
             sequelize,

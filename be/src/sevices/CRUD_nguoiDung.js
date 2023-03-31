@@ -22,6 +22,27 @@ let getAllNguoiDung = async () => {
     });
 };
 
+//Hie thi nguoi dung khuyen mai
+let getAllNguoiDungKhuyenMai = async () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let listChitiet = await db.chiTietKhuyenMai.findAll({
+              where:{
+                Mand:"ND6D9CC"
+              }
+            });
+
+            let count = await db.chiTietKhuyenMai.count();
+            if (count > 0) {
+                resolve(listChitiet);
+            } else {
+                resolve("List null");
+            }
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
 //Thêm người dùng
 let createNguoiDung = async (data) => {
     return new Promise(async (resolve, reject) => {
@@ -42,6 +63,16 @@ let createNguoiDung = async (data) => {
                 },
             });
             console.log(nguoidung);
+            let khuyenmai = await db.khuyenMai.findAll();
+
+            khuyenmai &&
+                khuyenmai.map(async (a) => {
+                    await db.chiTietKhuyenMai.create({
+                        Makm: a.id,
+                        Mand: nguoidung[0].id,
+                    });
+                });
+
             if (nguoidung[1]) {
                 resolve({ result: "Create Successfully" });
             } else {
@@ -112,12 +143,12 @@ let deleteNguoiDung = async (tendangnhap) => {
     });
 };
 //Cập nhập người dùng
-let updateNguoiDung = async (tendangnhap, data) => {
+let updateNguoiDung = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
             let findNguoiDung = await db.nguoiDung.findOne({
                 where: {
-                    Tendangnhap: tendangnhap.tendangnhap,
+                    Tendangnhap: data.Tendangnhap,
                 },
             });
             console.log("findNguoiDung: ", findNguoiDung);
@@ -159,7 +190,7 @@ let getByNameNguoiDung = (tendangnhap) => {
         try {
             let nguoiDungByName = await db.nguoiDung.findAll({
                 where: {
-                    Tendangnhap: tendangnhap,
+                    Tendangnhap: datafind,
                 },
             });
             if (nguoiDungByName) {
@@ -179,10 +210,7 @@ let findNguoiDung = (data) => {
         try {
             let nguoiDungById = await db.nguoiDung.findAll({
                 where: {
-                    [Op.or]: [
-                        { Tendangnhap: data.data },
-                        { Gioitinh: data.data },
-                    ],
+                    [Op.or]: [{ Tendangnhap: data.datafind }, { Sdt: data.datafind }],
                 },
                 raw: true,
             });
@@ -214,6 +242,7 @@ module.exports = {
     createNguoiDung,
     createNguoiDung_Admin,
     getAllNguoiDung,
+    getAllNguoiDungKhuyenMai,
     deleteNguoiDung,
     updateNguoiDung,
     getByNameNguoiDung,

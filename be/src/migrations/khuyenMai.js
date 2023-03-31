@@ -6,7 +6,7 @@ module.exports = {
             id: {
                 allowNull: false,
                 primaryKey: true,
-                type: Sequelize.STRING(15),
+                type: Sequelize.STRING(8),
             },
 
             Tenkm: {
@@ -25,11 +25,12 @@ module.exports = {
                 type: Sequelize.DATEONLY,
             },
             Dieukhoan: {
-                type: Sequelize.TEXT,
+                type: Sequelize.STRING(8),
             },
             Trangthai: {
                 type: Sequelize.BOOLEAN,
             },
+           
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE,

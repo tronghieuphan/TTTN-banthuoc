@@ -2,17 +2,15 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable("hinhAnhs", {
-            id: {
+        await queryInterface.createTable("chiTietKhuyenMais", {
+            Makm: {
                 allowNull: false,
                 primaryKey: true,
                 type: Sequelize.STRING(8),
             },
-
-            Url: {
-                type: Sequelize.TEXT,
-            },
-            Masp: {
+            Mand: {
+                allowNull: false,
+                primaryKey: true,
                 type: Sequelize.STRING(8),
             },
             createdAt: {
@@ -26,6 +24,6 @@ module.exports = {
         });
     },
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable("hinhAnhs");
+        await queryInterface.dropTable("chiTietKhuyenMais");
     },
 };

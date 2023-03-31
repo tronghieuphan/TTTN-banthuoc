@@ -12,7 +12,7 @@ let getAll_xuatXu = async (req, res) => {
     res.status(200).json(xuatxu);
 };
 let getName_xuatXu = async (req, res) => {
-    let xuatxu = await CRUD_xuatXu.getByNameXuatXu(req.body);
+    let xuatxu = await CRUD_xuatXu.getByNameXuatXu(req.query);
     res.status(200).json(xuatxu);
 };
 
