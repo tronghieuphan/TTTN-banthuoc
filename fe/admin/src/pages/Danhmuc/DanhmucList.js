@@ -5,6 +5,7 @@ import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import danhMucAPI from "../../services/danhMucAPI";
 import DanhmucDetail from "./DanhmucDetail";
+import { motion } from "framer-motion";
 function DanhmucList() {
     const [listDm, setList] = useState([]);
     const getAllDm = async () => {
@@ -35,7 +36,7 @@ function DanhmucList() {
             dataIndex: "",
             align: "center",
             render: (_, record) => (
-                <Popconfirm title="Bạn có muốn xóa?" onConfirm={() =>console.log(record)}>
+                <Popconfirm title="Bạn có muốn xóa?" onConfirm={() => console.log(record)}>
                     <Button className="bg-light">
                         <FontAwesomeIcon icon={faTrashAlt} className="text-dark" />
                     </Button>
@@ -55,23 +56,28 @@ function DanhmucList() {
     ];
     return (
         <>
-            <div className="m-4 ">
-                <div className="bd-radius bg-content p-4 text-muted fw-bold">
-                    <div className="d-flex justify-content-between">
-                        <p className="fs-3 w-75">QUẢN LÝ DANH MỤC</p>
-                        <Search />
-                    </div>
-                    <br />
-                    <div className="row">
-                        <div className="col-md-7">
-                            <Table columns={columns} dataSource={listDm} bordered={true} />
+            <motion.div
+                initial={{ opacity:0 }}
+                animate={{ opacity:1 }}
+                exit={{opacity:0 , transition: {duration:0.8} }}  >
+                <div className="m-4 ">
+                    <div className="bd-radius bg-content p-4 text-muted fw-bold">
+                        <div className="d-flex justify-content-between">
+                            <p className="fs-3 w-75">QUẢN LÝ DANH MỤC</p>
+                            <Search />
                         </div>
-                        <div className="col-md-5">
-                            <DanhmucDetail />
+                        <br />
+                        <div className="row">
+                            <div className="col-md-7">
+                                <Table columns={columns} dataSource={listDm} bordered={true} />
+                            </div>
+                            <div className="col-md-5">
+                                <DanhmucDetail />
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </motion.div>
         </>
     );
 }
