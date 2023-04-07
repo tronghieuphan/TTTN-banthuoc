@@ -1,4 +1,3 @@
-
 import Slider from "../../components/Slider/Slider";
 import { Image } from "react-bootstrap";
 import "./HomePage.scss";
@@ -125,10 +124,8 @@ function HomePage() {
         },
     ];
 
-
     return (
         <>
-            
             <div className="row w-100 h-50">
                 <div className="col-md-8">
                     <Slider />
@@ -187,10 +184,12 @@ function HomePage() {
                     <p className="text-center">
                         <FcFlashOn /> SẢN PHẨM NỔI BẬT <FcFlashOn />
                     </p>
-                    <div className="d-flex flex-wrap justify-content-center">
-                        {produce.map((produce) => (
-                            <CardProduce produce={produce} />
-                        ))}
+                    <div className="d-flex flex-wrap">
+                        
+                            {produce.map((produce) => (
+                                <CardProduce produce={produce} />
+                            ))}
+                      
                     </div>
                 </Section>
             </div>
@@ -223,47 +222,45 @@ function HomePage() {
                 <div className="col-3">
                     <div className="d-flex">
                         <div className="col-4">
-                            <div className="text-center" >
-                                <GiMedicines className="w-50 h-50 pt-2"/>
-                                </div>
+                            <div className="text-center">
+                                <GiMedicines className="w-50 h-50 pt-2" />
+                            </div>
                         </div>
                         <div className="col-9 pt-3">
-                            <h4 >THUỐC CHÍNH HÃNG</h4>
+                            <h4>THUỐC CHÍNH HÃNG</h4>
                             <h6>đa dạng và chuyên sâu</h6>
                         </div>
                     </div>
-                </div>                
-           
+                </div>
+
                 <div className="col-3">
                     <div className="d-flex">
                         <div className="col-4">
-                            <div className="text-center" >
-                                <MdSecurity className="w-50 h-50 pt-2"/>
-                                </div>
+                            <div className="text-center">
+                                <MdSecurity className="w-50 h-50 pt-2" />
+                            </div>
                         </div>
                         <div className="col-8 pt-3">
-                            <h4 >CAM KẾT 100%</h4>
+                            <h4>CAM KẾT 100%</h4>
                             <h6>chất lượng sản phẩm</h6>
                         </div>
                     </div>
-                </div>                
-            
+                </div>
+
                 <div className="col-3">
                     <div className="d-flex">
                         <div className="col-4">
-                            <div className="text-center" >
-                                <FaShippingFast className="w-50 h-50 pt-2"/>
-                                </div>
+                            <div className="text-center">
+                                <FaShippingFast className="w-50 h-50 pt-2" />
+                            </div>
                         </div>
                         <div className="col-9 pt-3">
-                            <h4 >MIỄN PHÍ VẬN CHUYỂN</h4>
+                            <h4>MIỄN PHÍ VẬN CHUYỂN</h4>
                             <h6>theo chính sách giao hàng</h6>
                         </div>
                     </div>
-                </div>                
-                      
+                </div>
             </div>
-           
         </>
     );
 }

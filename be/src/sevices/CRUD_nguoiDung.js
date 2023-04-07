@@ -168,7 +168,7 @@ let updateNguoiDung = async (data) => {
                     },
                     {
                         where: {
-                            Tendangnhap: tendangnhap.tendangnhap,
+                            Tendangnhap: data.Tendangnhap,
                         },
                     }
                 );

@@ -70,7 +70,7 @@ let updateDanhMuc = async (data) => {
         try {
             let findDanhMuc = await db.danhMuc.findOne({
                 where: {
-                    id: data.Id,
+                    id: data.id,
                 },
             });
             console.log("findDanhMuc: ", findDanhMuc);
@@ -81,7 +81,7 @@ let updateDanhMuc = async (data) => {
                     },
                     {
                         where: {
-                            id: data.Id,
+                            id: data.id,
                         },
                     }
                 );

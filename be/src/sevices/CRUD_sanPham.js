@@ -94,7 +94,7 @@ let updateSanPham = async (data) => {
         try {
             let findSanPham = await db.sanPham.findOne({
                 where: {
-                    id: data.Id,
+                    id: data.id,
                 },
             });
             if (findSanPham) {
@@ -118,7 +118,7 @@ let updateSanPham = async (data) => {
                     },
                     {
                         where: {
-                            id: data.Id,
+                            id: data.id,
                         },
                     }
                 );

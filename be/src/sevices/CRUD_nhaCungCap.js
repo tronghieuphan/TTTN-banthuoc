@@ -76,7 +76,7 @@ let updateNhaCungCap = async (data) => {
         try {
             let findNhaCungCap = await db.nhaCungCap.findOne({
                 where: {
-                    id: data.Id,
+                    id: data.id,
                 },
             });
             console.log("findNhaCungCap: ", findNhaCungCap);
@@ -92,7 +92,7 @@ let updateNhaCungCap = async (data) => {
                     },
                     {
                         where: {
-                            id: data.Id,
+                            id: data.id,
                         },
                     }
                 );

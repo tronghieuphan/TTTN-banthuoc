@@ -95,7 +95,7 @@ let updateKhuyenMai = async (data) => {
                     },
                     {
                         where: {
-                            id: data.Id,
+                            id: data.id,
                         },
                     }
                 );

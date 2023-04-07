@@ -70,7 +70,7 @@ let updateXuatXu = async (data) => {
         try {
             let findXuatXu = await db.xuatXu.findOne({
                 where: {
-                    id: data.Id,
+                    id: data.id,
                 },
             });
             console.log("findXuatXu: ", findXuatXu);
@@ -81,7 +81,7 @@ let updateXuatXu = async (data) => {
                     },
                     {
                         where: {
-                            id: data.Id,
+                            id: data.id,
                         },
                     }
                 );

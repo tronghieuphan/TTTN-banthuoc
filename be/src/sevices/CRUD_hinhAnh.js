@@ -72,14 +72,14 @@ let updateHinhAnh = async (data) => {
         try {
             let findHinhAnh = await db.hinhAnh.findOne({
                 where: {
-                    id: data.Id,
+                    id: data.id,
                 },
             });
             console.log("findHinhAnh: ", findHinhAnh);
             if (findHinhAnh) {
                 let updm = await db.hinhAnh.update(
                     {
-                        id: data.Id,
+                        id: data.id,
                         Masp:data.Masp
 
                     },

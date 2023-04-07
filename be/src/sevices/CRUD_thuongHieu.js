@@ -72,7 +72,7 @@ let updateThuongHieu = async (data) => {
         try {
             let findThuongHieu = await db.thuongHieu.findOne({
                 where: {
-                    id: data.Id,
+                    id: data.id,
                 },
             });
             console.log("findThuongHieu: ", findThuongHieu);
@@ -83,7 +83,7 @@ let updateThuongHieu = async (data) => {
                     },
                     {
                         where: {
-                            id: data.Id,
+                            id: data.id,
                         },
                     }
                 );

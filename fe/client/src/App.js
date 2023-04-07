@@ -6,7 +6,7 @@ import DetailUser from "./pages/Profile/DetailUser";
 function App() {
     return (
         <>
-            {/* <DetailUser /> */}
+            <DetailUser />
             <Routes>
                 {PageWeb.map((route, index) => {
                     const Page = route.page;
@@ -27,19 +27,7 @@ function App() {
                     );
                 })}
             </Routes>
-            {/* <Routes>
-                <Route path="/" element={<HomePage />}/>
-                <Route path="/login" element={<LoginPage />}/>
-                <Route path="/register" element={<RegisterPage />}/>
-                <Route path="/shopping" element={<CartShopping />}/>
-                <Route path="/detail" element={<DetailProduct />}/>
-            </Routes> */}
-            {/* <LoginPage />
-            <RegisterPage />
-            <DetailProduct />
-            <DetailUser />
-            <ListCard />
-            <CartShopping /> */}
+           
         </>
     );
 }

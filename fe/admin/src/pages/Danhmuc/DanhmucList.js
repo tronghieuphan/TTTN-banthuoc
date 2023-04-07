@@ -35,7 +35,7 @@ function DanhmucList() {
             dataIndex: "",
             align: "center",
             render: (_, record) => (
-                <Popconfirm title="Bạn có muốn xóa?" onConfirm={() => []}>
+                <Popconfirm title="Bạn có muốn xóa?" onConfirm={() =>console.log(record)}>
                     <Button className="bg-light">
                         <FontAwesomeIcon icon={faTrashAlt} className="text-dark" />
                     </Button>
