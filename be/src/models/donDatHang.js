@@ -10,13 +10,13 @@ module.exports = (sequelize, DataTypes) => {
         static associate(models) {
             donDatHang.belongsTo(models.nguoiDung, { foreignKey: "Mand" });
             donDatHang.belongsTo(models.khuyenMai, { foreignKey: "Makm" });
-            // donDatHang.belongsToMany(models.sanPham, { through: models.chiTietDonHang, foreignKey: "Maddh" });
+            donDatHang.belongsToMany(models.sanPham, { through: models.chiTietDonHang, foreignKey: "Maddh" });
         }
     }
     donDatHang.init(
         {
             Ngaydathang: DataTypes.DATEONLY,
-            Tongtien: DataTypes.DOUBLE,
+            Tongtien: DataTypes.INTEGER,
             Pttt: DataTypes.STRING(20),
             Sdt: DataTypes.STRING(12),
             Phuong: DataTypes.STRING(20),

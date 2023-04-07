@@ -1,0 +1,74 @@
+.bg{
+    background-color: #fff;
+    overflow: hidden;
+}
+.bg a{
+    text-decoration: none;
+    font-weight: 600;
+    padding:5%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 5%;
+    background-color:#fff;
+    border-radius: 10px;
+    font-size: 18px ;
+}
+.bg a:hover{
+    background: rgb(64,151,255);
+background: linear-gradient(90deg, rgba(64,151,255,1) 9%, rgba(255,255,255,1) 100%);    
+   text-decoration: none;
+   font-weight: 600;
+   color: #fff;
+   border-right: 5px solid rgb(0, 47, 255);
+   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+// .bg a.active{
+//     background: rgb(50,109,255);
+//     background: linear-gradient(90deg, rgba(50,109,255,1) 13%, rgba(255,255,255,1) 100%); 
+//        color: rgb(255, 255, 255);
+//    text-decoration: none;
+//    font-weight: 600;
+//    border-right: 5px solid rgb(0, 60, 255);
+//    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+// }
+
+.w-30{
+    width: 30%;
+}
+.w-85{
+    width: 85%;
+}
+.h{
+    height: 100% !important;
+}
+.position{
+    position: absolute;
+    top:2%;
+    left: 23%;
+    transition: 1s;
+}
+.transition-p{
+    transition: 1s;
+    top: 2%;
+}
+.click{
+    position: relative;
+    left: -400px;
+    top: 0;
+    transition: 1s;
+}
+.position-menu{
+    position: relative;
+    top: 0;
+    left: 0;
+    transition: 1s;
+}
+
+.bg-menu{
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;}
+.bg-logo{
+    background-color: rgb(54, 90, 255);
+    border-radius: 25px;
+    
+}

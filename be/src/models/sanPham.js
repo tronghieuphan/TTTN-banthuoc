@@ -12,14 +12,14 @@ module.exports = (sequelize, DataTypes) => {
             sanPham.belongsTo(models.loaiSanPham, { foreignKey: "Maloai" });
             sanPham.belongsTo(models.thuongHieu, { foreignKey: "Math" });
             sanPham.belongsTo(models.nhaCungCap, { foreignKey: "Mancc" });
-            // sanPham.belongsToMany(models.donDatHang, { through: models.chiTietDonHang, foreignKey: "Masp" });
-            // sanPham.hasMany(models.hinhAnh, { foreignKey: "Maha" });
+            sanPham.belongsToMany(models.donDatHang, { through: models.chiTietDonHang, foreignKey: "Masp" });
+            sanPham.hasMany(models.hinhAnh, { foreignKey: "Maha" });
         }
     }
     sanPham.init(
         {
-            Tensp: DataTypes.STRING(30),
-            Dongia: DataTypes.DOUBLE,
+            Tensp: DataTypes.STRING(150),
+            Dongia: DataTypes.INTEGER,
             Donviban: DataTypes.STRING(10),
             Dangbaoche: DataTypes.STRING(10),
             Quycach: DataTypes.STRING(20),

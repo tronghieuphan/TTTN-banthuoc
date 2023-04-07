@@ -3,7 +3,7 @@ import db from "../models/index";
 import randomId from "./randomId";
 import { Op } from "sequelize";
 
-//Hiển thị tất cả người dùng
+//Hiển thị tất cả đơn đặt hàng
 let getAllDonDatHang = async () => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -20,7 +20,7 @@ let getAllDonDatHang = async () => {
     });
 };
 
-//Thêm người dùng
+//Thêm đơn đặt hàng
 let createDonDatHang = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -46,8 +46,33 @@ let createDonDatHang = async (data) => {
         }
     });
 };
+//Thêm đơn đặt hàng
+let createChitiet = async (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let chitiet = await db.chiTietDonHang.create({
+                Maddh: randomId.randomId("DH"),
+                Ngaydathang: data.Ngaydathang,
+                Tongtien: data.Tongtien,
+                Pttt: data.Pttt,
+                Sdt: data.Sdt,
+                Phuong: data.Phuong,
+                Quan: data.Quan,
+                Thanhpho: data.Thanhpho,
+                Trangthai: data.Trangthai,
+                Ghichu: data.Ghichu,
+                Mand: data.Mand,
+                Makm: data.Makm,
+            });
+            console.log(dondathang);
 
-//Xóa người dùng
+            resolve({ result: "Create Successfully" });
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+//Xóa đơn đặt hàng
 let deleteDonDatHang = async (madondathang) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -67,7 +92,7 @@ let deleteDonDatHang = async (madondathang) => {
         }
     });
 };
-//Cập nhập người dùng
+//Cập nhập đơn đặt hàng
 let updateDonDatHang = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {

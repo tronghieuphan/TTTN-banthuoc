@@ -41,6 +41,14 @@ let update_nguoiDung = async (req, res) => {
     let nguoidung = await CRUD_nguoiDung.updateNguoiDung(req.body);
     res.status(200).json(nguoidung);
 };
+let login_nguoiDung = async (req, res) => {
+    let nguoidung = await CRUD_nguoiDung.loginNguoiDung(req.body);
+    res.status(200).json(nguoidung);
+};
+let changePass_nguoiDung = async (req, res) => {
+    let nguoidung = await CRUD_nguoiDung.changePassword(req.body);
+    res.status(200).json(nguoidung);
+};
 
 module.exports = {
     create_nguoiDung,
@@ -51,4 +59,6 @@ module.exports = {
     update_nguoiDung,
     getName_nguoiDung,
     find_nguoiDung,
+    login_nguoiDung,
+    changePass_nguoiDung
 };

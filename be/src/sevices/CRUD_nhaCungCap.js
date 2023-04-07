@@ -29,7 +29,7 @@ let createNhaCungCap = async (data) => {
                     Tenncc: data.Tenncc,
                 },
                 defaults: {
-                    id: randomId.randomId("NCC"),
+                    id: randomId.randomId("NC"),
                     Email: data.Email,
                     Sdt: data.Sdt,
                     Phuong: data.Phuong,

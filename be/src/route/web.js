@@ -25,6 +25,8 @@ let initWebRotes = (app) => {
     router.get("/find-nguoidung", nguoiDungController.find_nguoiDung);
     router.delete("/delete-nguoidung/:tendangnhap", nguoiDungController.delete_nguoiDung);
     router.put("/update-nguoidung", nguoiDungController.update_nguoiDung);
+    router.post("/login-nguoidung", nguoiDungController.login_nguoiDung);
+    router.post("/changepass-nguoidung", nguoiDungController.changePass_nguoiDung);
 
     //CRUD___ThuongHieu
     router.post("/create-thuonghieu", thuongHieuController.create_thuongHieu);
@@ -83,14 +85,13 @@ let initWebRotes = (app) => {
     router.get("/find-sanpham", sanPhamController.find_sanPham);
     router.get("/find-sanphambyname", sanPhamController.find_sanPhamByName);
 
-
     //CRUD___donDatHang
     router.post("/create-dondathang", donDatHangController.create_donDatHang);
     router.get("/getall-dondathang", donDatHangController.getAll_donDatHang);
     router.delete("/delete-dondathang/:madondathang", donDatHangController.delete_donDatHang);
     router.put("/update-dondathang", donDatHangController.update_donDatHang);
     router.get("/find-dondathang", donDatHangController.find_donDatHang);
-    
+
     return app.use("/", router);
 };
 

@@ -27,9 +27,9 @@ let getAllNguoiDungKhuyenMai = async () => {
     return new Promise(async (resolve, reject) => {
         try {
             let listChitiet = await db.chiTietKhuyenMai.findAll({
-              where:{
-                Mand:"ND6D9CC"
-              }
+                where: {
+                    Mand: "ND6D9CC",
+                },
             });
 
             let count = await db.chiTietKhuyenMai.count();
@@ -62,9 +62,7 @@ let createNguoiDung = async (data) => {
                     Loaind: data.Loaind,
                 },
             });
-            console.log(nguoidung);
             let khuyenmai = await db.khuyenMai.findAll();
-
             khuyenmai &&
                 khuyenmai.map(async (a) => {
                     await db.chiTietKhuyenMai.create({
@@ -225,6 +223,65 @@ let findNguoiDung = (data) => {
     });
 };
 
+let loginNguoiDung = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let account = await db.nguoiDung.findOne({
+                where: {
+                    Tendangnhap: data.tendangnhap,
+                },
+            });
+            if (account) {
+                const mk = bcrypt.compareSync(data.matkhau, account.Matkhau);
+                if (mk) {
+                    resolve("Login Successfull");
+                } else {
+                    resolve("Fail Matkhau");
+                }
+            } else {
+                resolve("Fail Login");
+            }
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
+let changePassword = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let mk = await hashPasswordUser(data.matkhau);
+            let findNguoiDung = await db.nguoiDung.findOne({
+                where: {
+                    Tendangnhap: data.tendangnhap,
+                },
+            });
+            console.log(">>>", findNguoiDung);
+            if (findNguoiDung) {
+                let changePa = await db.nguoiDung.update(
+                    {
+                        Matkhau: mk,
+                    },
+                    {
+                        where: {
+                            Tendangnhap: data.tendangnhap,
+                        },
+                    }
+                );
+                if (changePa) {
+                    resolve("Change Succesfull");
+                } else {
+                    resolve("Change Fail");
+                }
+            } else {
+                resolve("Not Exists ");
+            }
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
 //Mã hóa mật khẩu
 let hashPasswordUser = (password) => {
     return new Promise(async (resolve, reject) => {
@@ -247,4 +304,6 @@ module.exports = {
     updateNguoiDung,
     getByNameNguoiDung,
     findNguoiDung,
+    loginNguoiDung,
+    changePassword,
 };

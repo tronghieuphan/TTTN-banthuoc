@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     }
     nhaCungCap.init(
         {
-            Tenncc: DataTypes.STRING(20),
+            Tenncc: DataTypes.STRING(150),
             Email: DataTypes.STRING(30),
             Sdt: DataTypes.STRING(12),
             Phuong: DataTypes.STRING(20),

@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
     loaiSanPham.init(
         {
-            Tenloai: DataTypes.STRING(20),
+            Tenloai: DataTypes.STRING(50),
             Madm: DataTypes.STRING(8),
         },
         {

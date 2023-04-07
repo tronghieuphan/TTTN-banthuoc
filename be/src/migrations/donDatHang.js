@@ -13,7 +13,7 @@ module.exports = {
                 type: Sequelize.DATEONLY,
             },
             Tongtien: {
-                type: Sequelize.DOUBLE,
+                type: Sequelize.INTEGER,
                 allowNull: false,
             },
             Pttt: {

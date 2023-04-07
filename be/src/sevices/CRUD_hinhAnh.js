@@ -2,7 +2,7 @@ import express from "express";
 import db from "../models/index";
 import randomId from "./randomId";
 
-//Hiển thị tất cả danh mục
+//Hiển thị tất cả hình ảnh
 let getAllHinhAnh = async () => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -19,7 +19,7 @@ let getAllHinhAnh = async () => {
     });
 };
 
-//Thêm danh mục
+//Thêm hình ảnh
 let createHinhAnh = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -45,7 +45,7 @@ let createHinhAnh = async (data) => {
     });
 };
 
-//Xóa danh mục
+//Xóa hình ảnh
 let deleteHinhAnh = async (url) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -66,7 +66,7 @@ let deleteHinhAnh = async (url) => {
         }
     });
 };
-//Cập nhập danh mục
+//Cập nhập hình ảnh
 let updateHinhAnh = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -100,7 +100,7 @@ let updateHinhAnh = async (data) => {
         }
     });
 };
-//Tìm theo tên danh mục
+//Tìm theo tên hình ảnh
 let getByNameHinhAnh = (data) => {
     return new Promise(async (resolve, reject) => {
         try {

@@ -10,7 +10,7 @@ module.exports = {
             },
 
             Tenloai: {
-                type: Sequelize.STRING(20),
+                type: Sequelize.STRING(50),
             },
             Madm: {
                 type: Sequelize.STRING(8),

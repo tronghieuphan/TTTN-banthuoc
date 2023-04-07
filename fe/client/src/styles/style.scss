@@ -1,0 +1,33 @@
+//Header
+
+.bg-header{
+    background-color:#0F62F9 ;
+}
+.bg-btn-login{
+    background-color:#0f4dbf ;
+
+}
+
+
+//Nav
+.hover-nav{
+    color: #ffffff;
+}
+.hover-nav:hover{
+    background-color: white;
+    color: #0f4dbf ;
+    border-radius: 20px;
+}
+.dropdown-menu[data-bs-popper] {
+    top: 100%;
+    left: 28px;
+    margin-top: var(--bs-dropdown-spacer);
+    text-align: center;
+}
+.nav-link:focus, .nav-link {
+    color: #fff;
+}
+//Slider
+.height-slide{
+    height: 45%;
+}

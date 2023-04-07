@@ -10,10 +10,10 @@ module.exports = {
             },
 
             Tensp: {
-                type: Sequelize.STRING(30),
+                type: Sequelize.STRING(150),
             },
             Dongia: {
-                type: Sequelize.DOUBLE,
+                type: Sequelize.INTEGER,
             },
             Donviban: {
                 type: Sequelize.STRING(10),

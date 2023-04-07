@@ -18,7 +18,7 @@ module.exports = {
                 allowNull: false,
             },
             Gioitinh: {
-                type: Sequelize.STRING(4),
+                type: Sequelize.BOOLEAN,
             },
             Ngaysinh: {
                 type: Sequelize.DATEONLY,

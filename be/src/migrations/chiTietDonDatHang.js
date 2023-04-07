@@ -17,7 +17,7 @@ module.exports = {
                 type: Sequelize.INTEGER,
             },
             Thanhtien: {
-                type: Sequelize.DOUBLE,
+                type: Sequelize.INTEGER,
             },
             Ngaydat: {
                 type: Sequelize.DATEONLY,

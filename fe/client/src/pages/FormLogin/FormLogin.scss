@@ -1,0 +1,38 @@
+
+.bg-login{
+    background-image: url("https://i.imgur.com/AT9p0d7.png");
+    background-repeat: no-repeat;
+    background-size:100% 100%;
+
+}   
+.bg-icon{
+    background-color:#0F62F9;
+    
+}
+.content-center {
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+}
+.color-text1{
+    color: rgb(94,91,101);
+}
+.color-text2{
+    color:rgb(94,97,127)
+}
+// Login
+.box-login{
+    width:32%;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;    
+}
+
+//Register
+.box-register{
+    width:40%;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;    
+}
+.padding-fn{
+    padding-right: 10%;
+}

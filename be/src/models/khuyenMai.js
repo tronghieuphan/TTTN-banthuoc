@@ -8,13 +8,16 @@ module.exports = (sequelize, DataTypes) => {
          * The `models/index` file will call this method automatically.
          */
         static associate(models) {
-            khuyenMai.belongsTo(models.donDatHang, { foreignKey: "Makm" });
-            khuyenMai.belongsToMany(models.nguoiDung, { through: models.chiTietKhuyenMai,foreignKey:"Makm" });
+            khuyenMai.hasMany(models.donDatHang, { foreignKey: "Makm" });
+            khuyenMai.belongsToMany(models.nguoiDung, {
+                through: models.chiTietKhuyenMai,
+                foreignKey: "Makm",
+            });
         }
     }
     khuyenMai.init(
         {
-            Tenkm: DataTypes.STRING(30),
+            Tenkm: DataTypes.STRING(50),
             Code: DataTypes.STRING(10),
             Phantram: DataTypes.INTEGER,
             Ngaybd: DataTypes.DATEONLY,

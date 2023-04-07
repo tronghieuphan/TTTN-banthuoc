@@ -10,7 +10,7 @@ module.exports = {
             },
 
             Tenncc: {
-                type: Sequelize.STRING(20),
+                type: Sequelize.STRING(150),
             },
             Email: {
                 type: Sequelize.STRING(30),

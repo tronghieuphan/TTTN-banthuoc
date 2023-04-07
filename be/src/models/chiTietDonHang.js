@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
             Maddh: DataTypes.STRING(8),
             Masp: DataTypes.STRING(8),
             Soluong: DataTypes.INTEGER,
-            Thanhtien: DataTypes.DOUBLE,
+            Thanhtien: DataTypes.INTEGER,
             Ngaydat: DataTypes.DATEONLY,
         },
         {
