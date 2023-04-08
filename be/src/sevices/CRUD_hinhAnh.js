@@ -35,9 +35,9 @@ let createHinhAnh = async (data) => {
             });
             console.log(hinhanh);
             if (hinhanh[1]) {
-                resolve({ result: "Create Successfully" });
+                resolve({ message: "Create Successfully",data:hinhanh[0] });
             } else {
-                resolve({ result: "HinhAnh Exist" });
+                resolve({ message: "HinhAnh Exist" });
             }
         } catch (e) {
             reject(e);
@@ -77,7 +77,7 @@ let updateHinhAnh = async (data) => {
             });
             console.log("findHinhAnh: ", findHinhAnh);
             if (findHinhAnh) {
-                let updm = await db.hinhAnh.update(
+                let upha = await db.hinhAnh.update(
                     {
                         id: data.id,
                         Masp:data.Masp
@@ -90,8 +90,8 @@ let updateHinhAnh = async (data) => {
                         },
                     }
                 );
-                console.log(">>>", updm);
-                resolve("Update HinhAnh Successful");
+                console.log(">>>", upha);
+                resolve({message:"Update HinhAnh Successful",data:upha});
             } else {
                 resolve("HinhAnh not exist");
             }

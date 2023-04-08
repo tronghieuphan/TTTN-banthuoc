@@ -21,7 +21,7 @@ function Content() {
                         <p className="fs-5">Lưu Trung Lâm - DH5190</p>
                         <p className="fs-5">Nguyễn Cao Hùng - DH5190</p>
                     </div>
-                    <div class="position-absolute bottom-0 end-0 m-5">
+                    <div className="position-absolute bottom-0 end-0 m-5">
                         <Animation />
                     </div>
                 </div>

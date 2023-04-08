@@ -4,6 +4,9 @@ import NhacungcapDetail from "../pages/Nhacungcap/NhacungcapDetail";
 import DanhmucList from "../pages/Danhmuc/DanhmucList";
 import XuatxuList from "../pages/Xuatxu/XuatxuList";
 import LoginPage from "../pages/FormLogin/LoginPage";
+import NguoidungList from "../pages/Nguoidung/NguoidungList";
+import NguoidungDetail from "../pages/Nguoidung/NguoidungDetail";
+
 
 const PageWeb = [
     {
@@ -33,6 +36,16 @@ const PageWeb = [
     {
         path: '/xuatxu-list',
         page: XuatxuList,
+        isMainLayout: true
+    },
+    {
+        path: '/nguoidung-list',
+        page: NguoidungList,
+        isMainLayout: true
+    },
+    {
+        path: '/nguoidung-detail',
+        page: NguoidungDetail,
         isMainLayout: true
     },
     

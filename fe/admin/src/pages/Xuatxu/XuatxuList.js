@@ -3,21 +3,25 @@ import Search from "antd/es/transfer/search";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
-import xuatXuAPI from "../../services/xuatXuAPI";
+import { motion } from "framer-motion";
+
+import xuatxuAPI from "../../services/xuatXuAPI";
 import XuatxuDetail from "./XuatxuDetail";
 function XuatxuList() {
     const [listXx, setList] = useState([]);
-    const getAllDm = async () => {
+    const getAllXx = async () => {
         try {
-            const response = await xuatXuAPI.getAll();
+            const response = await xuatxuAPI.getAll();
             setList(response.data);
         } catch (err) {
             throw new Error(err);
         }
     };
     useEffect(() => {
-        getAllDm();
+        getAllXx();
     }, []);
+    const onChange = (value) => console.log(value);
+
     const columns = [
         {
             title: "ID",
@@ -53,23 +57,36 @@ function XuatxuList() {
     ];
     return (
         <>
-            <div className="m-4 ">
-                <div className="bd-radius bg-content p-4 text-muted fw-bold">
-                    <div className="d-flex justify-content-between">
-                        <p className="fs-3 w-75">QUẢN LÝ XUẤT XỨ</p>
-                        <Search />
-                    </div>
-                    <br />
-                    <div className="row">
-                        <div className="col-md-7">
-                            <Table columns={columns} dataSource={[listXx]} bordered={true} />
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0, transition: { duration: 0.8 } }}
+            >
+                <div className="m-4 ">
+                    <div className="bd-radius bg-content p-4 text-muted fw-bold">
+                        <div className="d-flex justify-content-between">
+                            <p className="fs-3 w-75">QUẢN LÝ XUẤT XỨ</p>
+                            <form action="" method="">
+                                <Search
+                                    placeholder="input search text"
+                                    onChange={onChange}
+                                    enterButton
+                                />
+                            </form>
                         </div>
-                        <div className="col-md-5">
-                            <XuatxuDetail />
+                        <br />
+                    
+                        <div className="row">
+                            <div className="col-md-7">
+                                <Table columns={columns} dataSource={listXx} bordered={true} />
+                            </div>
+                            <div className="col-md-5">
+                                <XuatxuDetail />
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </motion.div>
         </>
     );
 }

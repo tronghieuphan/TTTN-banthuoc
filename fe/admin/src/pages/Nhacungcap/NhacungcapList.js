@@ -3,8 +3,12 @@ import Search from "antd/es/transfer/search";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import nhaCungCapAPI from "../../services/nhaCungCapAPI";
+import { motion } from "framer-motion";
+
 function NhacungcapList() {
+    const nhacungcapDetailPage = "/nhacungcap-detail";
     const [listNcc, setList] = useState([]);
     const getAllNcc = async () => {
         try {
@@ -17,7 +21,7 @@ function NhacungcapList() {
     useEffect(() => {
         getAllNcc();
     }, []);
-    console.log(">>>>", listNcc);
+    const onChange = (value) => console.log(value);
     const columns = [
         {
             title: "ID",
@@ -73,16 +77,31 @@ function NhacungcapList() {
     ];
     return (
         <>
-            <div className="m-4 ">
-                <div className="bd-radius bg-content p-4 text-muted fw-bold">
-                    <div className="d-flex justify-content-between">
-                        <p className="fs-3 w-75">QUẢN LÝ NHÀ SẢN XUẤT</p>
-                        <Search />
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0, transition: { duration: 0.8 } }}
+            >
+                <div className="m-4 ">
+                    <div className="bd-radius bg-content p-4 text-muted fw-bold">
+                        <div className="d-flex justify-content-between">
+                            <p className="fs-3 w-75">QUẢN LÝ NHÀ SẢN XUẤT</p>
+                            <form action="" method="">
+                                <Search
+                                    placeholder="input search text"
+                                    onChange={onChange}
+                                    enterButton
+                                />
+                            </form>
+                        </div>
+                        <Link to={nhacungcapDetailPage}>
+                            <Button className="mb-2">Thêm</Button>
+                        </Link>
+                        <br />
+                        <Table columns={columns} dataSource={[listNcc]} bordered={true} />
                     </div>
-                    <br />
-                    <Table columns={columns} dataSource={[listNcc]} bordered={true} />
                 </div>
-            </div>
+            </motion.div>
         </>
     );
 }

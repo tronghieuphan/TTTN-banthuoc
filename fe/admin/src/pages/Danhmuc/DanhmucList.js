@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import danhMucAPI from "../../services/danhMucAPI";
 import DanhmucDetail from "./DanhmucDetail";
 import { motion } from "framer-motion";
+
 function DanhmucList() {
     const [listDm, setList] = useState([]);
     const getAllDm = async () => {

@@ -39,9 +39,9 @@ let createNhaCungCap = async (data) => {
             });
             console.log(nhacungcap);
             if (nhacungcap[1]) {
-                resolve({ result: "Create Successfully" });
+                resolve({ message: "Create Successfully",data:nhacungcap[0] });
             } else {
-                resolve({ result: "NhaCungCap Exist" });
+                resolve({ message: "NhaCungCap Exist" });
             }
         } catch (e) {
             reject(e);
@@ -81,7 +81,7 @@ let updateNhaCungCap = async (data) => {
             });
             console.log("findNhaCungCap: ", findNhaCungCap);
             if (findNhaCungCap) {
-                let updm = await db.nhaCungCap.update(
+                let upncc = await db.nhaCungCap.update(
                     {
                         Tenncc: data.Tenncc,
                         Email: data.Email,
@@ -96,8 +96,8 @@ let updateNhaCungCap = async (data) => {
                         },
                     }
                 );
-                console.log(">>>", updm);
-                resolve("Update NhaCungCap Successful");
+                console.log(">>>", upncc);
+                resolve({message:"Update NhaCungCap Successful",data:upncc});
             } else {
                 resolve("NhaCungCap not exist");
             }

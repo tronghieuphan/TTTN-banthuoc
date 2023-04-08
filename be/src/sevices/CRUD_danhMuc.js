@@ -34,9 +34,9 @@ let createDanhMuc = async (data) => {
             });
             console.log(danhmuc);
             if (danhmuc[1]) {
-                resolve({ result: "Create Successfully" });
+                resolve({ message: "Create Successfully",data:danhmuc[0] });
             } else {
-                resolve({ result: "Danhmuc Exist" });
+                resolve({message: "Danhmuc Exist" });
             }
         } catch (e) {
             reject(e);
@@ -86,7 +86,7 @@ let updateDanhMuc = async (data) => {
                     }
                 );
                 console.log(">>>", updm);
-                resolve("Update DanhMuc Successful");
+                resolve({message:"Update DanhMuc Successful",data:updm});
             } else {
                 resolve("DanhMuc not exist");
             }

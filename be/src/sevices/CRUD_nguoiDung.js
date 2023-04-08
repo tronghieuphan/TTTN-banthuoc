@@ -72,7 +72,7 @@ let createNguoiDung = async (data) => {
                 });
 
             if (nguoidung[1]) {
-                resolve({ result: "Create Successfully" });
+                resolve({ message:"Create Successfull",data:nguoidung[0]});
             } else {
                 resolve({ result: "NguoiDung Exist" });
             }
@@ -110,7 +110,7 @@ let createNguoiDung_Admin = async (data) => {
             });
             console.log(nguoidung);
             if (nguoidung[1]) {
-                resolve({ result: "Create Successfully" });
+                resolve( { message:"Create Successfull",data:nguoidung[0]} );
             } else {
                 resolve({ result: "NguoiDung Exist" });
             }
@@ -173,7 +173,7 @@ let updateNguoiDung = async (data) => {
                     }
                 );
                 console.log(">>>", upNd);
-                resolve("Update Nguoidung Successful");
+                resolve({message:"Update Nguoidung Successful",data:upNd});
             } else {
                 resolve("Nguoidung not exist");
             }
@@ -234,7 +234,7 @@ let loginNguoiDung = (data) => {
             if (account) {
                 const mk = bcrypt.compareSync(data.matkhau, account.Matkhau);
                 if (mk) {
-                    resolve("Login Successfull");
+                    resolve({message:"Login Successfull",data:account});
                 } else {
                     resolve("Fail Matkhau");
                 }

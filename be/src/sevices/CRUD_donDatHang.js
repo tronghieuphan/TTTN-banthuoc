@@ -40,7 +40,7 @@ let createDonDatHang = async (data) => {
             });
             console.log(dondathang);
 
-            resolve({ result: "Create Successfully" });
+            resolve({ message: "Create Successfully",data:dondathang });
         } catch (e) {
             reject(e);
         }
@@ -66,7 +66,7 @@ let createChitiet = async (data) => {
             });
             console.log(dondathang);
 
-            resolve({ result: "Create Successfully" });
+            resolve({ message: "Create Successfully" });
         } catch (e) {
             reject(e);
         }
@@ -124,7 +124,7 @@ let updateDonDatHang = async (data) => {
                     }
                 );
                 console.log(">>>", upDDH);
-                resolve("Update DonDatHang Successful");
+                resolve({message:"Update DonDatHang Successful",data:upDDH});
             } else {
                 resolve("DonDatHang not exist");
             }

@@ -15,23 +15,23 @@
 }
 .bg a:hover{
     background: rgb(64,151,255);
-background: linear-gradient(90deg, rgba(64,151,255,1) 9%, rgba(255,255,255,1) 100%);    
-   text-decoration: none;
-   font-weight: 600;
-   color: #fff;
-   border-right: 5px solid rgb(0, 47, 255);
-   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    background: linear-gradient(90deg, rgba(64,151,255,1) 9%, rgba(255,255,255,1) 100%);    
+    text-decoration: none;
+    font-weight: 600;
+    color: #fff;
+    border-right: 5px solid rgb(0, 47, 255);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 .bg a.active{
     background: rgb(50,109,255);
     background: linear-gradient(90deg, rgba(50,109,255,1) 13%, rgba(255,255,255,1) 100%); 
-       color: rgb(255, 255, 255);
-   text-decoration: none;
-   font-weight: 600;
-   border-right: 5px solid rgb(0, 60, 255);
-   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-   transition: all 1s;
-}
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-weight: 600;
+    border-right: 5px solid rgb(0, 60, 255);
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    transition: all 1s;
+    }
 
 .w-30{
     width: 30%;
@@ -67,9 +67,9 @@ background: linear-gradient(90deg, rgba(64,151,255,1) 9%, rgba(255,255,255,1) 10
 
 .bg-menu{
     background-color: rgb(255, 255, 255);
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;}
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
 .bg-logo{
     background-color: rgb(54, 90, 255);
     border-radius: 25px;
-    
 }

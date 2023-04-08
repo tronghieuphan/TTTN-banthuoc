@@ -34,9 +34,9 @@ let createXuatXu = async (data) => {
             });
             console.log(">>>", xuatxu);
             if (xuatxu[1]) {
-                resolve({ result: "Create Successfully" });
+                resolve({ message: "Create Successfully",data:xuatxu[0] });
             } else {
-                resolve({ result: "Xuatxu Exist" });
+                resolve({ message: "Xuatxu Exist" });
             }
         } catch (e) {
             reject(e);
@@ -86,7 +86,7 @@ let updateXuatXu = async (data) => {
                     }
                 );
                 console.log(">>>", upTh);
-                resolve("Update XuatXu Successful");
+                resolve({message:"Update XuatXu Successful",data:upTh});
             } else {
                 resolve("XuatXu not exist");
             }

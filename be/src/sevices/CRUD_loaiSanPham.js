@@ -40,9 +40,9 @@ let createLoaiSanPham = async (data) => {
             });
             console.log(loaisanpham);
             if (loaisanpham[1]) {
-                resolve({ result: "Create Successfully" });
+                resolve({ message: "Create Successfully",data:loaisanpham[0]});
             } else {
-                resolve({ result: "LoaiSanPham Exist" });
+                resolve({ message: "LoaiSanPham Exist" });
             }
         } catch (e) {
             reject(e);
@@ -93,7 +93,7 @@ let updateLoaiSanPham = async (data) => {
                     }
                 );
                 console.log(">>>", uploai);
-                resolve("Update LoaiSanPham Successful");
+                resolve({message:"Update LoaiSanPham Successful",data:uploai});
             } else {
                 resolve("LoaiSanPham not exist");
             }

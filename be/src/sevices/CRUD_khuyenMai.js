@@ -43,9 +43,9 @@ let createKhuyenMai = async (data) => {
             });
             console.log(khuyenmai);
             if (khuyenmai[1]) {
-                resolve({ result: "Create Successfully" });
+                resolve({ message: "Create Successfully",data:khuyenmai[0] });
             } else {
-                resolve({ result: "KhuyenMai Exist" });
+                resolve({ message: "KhuyenMai Exist" });
             }
         } catch (e) {
             reject(e);
@@ -100,7 +100,7 @@ let updateKhuyenMai = async (data) => {
                     }
                 );
                 console.log(">>>", upKm);
-                resolve("Update KhuyenMai Successful");
+                resolve({message:"Update KhuyenMai Successful",data:upKm});
             } else {
                 resolve("KhuyenMai not exist");
             }

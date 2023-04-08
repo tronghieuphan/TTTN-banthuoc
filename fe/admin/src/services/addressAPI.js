@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL= process.env.REACT_LOCALHOST;
+// const URL= process.env.REACT_LOCALHOST;
 
 const address={
     getAll_Province:()=>{

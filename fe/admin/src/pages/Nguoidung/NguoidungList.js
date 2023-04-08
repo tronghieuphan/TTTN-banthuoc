@@ -3,39 +3,59 @@ import Search from "antd/es/transfer/search";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
-import nhaCungCapAPI from "../../services/nhaCungCapAPI";
-function NhacungcapList() {
-    // const [listNcc, setList] = useState([]);
-    // const getAllNcc = async () => {
-    //     try {
-    //         const response = await nhaCungCapAPI.getAll();
-    //         setList(response.data);
-    //     } catch (err) {
-    //         throw new Error(err);
-    //     }
-    // };
-    // useEffect(() => {
-    //     getAllNcc();
-    // }, []);
-    // console.log(">>>>", listNcc);
+import { Link } from "react-router-dom";
+import nguoiDungAPI from "../../services/nguoiDungAPI";
+import { motion } from "framer-motion";
+function NguoidungList() {
+    const [listNd, setList] = useState([]);
+    const nguoidungDetailPage = "/nguoidung-detail";
+    const getAllNd = async () => {
+        try {
+            const response = await nguoiDungAPI.getAll();
+            setList(response.data);
+        } catch (err) {
+            throw new Error(err);
+        }
+    };
+    useEffect(() => {
+        getAllNd();
+    }, []);
+    const onChange = (value) => console.log(value);
+
     const columns = [
         {
             title: "ID",
             dataIndex: "id",
             align: "center",
+            fixed: "left",
         },
         {
-            title: "Tên nhà cung cấp",
-            dataIndex: "Tenncc",
+            title: "Họ lót",
+            dataIndex: "Holot",
+            fixed: "left",
         },
         {
-            title: "Email",
-            dataIndex: "Email",
+            title: "Tên",
+            dataIndex: "Ten",
+            fixed: "left",
+        },
+        {
+            title: "Giới tính",
+            dataIndex: "Gioitinh",
+        },
+        {
+            title: "Ngày sinh",
+            dataIndex: "Ngaysinh",
         },
         {
             title: "Số điện thoại",
             dataIndex: "Sdt",
         },
+        {
+            title: "Email",
+            dataIndex: "Email",
+        },
+        ,
         {
             title: "Phường/xã",
             dataIndex: "Phuong",
@@ -49,11 +69,20 @@ function NhacungcapList() {
             dataIndex: "Thanhpho",
         },
         {
+            title: "Tên đăng nhập",
+            dataIndex: "Tendangnhap",
+        },
+        {
+            title: "Loại người dùng",
+            dataIndex: "Loaind",
+        },
+        {
             title: "Xóa",
             dataIndex: "",
             align: "center",
+            fixed: "right",
             render: (_, record) => (
-                <Popconfirm title="Bạn có muốn xóa?" onConfirm={() => []}>
+                <Popconfirm title="Bạn có muốn xóa?" onConfirm={() => console.log(record)}>
                     <Button className="bg-light">
                         <FontAwesomeIcon icon={faTrashAlt} className="text-dark" />
                     </Button>
@@ -64,6 +93,7 @@ function NhacungcapList() {
             title: "Xem",
             dataIndex: "",
             align: "center",
+            fixed: "right",
             render: () => (
                 <Button className="bg-light" onClick={[]}>
                     <FontAwesomeIcon icon={faEdit} className="text-dark" />
@@ -73,18 +103,38 @@ function NhacungcapList() {
     ];
     return (
         <>
-            <div className="m-4 ">
-                <div className="bd-radius bg-content p-4 text-muted fw-bold">
-                    <div className="d-flex justify-content-between">
-                        <p className="fs-3 w-75">QUẢN LÝ NHÀ SẢN XUẤT</p>
-                        <Search />
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0, transition: { duration: 0.8 } }}
+            >
+                <div className="m-4 ">
+                    <div className="bd-radius bg-content p-4 text-muted fw-bold">
+                        <div className="d-flex justify-content-between">
+                            <p className="fs-3 w-75">QUẢN LÝ NGƯỜI DÙNG</p>
+                            <form action="" method="">
+                                <Search
+                                    placeholder="input search text"
+                                    onChange={onChange}
+                                    enterButton
+                                />
+                            </form>
+                        </div>
+                        <Link to={nguoidungDetailPage}>
+                            <Button className="mb-2">Thêm</Button>
+                        </Link>
+                        <br />
+                        <Table
+                            columns={columns}
+                            dataSource={listNd}
+                            bordered={true}
+                            scroll={{ x: true }}
+                        />
                     </div>
-                    <br />
-                    <Table columns={columns} dataSource={[]} bordered={true} />
                 </div>
-            </div>
+            </motion.div>
         </>
     );
 }
 
-export default NhacungcapList;
+export default NguoidungList;

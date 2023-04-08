@@ -58,9 +58,9 @@ let createSanPham = async (data) => {
             });
             console.log(sanpham);
             if (sanpham[1]) {
-                resolve({ result: "Create Successfully" });
+                resolve({ message: "Create Successfully" ,data:sanpham[0]});
             } else {
-                resolve({ result: "SanPham Exist" });
+                resolve({ message: "SanPham Exist" });
             }
         } catch (e) {
             reject(e);
@@ -123,7 +123,7 @@ let updateSanPham = async (data) => {
                     }
                 );
                 console.log(">>>", upSp);
-                resolve("Update SanPham Successful");
+                resolve({message:"Update SanPham Successful",data:upSp});
             } else {
                 resolve("SanPham not exist");
             }

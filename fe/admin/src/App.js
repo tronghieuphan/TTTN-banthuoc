@@ -4,7 +4,8 @@ import PageWeb from "./routes/index";
 import LayoutPageLogin from "./layouts/LayoutPageLogin";
 import LayoutPageMain from "./layouts/LayoutPageMain";
 import { AnimatePresence } from "framer-motion";
-
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 function App() {
     const location = useLocation();
     return (
@@ -31,6 +32,19 @@ function App() {
                     })}
                 </Routes>
             </AnimatePresence>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
+            <ToastContainer />
         </>
     );
 }

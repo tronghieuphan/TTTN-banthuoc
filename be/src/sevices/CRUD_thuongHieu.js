@@ -36,9 +36,9 @@ let createThuongHieu = async (data) => {
             });
             console.log(thuonghieu);
             if (thuonghieu[1]) {
-                resolve({ result: "Create Successfully" });
+                resolve({ message: "Create Successfully",data:thuonghieu[0] });
             } else {
-                resolve({ result: "Thuonghieu Exist" });
+                resolve({ message: "Thuonghieu Exist" });
             }
         } catch (e) {
             reject(e);
@@ -88,7 +88,7 @@ let updateThuongHieu = async (data) => {
                     }
                 );
                 console.log(">>>", upTh);
-                resolve("Update ThuongHieu Successful");
+                resolve({message:"Update ThuongHieu Successful",data:upTh});
             } else {
                 resolve("ThuongHieu not exist");
             }

@@ -17,7 +17,7 @@ function MenuBar() {
                 </div>
                 <hr className="w-75 d-block mx-auto" />
                 <div className="w-100 p-3 bg">
-                    <NavLink className="w-85 d-block fw-bold fs-5" to="/home" acticveClassName="active" >
+                    <NavLink className="w-85 d-block fw-bold fs-5" to="/home" acticveclasname="active" >
                         Trang chủ
                     </NavLink>
                     <NavLink className="w-85 d-block fw-bold fs-5" to="/nguoidung-list">
