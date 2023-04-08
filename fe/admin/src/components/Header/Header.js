@@ -3,10 +3,11 @@ import "./Header.scss";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { open, hide } from "../../slices/menuSlice";
 function Header() {
     const dispatch = useDispatch();
+    const {account}= useSelector((state)=>state.user)
     const [collapsed, setCollapsed] = useState(false);
     const toggleCollapsed = () => {
         setCollapsed(!collapsed);
@@ -23,7 +24,7 @@ function Header() {
                     {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
                 </Button>
                 <div className="p-3">
-                    <AvatarMenu className=" " />
+                   <AvatarMenu account={account} />
                 </div>
             </div>
         </>

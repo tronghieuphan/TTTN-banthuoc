@@ -34,7 +34,7 @@ let createXuatXu = async (data) => {
             });
             console.log(">>>", xuatxu);
             if (xuatxu[1]) {
-                resolve({ message: "Create Successfully",data:xuatxu[0] });
+                resolve({ message: "Create Successfully", data: xuatxu[0] });
             } else {
                 resolve({ message: "Xuatxu Exist" });
             }
@@ -53,11 +53,21 @@ let deleteXuatXu = async (Tenxx) => {
                     Tenxx: Tenxx,
                 },
             });
-            if (Tenxx_delete) {
-                await Tenxx_delete.destroy();
-                resolve("Delete Successful");
+            console.log("Tenxx_delete: ", Tenxx_delete.id);
+            let sanpham = await db.sanPham.findAll({
+                where: {
+                    Maxx: Tenxx_delete.id,
+                },
+            });
+            if (sanpham.length > 0) {
+                resolve("Have Product Belongs Xuat Xu");
             } else {
-                resolve("Xuatxu not exist");
+                if (Tenxx_delete) {
+                    await Tenxx_delete.destroy();
+                    resolve("Delete Successful");
+                } else {
+                    resolve("Xuatxu not exist");
+                }
             }
         } catch (e) {
             reject(e);
@@ -86,7 +96,7 @@ let updateXuatXu = async (data) => {
                     }
                 );
                 console.log(">>>", upTh);
-                resolve({message:"Update XuatXu Successful",data:upTh});
+                resolve({ message: "Update XuatXu Successful", data: upTh });
             } else {
                 resolve("XuatXu not exist");
             }

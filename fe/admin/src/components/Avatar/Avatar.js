@@ -9,8 +9,13 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Logout from "@mui/icons-material/Logout";
 import { useState } from "react";
-
-function AvatarMenu() {
+import {logout} from "../../slices/userSlice"
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+function AvatarMenu(props) {
+    const name=props.account.Ten;
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -18,6 +23,11 @@ function AvatarMenu() {
     };
     const handleClose = () => {
         setAnchorEl(null);
+    };
+   
+    const handleLogout = () => {
+        dispatch(logout());
+        navigate("/");
     };
     return (
         <React.Fragment>
@@ -31,7 +41,7 @@ function AvatarMenu() {
                         aria-haspopup="true"
                         aria-expanded={open ? "true" : undefined}
                     >
-                        <Avatar sx={{ width: 32, height: 32 }}>H</Avatar>
+                        <Avatar sx={{ width: 52, height: 52 }}>{name}</Avatar>
                     </IconButton>
                 </Tooltip>
             </Box>
@@ -74,7 +84,7 @@ function AvatarMenu() {
                     <Avatar /> Profile
                 </MenuItem>
                 <Divider />
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleLogout}>
                     <ListItemIcon>
                         <Logout fontSize="small" />
                     </ListItemIcon>

@@ -4,16 +4,16 @@ export const userSlice = createSlice({
     name: "user",
     initialState: {
         login: false,
-        accout:[]
+        account:[]
     },
     reducers: {
         login: (state,action) => {
             state.login = true;
-            state.accout=action.payload
+            state.account=action.payload
         },
         logout: (state) => {
             state.login = false;
-            state.accout=[]
+            state.account=[]
         },
     },
 });

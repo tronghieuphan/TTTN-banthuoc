@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
 import { login } from "../../slices/userSlice";
+import xuatXuAPI from "../../services/xuatXuAPI";
 
 function LoginPage() {
     const dispatch = useDispatch();
@@ -36,7 +37,7 @@ function LoginPage() {
             toast.error("Vui lòng nhập đầy đủ thông tin!");
         } else {
             let a = await nguoiDungAPI.login(obj);
-            console.log('a: ', a);
+            console.log('a: ', a.data.data);
             if (a.data === "Fail Login") {
                 toast.error("Tài khoản không tồn tại !");
             } else {
@@ -44,12 +45,16 @@ function LoginPage() {
                     toast.error("Mật khẩu không chính xác!");
                 } else {
                     toast.success("Đăng nhập thành công");
-                    dispatch(login(a));
+                    dispatch(login(a.data.data));
                     navigate("/home");
                 }
             }
         }
     };
+    const handleCreate=async (obj)=>{
+        const a= await xuatXuAPI.create(obj);
+        console.log(a)
+    }
     return (
         <>
             <motion.div

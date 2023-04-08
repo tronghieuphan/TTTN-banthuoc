@@ -7,16 +7,16 @@ const xuatXuAPI = {
         return axios.get(`http://localhost:9000/getall-xuatxu`);
     },
     getByName: (xuatxu_name) => {
-        return axios.get(`${URL}/getbyName-xuatxu?datafind=${xuatxu_name}`);
+        return axios.get(`http://localhost:9000/getbyName-xuatxu?datafind=${xuatxu_name}`);
     },
     create: (obj) => {
-        return axios.post(`${URL}/create-xuatxu`, obj);
+        return axios.post(`http://localhost:9000/create-xuatxu`, obj);
     },
     update: (obj) => {
-        return axios.put(`${URL}/update-xuatxu`, obj);
+        return axios.put(`http://localhost:9000/update-xuatxu`, obj);
     },
     delete: (xuatxu_name) => {
-        return axios.delete(`${URL}/delete-xuatxu/${xuatxu_name}`);
+        return axios.delete(`http://localhost:9000/delete-xuatxu/${xuatxu_name}`);
     },
 };
 

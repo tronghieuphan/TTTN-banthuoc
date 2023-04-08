@@ -4,15 +4,24 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-
-import xuatxuAPI from "../../services/xuatXuAPI";
+import { useDispatch, useSelector} from "react-redux";
+import { setDataXX } from "../../slices/xuatxudanhmucSlice";
 import XuatxuDetail from "./XuatxuDetail";
+import xuatXuAPI from "../../services/xuatXuAPI";
+import Swal from "sweetalert2";
+import { deleteSuccess } from "../../components/Dialog/Dialog";
+
 function XuatxuList() {
     const [listXx, setList] = useState([]);
+    const dispatch = useDispatch();
+    const [loading, setLoading] = useState(false);
+    const { xuatxu } = useSelector((state) => state.xxdm);
     const getAllXx = async () => {
         try {
-            const response = await xuatxuAPI.getAll();
+            setLoading(true);
+            const response = await xuatXuAPI.getAll();
             setList(response.data);
+            setLoading(false);
         } catch (err) {
             throw new Error(err);
         }
@@ -21,7 +30,9 @@ function XuatxuList() {
         getAllXx();
     }, []);
     const onChange = (value) => console.log(value);
-
+    const handleGetDataToCreate = (record) => {
+        dispatch(setDataXX(record));
+    };
     const columns = [
         {
             title: "ID",
@@ -37,7 +48,7 @@ function XuatxuList() {
             dataIndex: "",
             align: "center",
             render: (_, record) => (
-                <Popconfirm title="Bạn có muốn xóa?" onConfirm={() => []}>
+                <Popconfirm title="Bạn có muốn xóa?" onConfirm={() => handleDelete(record)}>
                     <Button className="bg-light">
                         <FontAwesomeIcon icon={faTrashAlt} className="text-dark" />
                     </Button>
@@ -48,13 +59,29 @@ function XuatxuList() {
             title: "Xem",
             dataIndex: "",
             align: "center",
-            render: () => (
-                <Button className="bg-light" onClick={[]}>
+            render: (record) => (
+                <Button className="bg-light" onClick={() => handleGetDataToCreate(record)}>
                     <FontAwesomeIcon icon={faEdit} className="text-dark" />
                 </Button>
             ),
         },
     ];
+
+    //Xóa
+    const handleDelete = async (record) => {
+        const data = await xuatXuAPI.delete(record.Tenxx);
+
+        if (data.data === "Have Product Belongs Xuat Xu") {
+            Swal.fire({
+                icon: "error",
+                text: "Xuất xứ đang có sản phẩm!",
+            });
+        } else {
+            deleteSuccess();
+            getAllXx();
+        }
+    };
+
     return (
         <>
             <motion.div
@@ -75,13 +102,18 @@ function XuatxuList() {
                             </form>
                         </div>
                         <br />
-                    
+
                         <div className="row">
                             <div className="col-md-7">
-                                <Table columns={columns} dataSource={listXx} bordered={true} />
+                                <Table
+                                    columns={columns}
+                                    dataSource={listXx}
+                                    bordered={true}
+                                    loading={loading}
+                                />
                             </div>
                             <div className="col-md-5">
-                                <XuatxuDetail />
+                                <XuatxuDetail xuatxu={xuatxu} />
                             </div>
                         </div>
                     </div>
