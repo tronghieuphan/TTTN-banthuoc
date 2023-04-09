@@ -5,8 +5,7 @@ import xxdmSlice from '../slices/xuatxudanhmucSlice';
 const rootReducer = {
     menu: menuSlice,
     user:userSlice,
-    xxdm:xxdmSlice
-
+    xxdm:xxdmSlice,
 };
 
 const store = configureStore({

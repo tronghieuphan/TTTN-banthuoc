@@ -2,7 +2,6 @@ import CRUD_xuatXu from "../sevices/CRUD_xuatXu";
 
 let create_xuatXu = async (req, res) => {
     let xuatxu = await CRUD_xuatXu.createXuatXu(req.body);
-    console.log("req.body: ", req.body);
     res.status(200).json(xuatxu);
 };
 

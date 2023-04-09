@@ -19,7 +19,7 @@ let getAllXuatXu = async () => {
     });
 };
 
-//Thêm dxuất xứ
+//Thêm xuất xứ
 let createXuatXu = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {

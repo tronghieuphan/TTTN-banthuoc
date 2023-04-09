@@ -1,21 +1,22 @@
-import { Table, Button, Popconfirm } from "antd";
-import Search from "antd/es/transfer/search";
+import { Table, Button, Popconfirm, Tooltip, Input } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { useDispatch, useSelector} from "react-redux";
+import { useDispatch } from "react-redux";
 import { setDataXX } from "../../slices/xuatxudanhmucSlice";
 import XuatxuDetail from "./XuatxuDetail";
 import xuatXuAPI from "../../services/xuatXuAPI";
 import Swal from "sweetalert2";
-import { deleteSuccess } from "../../components/Dialog/Dialog";
+import { SearchOutlined } from "@ant-design/icons";
+import { successDialog, deleteSuccess, exist } from "../../components/Dialog/Dialog";
 
 function XuatxuList() {
     const [listXx, setList] = useState([]);
+    const [keysearch, setValueSearch] = useState("");
+
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
-    const { xuatxu } = useSelector((state) => state.xxdm);
     const getAllXx = async () => {
         try {
             setLoading(true);
@@ -26,13 +27,58 @@ function XuatxuList() {
             throw new Error(err);
         }
     };
+    const getByName = async () => {
+        setLoading(true);
+        const data = await xuatXuAPI.getByName(keysearch);
+        setList(data.data);
+        setLoading(false);
+    };
+
     useEffect(() => {
         getAllXx();
     }, []);
-    const onChange = (value) => console.log(value);
+
+    const handleChange = (e) => {
+        setValueSearch(e.target.value);
+    };
     const handleGetDataToCreate = (record) => {
         dispatch(setDataXX(record));
     };
+
+    //XÓA
+    const handleDelete = async (record) => {
+        const data = await xuatXuAPI.delete(record.Tenxx);
+
+        if (data.data === "Have Product Belongs Xuat Xu") {
+            Swal.fire({
+                icon: "error",
+                text: "Xuất xứ đang có sản phẩm!",
+            });
+        } else {
+            deleteSuccess();
+            getAllXx();
+        }
+    };
+    //THÊM
+    const handleCreate = async (obj) => {
+        const data = await xuatXuAPI.create(obj);
+        if (data.data.message === "Xuatxu Exist") {
+            exist();
+        } else if (data.data.message === "Create Successfully") {
+            successDialog();
+            getAllXx();
+        }
+    };
+    //SỬA
+    const handleUpdate = async (obj) => {
+        const data = await xuatXuAPI.update(obj);
+        if (data.data.message === "Update XuatXu Successful") {
+            successDialog();
+            getAllXx();
+        }
+    };
+
+    //ĐỊNH DẠNG TABLE
     const columns = [
         {
             title: "ID",
@@ -67,21 +113,6 @@ function XuatxuList() {
         },
     ];
 
-    //Xóa
-    const handleDelete = async (record) => {
-        const data = await xuatXuAPI.delete(record.Tenxx);
-
-        if (data.data === "Have Product Belongs Xuat Xu") {
-            Swal.fire({
-                icon: "error",
-                text: "Xuất xứ đang có sản phẩm!",
-            });
-        } else {
-            deleteSuccess();
-            getAllXx();
-        }
-    };
-
     return (
         <>
             <motion.div
@@ -94,11 +125,22 @@ function XuatxuList() {
                         <div className="d-flex justify-content-between">
                             <p className="fs-3 w-75">QUẢN LÝ XUẤT XỨ</p>
                             <form action="" method="">
-                                <Search
-                                    placeholder="input search text"
-                                    onChange={onChange}
-                                    enterButton
-                                />
+                                <div className="d-flex">
+                                    <Input
+                                        className="mx-2"
+                                        placeholder="Nhập tìm kiếm"
+                                        value={keysearch}
+                                        onChange={handleChange}
+                                    />
+                                    <Tooltip title="search">
+                                        <Button
+                                            type="primary"
+                                            shape="circle"
+                                            icon={<SearchOutlined />}
+                                            onClick={getByName}
+                                        />
+                                    </Tooltip>
+                                </div>
                             </form>
                         </div>
                         <br />
@@ -113,7 +155,10 @@ function XuatxuList() {
                                 />
                             </div>
                             <div className="col-md-5">
-                                <XuatxuDetail xuatxu={xuatxu} />
+                                <XuatxuDetail
+                                    handleCreate={handleCreate}
+                                    handleUpdate={handleUpdate}
+                                />
                             </div>
                         </div>
                     </div>

@@ -1,4 +1,4 @@
-import { Select, Input } from "antd";
+import { Select, Input, Button } from "antd";
 import React from "react";
 import { useState, useEffect } from "react";
 import addressAPI from "../../services/addressAPI";
@@ -8,6 +8,25 @@ function NhacungcapDetail() {
     const [city, listCity] = useState([]);
     const [district, listDistrict] = useState([]);
     const [ward, listWard] = useState([]);
+    const init = {
+        Tenncc: "",
+        Email: "",
+        Sdt: "",
+        Phuong: "",
+        Quan: "",
+        Thanhpho: "",
+    };
+    const [values, setValues] = useState(init);
+    console.log('values: ', values);
+
+    //XỬ LÝ THAY ĐỔI INPUT
+    const handleChangeInput = (e) => {
+        const { name, value } = e.target;
+        setValues({
+            ...values,
+            [name]: value,
+        });
+    };
 
     //Lây API Thành phố
     const getAllCity = async () => {
@@ -79,7 +98,9 @@ function NhacungcapDetail() {
                                             id="outlined-basic"
                                             label="Tên nhà cung cấp"
                                             variant="outlined"
-                                            value=""
+                                            name="Tenncc"
+                                            onChange={handleChangeInput}
+                                            value={values.Tenncc}
                                         />
                                     </div>
                                     <div className="justify-content-center w-30 ">
@@ -89,8 +110,10 @@ function NhacungcapDetail() {
                                             id="outlined-basic"
                                             label="Email"
                                             type="text"
+                                            name="Email"
                                             variant="outlined"
-                                            value=""
+                                            onChange={handleChangeInput}
+                                            value={values.Email}
                                         />
                                     </div>
                                     <div className="justify-content-center w-30 ">
@@ -100,8 +123,10 @@ function NhacungcapDetail() {
                                             id="outlined-basic"
                                             label="Số điện thoại"
                                             type="tel"
+                                            name="Sdt"
+                                            onChange={handleChangeInput}
                                             variant="outlined"
-                                            value=""
+                                            value={values.Sdt}
                                         />
                                     </div>
                                     <div className="justify-content-center w-30">
@@ -112,9 +137,10 @@ function NhacungcapDetail() {
                                             style={{
                                                 width: 160,
                                             }}
+                                            id="Phuong"
                                             placeholder="Chọn phường, xã"
                                             optionFilterProp="children"
-                                            onChange={onChange}
+                                            onChange={(e) => onChange(e)}
                                             onSearch={onSearch}
                                             filterOption={(input, option) =>
                                                 (option?.label ?? "")
@@ -135,6 +161,7 @@ function NhacungcapDetail() {
                                             style={{
                                                 width: 160,
                                             }}
+                                            id="Quan"
                                             placeholder="Chọn quận, huyện"
                                             optionFilterProp="children"
                                             onChange={onChange}
@@ -158,6 +185,7 @@ function NhacungcapDetail() {
                                             style={{
                                                 width: 160,
                                             }}
+                                            id="Thanhpho"
                                             placeholder="Chọn thành phố, tỉnh"
                                             optionFilterProp="children"
                                             onChange={onChange}
@@ -174,6 +202,21 @@ function NhacungcapDetail() {
                                         />
                                     </div>
                                 </div>
+                                <button
+                                    type="submit"
+                                    className="mx-2"
+                                    style={{
+                                        background: "#1677FF",
+                                        color: "#fff",
+                                        border: "1px solid #1677FF",
+                                        padding: "3px 15px",
+                                        borderRadius: "5px",
+                                    }}
+                                >
+                                    Lưu
+                                </button>
+
+                                <Button type="primary">Hủy</Button>
                             </form>
                         </div>
                     </div>

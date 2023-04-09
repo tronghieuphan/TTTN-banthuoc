@@ -6,6 +6,9 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import nhaCungCapAPI from "../../services/nhaCungCapAPI";
 import { motion } from "framer-motion";
+import { deleteSuccess } from "../../components/Dialog/Dialog";
+import Swal from "sweetalert2";
+
 
 function NhacungcapList() {
     const nhacungcapDetailPage = "/nhacungcap-detail";
@@ -22,6 +25,21 @@ function NhacungcapList() {
         getAllNcc();
     }, []);
     const onChange = (value) => console.log(value);
+
+    const handleDelete=async (record)=>{
+        console.log('record: ', record.Tenncc);
+        const data = await nhaCungCapAPI.delete(record.Tenncc);
+        console.log('data: ', data.data);
+        if (data.data === "Have Product Belongs NhaCungCap") {
+            Swal.fire({
+                icon: "error",
+                text: "Nhà cung cấp đang có sản phẩm!",
+            });
+        } else {
+            deleteSuccess();
+            getAllNcc();
+        }
+    }
     const columns = [
         {
             title: "ID",
@@ -57,7 +75,7 @@ function NhacungcapList() {
             dataIndex: "",
             align: "center",
             render: (_, record) => (
-                <Popconfirm title="Bạn có muốn xóa?" onConfirm={() => []}>
+                <Popconfirm title="Bạn có muốn xóa?" onConfirm={() =>handleDelete(record)}>
                     <Button className="bg-light">
                         <FontAwesomeIcon icon={faTrashAlt} className="text-dark" />
                     </Button>
@@ -98,7 +116,7 @@ function NhacungcapList() {
                             <Button className="mb-2">Thêm</Button>
                         </Link>
                         <br />
-                        <Table columns={columns} dataSource={[listNcc]} bordered={true} />
+                        <Table columns={columns} dataSource={listNcc} bordered={true} />
                     </div>
                 </div>
             </motion.div>
