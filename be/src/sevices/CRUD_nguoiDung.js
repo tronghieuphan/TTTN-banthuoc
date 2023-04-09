@@ -72,7 +72,7 @@ let createNguoiDung = async (data) => {
                 });
 
             if (nguoidung[1]) {
-                resolve({ message:"Create Successfull",data:nguoidung[0]});
+                resolve({ message: "Create Successfull", data: nguoidung[0] });
             } else {
                 resolve({ result: "NguoiDung Exist" });
             }
@@ -86,7 +86,9 @@ let createNguoiDung = async (data) => {
 let createNguoiDung_Admin = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
+            console.log(data)
             let mk = await hashPasswordUser(data.Matkhau);
+            console.log("mk: ", mk);
 
             let nguoidung = await db.nguoiDung.findOrCreate({
                 where: {
@@ -173,7 +175,7 @@ let updateNguoiDung = async (data) => {
                     }
                 );
                 console.log(">>>", upNd);
-                resolve({message:"Update Nguoidung Successful",data:upNd});
+                resolve({ message: "Update Nguoidung Successful", data: upNd });
             } else {
                 resolve("Nguoidung not exist");
             }
@@ -234,7 +236,7 @@ let loginNguoiDung = (data) => {
             if (account) {
                 const mk = bcrypt.compareSync(data.matkhau, account.Matkhau);
                 if (mk) {
-                    resolve({message:"Login Successfull",data:account});
+                    resolve({ message: "Login Successfull", data: account });
                 } else {
                     resolve("Fail Matkhau");
                 }
@@ -287,7 +289,7 @@ let hashPasswordUser = (password) => {
     return new Promise(async (resolve, reject) => {
         try {
             let hashPassword = await bcrypt.hash(password, salt);
-            console.log("password: ", password);
+            console.log("password: ", hashPassword);
             resolve(hashPassword);
         } catch (e) {
             reject(e);

@@ -1,5 +1,4 @@
-import { Table, Button, Popconfirm } from "antd";
-import Search from "antd/es/transfer/search";
+import { Table, Button, Popconfirm, Input, Tooltip } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
@@ -8,28 +7,41 @@ import nhaCungCapAPI from "../../services/nhaCungCapAPI";
 import { motion } from "framer-motion";
 import { deleteSuccess } from "../../components/Dialog/Dialog";
 import Swal from "sweetalert2";
-
-
+import { SearchOutlined } from "@ant-design/icons";
+import { useDispatch } from "react-redux";
+import { setDataNcc } from "../../slices/dataAdd";
 function NhacungcapList() {
     const nhacungcapDetailPage = "/nhacungcap-detail";
     const [listNcc, setList] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [keysearch, setValueSearch] = useState("");
+
+    const dispatch = useDispatch();
     const getAllNcc = async () => {
         try {
+            setLoading(true);
             const response = await nhaCungCapAPI.getAll();
             setList(response.data);
+            setLoading(false);
         } catch (err) {
             throw new Error(err);
         }
+    };
+    const getByName = async () => {
+        setLoading(true);
+        const data = await nhaCungCapAPI.getByName(keysearch);
+        setList(data.data);
+        setLoading(false);
     };
     useEffect(() => {
         getAllNcc();
     }, []);
     const onChange = (value) => console.log(value);
 
-    const handleDelete=async (record)=>{
-        console.log('record: ', record.Tenncc);
+    const handleDelete = async (record) => {
+        console.log("record: ", record.Tenncc);
         const data = await nhaCungCapAPI.delete(record.Tenncc);
-        console.log('data: ', data.data);
+        console.log("data: ", data.data);
         if (data.data === "Have Product Belongs NhaCungCap") {
             Swal.fire({
                 icon: "error",
@@ -39,7 +51,14 @@ function NhacungcapList() {
             deleteSuccess();
             getAllNcc();
         }
-    }
+    };
+    const handleAddStore = (record) => {
+        dispatch(setDataNcc(record));
+    };
+    const handleChange = (e) => {
+        setValueSearch(e.target.value);
+    };
+
     const columns = [
         {
             title: "ID",
@@ -75,7 +94,7 @@ function NhacungcapList() {
             dataIndex: "",
             align: "center",
             render: (_, record) => (
-                <Popconfirm title="Bạn có muốn xóa?" onConfirm={() =>handleDelete(record)}>
+                <Popconfirm title="Bạn có muốn xóa?" onConfirm={() => handleDelete(record)}>
                     <Button className="bg-light">
                         <FontAwesomeIcon icon={faTrashAlt} className="text-dark" />
                     </Button>
@@ -86,10 +105,12 @@ function NhacungcapList() {
             title: "Xem",
             dataIndex: "",
             align: "center",
-            render: () => (
-                <Button className="bg-light" onClick={[]}>
-                    <FontAwesomeIcon icon={faEdit} className="text-dark" />
-                </Button>
+            render: (record) => (
+                <Link to="/nhacungcap-detail">
+                    <Button className="bg-light" onClick={() => handleAddStore(record)}>
+                        <FontAwesomeIcon icon={faEdit} className="text-dark" />
+                    </Button>
+                </Link>
             ),
         },
     ];
@@ -105,18 +126,34 @@ function NhacungcapList() {
                         <div className="d-flex justify-content-between">
                             <p className="fs-3 w-75">QUẢN LÝ NHÀ SẢN XUẤT</p>
                             <form action="" method="">
-                                <Search
-                                    placeholder="input search text"
-                                    onChange={onChange}
-                                    enterButton
-                                />
+                                <div className="d-flex">
+                                    <Input
+                                        className="mx-2"
+                                        placeholder="Nhập tìm kiếm"
+                                        value={keysearch}
+                                        onChange={handleChange}
+                                    />
+                                    <Tooltip title="search">
+                                        <Button
+                                            type="primary"
+                                            shape="circle"
+                                            icon={<SearchOutlined />}
+                                            onClick={getByName}
+                                        />
+                                    </Tooltip>
+                                </div>
                             </form>
                         </div>
                         <Link to={nhacungcapDetailPage}>
                             <Button className="mb-2">Thêm</Button>
                         </Link>
                         <br />
-                        <Table columns={columns} dataSource={listNcc} bordered={true} />
+                        <Table
+                            columns={columns}
+                            dataSource={listNcc}
+                            bordered={true}
+                            loading={loading}
+                        />
                     </div>
                 </div>
             </motion.div>

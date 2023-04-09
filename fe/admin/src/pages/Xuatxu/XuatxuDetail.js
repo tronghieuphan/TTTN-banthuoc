@@ -19,6 +19,7 @@ function XuatxuDetail(props) {
     useEffect(() => {
         setTenxx(xuatxu.Tenxx);
     }, [xuatxu]);
+
     //XỬ LÝ NHẬP LIỆU
     const handleOnChange = (e) => {
         setTenxx(e.target.value);
@@ -28,10 +29,10 @@ function XuatxuDetail(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         let obj = {
-            id:xuatxu.id,
+            id: xuatxu.id,
             Tenxx: tenxx, // biến Tenxx phải ghi đúng với phần data.Tenxx bên be
         };
-        console.log(">>>",obj)
+        console.log(">>>", obj);
         Swal.fire({
             title: "BẠN CÓ MUỐN LƯU THÔNG TIN?",
             confirmButtonText: "Lưu",
@@ -55,6 +56,7 @@ function XuatxuDetail(props) {
             }
         });
     };
+
     //RESET LẠI GIÁ TRỊ VỀ BAN ĐẦU
     const handleReset = () => {
         setTenxx("");

@@ -3,6 +3,7 @@ import SearchInput from "../Search/Search";
 import CheckOrder from "./CheckOrder";
 import Card from "./Card";
 import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 function Header() {
     return (
@@ -24,9 +25,11 @@ function Header() {
                                 <Card />
                             </div>
                             <div className="col ">
+                                <Link to="/login">
                                 <Button variant="outline-light" className="col-10 bg-btn-login">
                                     <div className="col-7 fw-bold w-100 d-block m-auto py-3 ">Đăng nhập</div>
                                 </Button>
+                                </Link>
                                
                             </div>
                         </div>

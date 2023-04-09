@@ -14,7 +14,6 @@ import { successDialog, deleteSuccess, exist } from "../../components/Dialog/Dia
 function XuatxuList() {
     const [listXx, setList] = useState([]);
     const [keysearch, setValueSearch] = useState("");
-
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const getAllXx = async () => {
@@ -41,14 +40,15 @@ function XuatxuList() {
     const handleChange = (e) => {
         setValueSearch(e.target.value);
     };
+
     const handleGetDataToCreate = (record) => {
         dispatch(setDataXX(record));
     };
 
     //XÓA
     const handleDelete = async (record) => {
+        // console.log(record)
         const data = await xuatXuAPI.delete(record.Tenxx);
-
         if (data.data === "Have Product Belongs Xuat Xu") {
             Swal.fire({
                 icon: "error",

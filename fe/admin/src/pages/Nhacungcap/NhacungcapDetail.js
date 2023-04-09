@@ -1,30 +1,73 @@
-import { Select, Input, Button } from "antd";
+import { Select, Input, Button, Form } from "antd";
 import React from "react";
 import { useState, useEffect } from "react";
 import addressAPI from "../../services/addressAPI";
 import { motion } from "framer-motion";
-
+import Swal from "sweetalert2";
+import nhaCungCapAPI from "../../services/nhaCungCapAPI";
+import { useSelector, useDispatch } from "react-redux";
+import { exist, successDialog } from "../../components/Dialog/Dialog";
+import { Link } from "react-router-dom";
+import { setDataNcc } from "../../slices/dataAdd";
 function NhacungcapDetail() {
     const [city, listCity] = useState([]);
     const [district, listDistrict] = useState([]);
     const [ward, listWard] = useState([]);
-    const init = {
-        Tenncc: "",
-        Email: "",
-        Sdt: "",
-        Phuong: "",
-        Quan: "",
-        Thanhpho: "",
-    };
-    const [values, setValues] = useState(init);
-    console.log('values: ', values);
+    const { nhacungcap } = useSelector((state) => state.dataAdd);
+    const dispatch = useDispatch();
+    const [values, setValues] = useState([]);
 
-    //XỬ LÝ THAY ĐỔI INPUT
-    const handleChangeInput = (e) => {
-        const { name, value } = e.target;
-        setValues({
-            ...values,
-            [name]: value,
+    console.log("values: ", values);
+    useEffect(() => {
+        setValues(nhacungcap);
+    }, [nhacungcap]);
+
+    const handleCreate = async (obj) => {
+        const data = await nhaCungCapAPI.create(obj);
+        if (data.data.message === "NhaCungCap Exist") {
+            exist();
+        } else if (data.data.message === "Create Successfully") {
+            successDialog();
+        }
+    };
+    //SỬA
+    const handleUpdate = async (obj) => {
+        const data = await nhaCungCapAPI.update(obj);
+        if (data.data.message === "Update NhaCungCap Successful") {
+            successDialog();
+        }
+    };
+    //RESET
+    const handleReset = () => {
+        dispatch(setDataNcc([]));
+        const obj = {
+            Tenncc: "",
+        };
+    };
+    // XỬ LÝ THÊM SỬA
+    const handleSubmit = (e) => {
+        console.log(">>>", e);
+        Swal.fire({
+            title: "BẠN CÓ MUỐN LƯU THÔNG TIN?",
+            confirmButtonText: "Lưu",
+            showCancelButton: true,
+            cancelButtonText: "Hủy",
+            customClass: {
+                title: "fs-5 text-dark",
+                confirmButton: "bg-primary shadow-none",
+                cancelButton: "bg-warning shadow-none",
+            },
+        }).then((result) => {
+            if (result.isConfirmed) {
+                //UPDATE
+                if (nhacungcap.Tenncc) {
+                    handleUpdate(e);
+                }
+                //CREATE
+                else {
+                    handleCreate(e);
+                }
+            }
         });
     };
 
@@ -81,6 +124,9 @@ function NhacungcapDetail() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0, transition: { duration: 0.8 } }}
             >
+                <Link to="/nhacungcap-list" className="m-4">
+                    <Button> Quay lại</Button>
+                </Link>
                 <div className="m-4 ">
                     <div className="bd-radius bg-content p-4 text-muted fw-bold">
                         <div className="d-flex justify-content-between">
@@ -89,135 +135,166 @@ function NhacungcapDetail() {
                         <hr className="w-100 " />
                         <br />
                         <div>
-                            <form action="" method="">
+                            <Form onFinish={handleSubmit}>
+                                {nhacungcap.Tenncc ? (
+                                    <Form.Item label="ID" name="id" initialValue={nhacungcap.id}>
+                                        <Input disabled />
+                                    </Form.Item>
+                                ) : (
+                                    ""
+                                )}
                                 <div className="d-flex flex-wrap justify-content-between">
                                     <div className="justify-content-center w-30 ">
-                                        <label className="m-1 w-33">Tên nhà cung cấp:</label>
-                                        <Input
-                                            className="m-1 w-100"
-                                            id="outlined-basic"
+                                        <Form.Item
+                                            className="m-1 w-33"
                                             label="Tên nhà cung cấp"
-                                            variant="outlined"
                                             name="Tenncc"
-                                            onChange={handleChangeInput}
-                                            value={values.Tenncc}
-                                        />
+                                            initialValue={nhacungcap.Tenncc}
+                                        >
+                                            <Input
+                                                className="m-1 w-100"
+                                                id="outlined-basic"
+                                                variant="outlined"
+                                            />
+                                        </Form.Item>
                                     </div>
                                     <div className="justify-content-center w-30 ">
-                                        <label className="m-1 w-33">Email:</label>
-                                        <Input
-                                            className="m-1 w-100"
-                                            id="outlined-basic"
-                                            label="Email"
-                                            type="text"
+                                        <Form.Item
+                                            className="m-1 w-33"
                                             name="Email"
-                                            variant="outlined"
-                                            onChange={handleChangeInput}
-                                            value={values.Email}
-                                        />
+                                            label="Email"
+                                            initialValue={nhacungcap.Email}
+                                        >
+                                            <Input
+                                                className="m-1 w-100"
+                                                id="outlined-basic"
+                                                type="text"
+                                                name="Email"
+                                                variant="outlined"
+                                            />
+                                        </Form.Item>
                                     </div>
                                     <div className="justify-content-center w-30 ">
-                                        <label className="m-1 w-33">Số điện thoại:</label>
-                                        <Input
-                                            className="m-1 w-100"
-                                            id="outlined-basic"
-                                            label="Số điện thoại"
-                                            type="tel"
+                                        <Form.Item
+                                            className="m-1 w-33"
                                             name="Sdt"
-                                            onChange={handleChangeInput}
-                                            variant="outlined"
-                                            value={values.Sdt}
-                                        />
+                                            label="Số điện thoại"
+                                            initialValue={nhacungcap.Sdt}
+                                        >
+                                            <Input
+                                                className="m-1 w-100"
+                                                id="outlined-basic"
+                                                type="tel"
+                                                name="Sdt"
+                                                variant="outlined"
+                                            />
+                                        </Form.Item>
                                     </div>
                                     <div className="justify-content-center w-30">
-                                        <label className="m-2 w-33">Phường/Xã:</label>
-                                        <Select
-                                            className="m-2 w-100"
-                                            showSearch
-                                            style={{
-                                                width: 160,
-                                            }}
-                                            id="Phuong"
-                                            placeholder="Chọn phường, xã"
-                                            optionFilterProp="children"
-                                            onChange={(e) => onChange(e)}
-                                            onSearch={onSearch}
-                                            filterOption={(input, option) =>
-                                                (option?.label ?? "")
-                                                    .toLowerCase()
-                                                    .includes(input.toLowerCase())
-                                            }
-                                            options={arrayward.map((item) => ({
-                                                value: item,
-                                                label: item,
-                                            }))}
-                                        />
+                                        <Form.Item
+                                            className="m-2 w-33"
+                                            name="Phuong"
+                                            label="Phường/xã"
+                                            initialValue={nhacungcap.Phuong}
+                                        >
+                                            <Select
+                                                className="w-100"
+                                                showSearch
+                                                style={{
+                                                    width: 160,
+                                                }}
+                                                placeholder="Chọn phường, xã"
+                                                optionFilterProp="children"
+                                                onChange={(e) => onChange(e)}
+                                                onSearch={onSearch}
+                                                filterOption={(input, option) =>
+                                                    (option?.label ?? "")
+                                                        .toLowerCase()
+                                                        .includes(input.toLowerCase())
+                                                }
+                                                options={arrayward.map((item) => ({
+                                                    value: item,
+                                                    label: item,
+                                                }))}
+                                            />
+                                        </Form.Item>
                                     </div>
                                     <div className="justify-content-center w-30">
-                                        <label className="m-2 w-33">Quận/Huyện:</label>
-                                        <Select
-                                            className="m-2 w-100"
-                                            showSearch
-                                            style={{
-                                                width: 160,
-                                            }}
-                                            id="Quan"
-                                            placeholder="Chọn quận, huyện"
-                                            optionFilterProp="children"
-                                            onChange={onChange}
-                                            onSearch={onSearch}
-                                            filterOption={(input, option) =>
-                                                (option?.label ?? "")
-                                                    .toLowerCase()
-                                                    .includes(input.toLowerCase())
-                                            }
-                                            options={arraydistrict.map((item) => ({
-                                                value: item,
-                                                label: item,
-                                            }))}
-                                        />
+                                        <Form.Item
+                                            className="m-2 w-33"
+                                            name="Quan"
+                                            label="Quan/huyện"
+                                            initialValue={nhacungcap.Quan}
+                                        >
+                                            <Select
+                                                className="w-100"
+                                                showSearch
+                                                style={{
+                                                    width: 160,
+                                                }}
+                                                placeholder="Chọn quận, huyện"
+                                                optionFilterProp="children"
+                                                onChange={onChange}
+                                                onSearch={onSearch}
+                                                filterOption={(input, option) =>
+                                                    (option?.label ?? "")
+                                                        .toLowerCase()
+                                                        .includes(input.toLowerCase())
+                                                }
+                                                options={arraydistrict.map((item) => ({
+                                                    value: item,
+                                                    label: item,
+                                                }))}
+                                            />
+                                        </Form.Item>
                                     </div>
                                     <div className="justify-content-center w-30">
-                                        <label className="m-2 w-33">Thành phố/Tỉnh:</label>
-                                        <Select
-                                            className="m-2 w-100"
-                                            showSearch
-                                            style={{
-                                                width: 160,
-                                            }}
-                                            id="Thanhpho"
-                                            placeholder="Chọn thành phố, tỉnh"
-                                            optionFilterProp="children"
-                                            onChange={onChange}
-                                            onSearch={onSearch}
-                                            filterOption={(input, option) =>
-                                                (option?.label ?? "")
-                                                    .toLowerCase()
-                                                    .includes(input.toLowerCase())
-                                            }
-                                            options={arraycity.map((item) => ({
-                                                value: item,
-                                                label: item,
-                                            }))}
-                                        />
+                                        <Form.Item
+                                            className="m-2 w-33"
+                                            name="Thanhpho"
+                                            label="Thành phố/tỉnh"
+                                            initialValue={nhacungcap.Thanhpho}
+                                        >
+                                            <Select
+                                                className="w-100"
+                                                showSearch
+                                                style={{
+                                                    width: 160,
+                                                }}
+                                                placeholder="Chọn thành phố, tỉnh"
+                                                optionFilterProp="children"
+                                                onChange={onChange}
+                                                onSearch={onSearch}
+                                                filterOption={(input, option) =>
+                                                    (option?.label ?? "")
+                                                        .toLowerCase()
+                                                        .includes(input.toLowerCase())
+                                                }
+                                                options={arraycity.map((item) => ({
+                                                    value: item,
+                                                    label: item,
+                                                }))}
+                                            />
+                                        </Form.Item>
                                     </div>
                                 </div>
-                                <button
-                                    type="submit"
-                                    className="mx-2"
-                                    style={{
-                                        background: "#1677FF",
-                                        color: "#fff",
-                                        border: "1px solid #1677FF",
-                                        padding: "3px 15px",
-                                        borderRadius: "5px",
-                                    }}
-                                >
-                                    Lưu
-                                </button>
-
-                                <Button type="primary">Hủy</Button>
-                            </form>
+                                <div className="d-flex m-3 w-100 justify-content-center">
+                                    <Form.Item>
+                                        <Button type="primary" htmlType="submit" className="m-2">
+                                            Lưu
+                                        </Button>
+                                    </Form.Item>
+                                    <Form.Item>
+                                        <Button
+                                            type="primary"
+                                            className="m-2"
+                                            onClick={handleReset}
+                                        >
+                                            Hủy
+                                        </Button>
+                                    </Form.Item>
+                                </div>
+                            </Form>
                         </div>
                     </div>
                 </div>

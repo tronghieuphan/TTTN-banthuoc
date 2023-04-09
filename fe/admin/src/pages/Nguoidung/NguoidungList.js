@@ -1,18 +1,24 @@
 import { Table, Button, Popconfirm } from "antd";
 import Search from "antd/es/transfer/search";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import nguoiDungAPI from "../../services/nguoiDungAPI";
 import { motion } from "framer-motion";
+import { useDispatch } from "react-redux";
+import { setDataNd } from "../../slices/dataAdd";
 function NguoidungList() {
     const [listNd, setList] = useState([]);
     const nguoidungDetailPage = "/nguoidung-detail";
+    const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch();
     const getAllNd = async () => {
         try {
+            setLoading(true);
             const response = await nguoiDungAPI.getAll();
             setList(response.data);
+            setLoading(false);
         } catch (err) {
             throw new Error(err);
         }
@@ -21,7 +27,10 @@ function NguoidungList() {
         getAllNd();
     }, []);
     const onChange = (value) => console.log(value);
-
+    const handleAddStore = (record) => {
+        console.log(record);
+        dispatch(setDataNd(record));
+    };
     const columns = [
         {
             title: "ID",
@@ -77,27 +86,16 @@ function NguoidungList() {
             dataIndex: "Loaind",
         },
         {
-            title: "Xóa",
-            dataIndex: "",
-            align: "center",
-            fixed: "right",
-            render: (_, record) => (
-                <Popconfirm title="Bạn có muốn xóa?" onConfirm={() => console.log(record)}>
-                    <Button className="bg-light">
-                        <FontAwesomeIcon icon={faTrashAlt} className="text-dark" />
-                    </Button>
-                </Popconfirm>
-            ),
-        },
-        {
             title: "Xem",
             dataIndex: "",
             align: "center",
             fixed: "right",
-            render: () => (
-                <Button className="bg-light" onClick={[]}>
-                    <FontAwesomeIcon icon={faEdit} className="text-dark" />
-                </Button>
+            render: (record) => (
+                <Link to="/nguoidung-detail">
+                    <Button className="bg-light" onClick={() => handleAddStore(record)}>
+                        <FontAwesomeIcon icon={faEdit} className="text-dark" />
+                    </Button>
+                </Link>
             ),
         },
     ];
@@ -120,7 +118,7 @@ function NguoidungList() {
                                 />
                             </form>
                         </div>
-                        <Link to={nguoidungDetailPage}>
+                        <Link to="/nguoidung-detail">
                             <Button className="mb-2">Thêm</Button>
                         </Link>
                         <br />
@@ -129,6 +127,7 @@ function NguoidungList() {
                             dataSource={listNd}
                             bordered={true}
                             scroll={{ x: true }}
+                            loading={loading}
                         />
                     </div>
                 </div>

@@ -83,6 +83,7 @@ let deleteNhaCungCap = async (tenncc) => {
 let updateNhaCungCap = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
+           
             let findNhaCungCap = await db.nhaCungCap.findOne({
                 where: {
                     id: data.id,
