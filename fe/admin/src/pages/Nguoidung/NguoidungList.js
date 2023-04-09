@@ -1,5 +1,6 @@
-import { Table, Button, Popconfirm } from "antd";
-import Search from "antd/es/transfer/search";
+import { Table, Button, Input, Tooltip } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
@@ -8,11 +9,13 @@ import nguoiDungAPI from "../../services/nguoiDungAPI";
 import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
 import { setDataNd } from "../../slices/dataAdd";
+import nhaCungCapAPI from "../../services/nhaCungCapAPI";
 function NguoidungList() {
     const [listNd, setList] = useState([]);
-    const nguoidungDetailPage = "/nguoidung-detail";
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
+    const [keysearch, setValueSearch] = useState("");
+
     const getAllNd = async () => {
         try {
             setLoading(true);
@@ -30,6 +33,19 @@ function NguoidungList() {
     const handleAddStore = (record) => {
         console.log(record);
         dispatch(setDataNd(record));
+    };
+    const getByName = async () => {
+        setLoading(true);
+        const data = await nguoiDungAPI.getByName(keysearch);
+        console.log('keysearch: ', keysearch);
+           console.log('data.data: ', data.data);
+        setList(data.data);
+     
+        setLoading(false);
+    };
+    const handleChange = (e) => {
+        setValueSearch(e.target.value);
+        
     };
     const columns = [
         {
@@ -109,13 +125,26 @@ function NguoidungList() {
                 <div className="m-4 ">
                     <div className="bd-radius bg-content p-4 text-muted fw-bold">
                         <div className="d-flex justify-content-between">
-                            <p className="fs-3 w-75">QUẢN LÝ NGƯỜI DÙNG</p>
+                            <p className="fs-3" style={{width:"30%"}}>QUẢN LÝ NGƯỜI DÙNG</p>
                             <form action="" method="">
-                                <Search
-                                    placeholder="input search text"
-                                    onChange={onChange}
-                                    enterButton
-                                />
+                                <div className="d-flex">
+                                    <p className="fst-italic fw-lighter">Mình có thể tìm theo tên hoặc theo số điện thoại (*)</p>
+                                    <Input
+                                        className="mx-2"
+                                        placeholder="Nhập tìm kiếm"
+                                        value={keysearch}
+                                        onChange={handleChange}
+                                    />
+                                    <Tooltip title="search">
+                                        <Button
+                                            type="primary"
+                                            shape="circle"
+                                            icon={<SearchOutlined />}
+                                            onClick={getByName}
+                                            style={{marginTop:"12px"}}
+                                        />
+                                    </Tooltip>
+                                </div>
                             </form>
                         </div>
                         <Link to="/nguoidung-detail">

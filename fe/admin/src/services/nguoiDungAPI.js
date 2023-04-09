@@ -7,7 +7,7 @@ const nguoiDungAPI = {
         return axios.get(`http://localhost:9000/getall-nguoidung`);
     },
     getByName: (nguoidung_name) => {
-        return axios.get(`http://localhost:9000/getbyName-nguoidung?datafind=${nguoidung_name}`);
+        return axios.get(`http://localhost:9000/find-nguoidung?datafind=${nguoidung_name}`);
     },
     create: (obj) => {
         return axios.post(`http://localhost:9000/create-nguoidung-admin`, obj);
