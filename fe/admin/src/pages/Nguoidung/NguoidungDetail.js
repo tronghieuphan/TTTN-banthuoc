@@ -229,7 +229,7 @@ function NguoidungDetail() {
                                             className="m-1 w-33"
                                             name="Gioitinh"
                                             label="Giới tính"
-                                            initialValue={nguoidung.Gioitinh === 1 ? "Nữ" : "Nam"}
+                                            initialValue={nguoidung.Gioitinh === true ? "Nữ" : "Nam"}
                                         >
                                             <Select
                                                 className="m-1 w-100"

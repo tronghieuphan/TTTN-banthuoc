@@ -9,6 +9,7 @@ import HinhanhList from "../pages/Hinhanh/HinhanhList";
 import LoginPage from "../pages/FormLogin/LoginPage";
 import NguoidungList from "../pages/Nguoidung/NguoidungList";
 import NguoidungDetail from "../pages/Nguoidung/NguoidungDetail";
+import SanphamDetail from "../pages/SanPham/SanphamDetail";
 
 
 const PageWeb = [
@@ -66,7 +67,11 @@ const PageWeb = [
         page: HinhanhList,
         isMainLayout: true
     },
-    
+    {
+        path: '/sanpham-detail',
+        page: SanphamDetail,
+        isMainLayout: true
+    },
 ]
 
 export default PageWeb
