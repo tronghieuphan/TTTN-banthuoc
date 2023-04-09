@@ -2,84 +2,87 @@ import { Table, Button, Popconfirm, Tooltip, Input } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
-import { setDataXX } from "../../slices/xuatxudanhmucSlice";
-import XuatxuDetail from "./XuatxuDetail";
-import xuatXuAPI from "../../services/xuatXuAPI";
-import Swal from "sweetalert2";
+import { setDataTH } from "../../slices/thuonghieudanhmucSlice";
+import thuonghieuAPI from "../../services/thuonghieuAPI";
+import ThuonghieuDetail from "./ThuonghieuDetail";
+import { motion } from "framer-motion";
 import { SearchOutlined } from "@ant-design/icons";
+
+import Swal from "sweetalert2";
 import { successDialog, deleteSuccess, exist } from "../../components/Dialog/Dialog";
 
-function XuatxuList() {
+function ThuonghieuList() {
+    const [listTh, setList] = useState([]);
     
-    const [listXx, setList] = useState([]);
     const [keysearch, setValueSearch] = useState("");
+
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
-    const getAllXx = async () => {
+  
+    const getAllTh = async () => {
         try {
             setLoading(true);
-            const response = await xuatXuAPI.getAll();
+            const response = await thuonghieuAPI.getAll();
             setList(response.data);
             setLoading(false);
         } catch (err) {
             throw new Error(err);
         }
     };
+    //xulytim
     const getByName = async () => {
         setLoading(true);
-        const data = await xuatXuAPI.getByName(keysearch);
+        const data = await thuonghieuAPI.getByName(keysearch);
         setList(data.data);
         setLoading(false);
     };
-
     useEffect(() => {
-        getAllXx();
+        getAllTh();
     }, []);
-
     const handleChange = (e) => {
         setValueSearch(e.target.value);
     };
-
     const handleGetDataToCreate = (record) => {
-        dispatch(setDataXX(record));
+        dispatch(setDataTH(record));
     };
+    console.log("listth: ", listTh);
 
-    //XÓA
-    const handleDelete = async (record) => {
-        // console.log(record)
-        const data = await xuatXuAPI.delete(record.Tenxx);
-        if (data.data === "Have Product Belongs Xuat Xu") {
-            Swal.fire({
-                icon: "error",
-                text: "Xuất xứ đang có sản phẩm!",
-            });
-        } else {
-            deleteSuccess();
-            getAllXx();
-        }
-    };
-    //THÊM
-    const handleCreate = async (obj) => {
-        const data = await xuatXuAPI.create(obj);
-        if (data.data.message === "Xuatxu Exist") {
-            exist();
-        } else if (data.data.message === "Create Successfully") {
-            successDialog();
-            getAllXx();
-        }
-    };
-    //SỬA
-    const handleUpdate = async (obj) => {
-        const data = await xuatXuAPI.update(obj);
-        if (data.data.message === "Update XuatXu Successful") {
-            successDialog();
-            getAllXx();
-        }
-    };
 
-    //ĐỊNH DẠNG TABLE
+
+  //XỬ LÝ DELETE
+  const handleDelete = async (record) => {
+    
+    const data = await thuonghieuAPI.delete(record.Tenth);
+    console.log(data);
+    if (data.data === "Have Product Belongs Thuong hieu") {
+        Swal.fire({
+            icon: "error",
+            text: "Thương hiệu đang có sản phẩm!",
+        });
+    } else {
+        deleteSuccess();
+        getAllTh();
+    }
+};
+ //THÊM
+ const handleCreate = async (obj) => {
+    const data = await thuonghieuAPI.create(obj);
+    if (data.data.message === "Thuonghieu Exist") {
+        exist();
+    } else if (data.data.message === "Create Successfully") {
+        successDialog();
+        getAllTh();
+    }
+};
+//SỬA
+const handleUpdate = async (obj) => {
+    const data = await thuonghieuAPI.update(obj);
+    if (data.data.message === "Update ThuongHieu Successful") {
+        successDialog();
+        getAllTh();
+    }
+};
     const columns = [
         {
             title: "ID",
@@ -87,10 +90,12 @@ function XuatxuList() {
             align: "center",
         },
         {
-            title: "Tên xuất xứ",
-            dataIndex: "Tenxx",
+            title: "Tên Thương hiệu",
+            dataIndex: "Tenth",
         },
+        
         {
+            
             title: "Xóa",
             dataIndex: "",
             align: "center",
@@ -117,16 +122,14 @@ function XuatxuList() {
     return (
         <>
             <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0, transition: { duration: 0.8 } }}
-            >
+                initial={{ opacity:0 }}
+                animate={{ opacity:1 }}
+                exit={{opacity:0 , transition: {duration:0.8} }}  >
                 <div className="m-4 ">
                     <div className="bd-radius bg-content p-4 text-muted fw-bold">
                         <div className="d-flex justify-content-between">
-                            <p className="fs-3 w-75">QUẢN LÝ XUẤT XỨ</p>
-                            <form action="" method="">
-                                <div className="d-flex">
+                            <p className="fs-3 w-75">QUẢN LÝ THƯƠNG HIỆU</p>
+                            <div className="d-flex">
                                     <Input
                                         className="mx-2"
                                         placeholder="Nhập tìm kiếm"
@@ -142,23 +145,20 @@ function XuatxuList() {
                                         />
                                     </Tooltip>
                                 </div>
-                            </form>
                         </div>
                         <br />
-
                         <div className="row">
                             <div className="col-md-7">
-                                <Table
-                                    columns={columns}
-                                    dataSource={listXx}
-                                    bordered={true}
-                                    loading={loading}
+                                <Table columns={columns}
+                                 dataSource={listTh}
+                                  bordered={true}
+                                  loading={loading}
                                 />
                             </div>
                             <div className="col-md-5">
-                                <XuatxuDetail
-                                    handleCreate={handleCreate}
-                                    handleUpdate={handleUpdate}
+                                <ThuonghieuDetail 
+                                handleCreate={handleCreate}
+                                handleUpdate={handleUpdate}
                                 />
                             </div>
                         </div>
@@ -169,4 +169,4 @@ function XuatxuList() {
     );
 }
 
-export default XuatxuList;
+export default ThuonghieuList;

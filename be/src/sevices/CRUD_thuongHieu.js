@@ -55,12 +55,22 @@ let deleteThuongHieu = async (tenth) => {
                     Tenth: tenth,
                 },
             });
-            if (tenth_delete) {
-                await tenth_delete.destroy();
-                resolve("Delete Successful");
+            let sanpham = await db.sanPham.findAll({
+                where: {
+                    Math: tenth_delete.id,
+                },
+            });
+            if (sanpham.length > 0) {
+                resolve("Have Product Belongs Thuong hieu");
             } else {
-                resolve("Thuonghieu not exist");
-            }
+                if (tenth_delete) {
+                    await tenth_delete.destroy();
+                    resolve("Delete Successful");
+                } else {
+                    resolve("Thuonghieu not exist");
+                }
+             }
+            
         } catch (e) {
             reject(e);
         }

@@ -53,8 +53,7 @@ let deleteHinhAnh = async (url) => {
                 where: {
                     Url: url,
                 },
-            });
-
+            })
             if (url_delete) {
                 await url_delete.destroy();
                 resolve("Delete Successful");
