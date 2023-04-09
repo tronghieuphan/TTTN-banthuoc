@@ -6,6 +6,8 @@ import XuatxuList from "../pages/Xuatxu/XuatxuList";
 import LoginPage from "../pages/FormLogin/LoginPage";
 import NguoidungList from "../pages/Nguoidung/NguoidungList";
 import NguoidungDetail from "../pages/Nguoidung/NguoidungDetail";
+import KhuyenmaiList from "../pages/Khuyenmai/KhuyenmaiList";
+import LoaisanphamList from "../pages/Loaisanpham/LoaisanphamList";
 
 
 const PageWeb = [
@@ -34,8 +36,18 @@ const PageWeb = [
         isMainLayout: true
     },
     {
+        path: '/loaisanpham-list',
+        page: LoaisanphamList,
+        isMainLayout: true
+    },
+    {
         path: '/xuatxu-list',
         page: XuatxuList,
+        isMainLayout: true
+    },
+    {
+        path: '/khuyenmai-list',
+        page: KhuyenmaiList,
         isMainLayout: true
     },
     {

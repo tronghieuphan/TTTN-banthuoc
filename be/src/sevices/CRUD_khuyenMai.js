@@ -62,12 +62,23 @@ let deleteKhuyenMai = async (tenkm) => {
                     Tenkm: tenkm,
                 },
             });
-            if (tenkm_delete) {
-                await tenkm_delete.destroy();
-                resolve("Delete Successful");
+            console.log("tenkm_delete: ", tenkm_delete.id);
+            let dondathang = await db.donDatHang.findAll({
+                where: {
+                    Makm: tenkm_delete.id,
+                },
+            });
+            if (dondathang.length > 0) {
+                resolve("Mã khuyến mãi tồn tại ở đơn đặt hàng");
             } else {
-                resolve("KhuyenMai not exist");
+                if (tenkm_delete) {
+                    await tenkm_delete.destroy();
+                    resolve("Xóa thành công");
+                } else {
+                    resolve("KhuyenMai không tồn tại");
+                }
             }
+            
         } catch (e) {
             reject(e);
         }

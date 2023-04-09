@@ -59,11 +59,21 @@ let deleteLoaiSanPham = async (tenloai) => {
                     Tenloai: tenloai,
                 },
             });
-            if (tenloai_delete) {
-                await tenloai_delete.destroy();
-                resolve("Delete Successful");
+            console.log("tenloai_delete: ", tenloai_delete.id);
+            let sanpham = await db.sanPham.findAll({
+                where: {
+                    Maloai: tenloai_delete.id,
+                },
+            });
+            if (sanpham.length > 0) {
+                resolve("Loại sản phẩm tồn tại sản phẩm");
             } else {
-                resolve("LoaiSanPham not exist");
+                if (tenloai_delete) {
+                    await tenloai_delete.destroy();
+                    resolve("Xóa thành công");
+                } else {
+                    resolve("LoaiSanPham không tồn tại");
+                }
             }
         } catch (e) {
             reject(e);

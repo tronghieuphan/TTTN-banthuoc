@@ -53,12 +53,23 @@ let deleteDanhMuc = async (tendm) => {
                     Tendm: tendm,
                 },
             });
-            if (tendm_delete) {
-                await tendm_delete.destroy();
-                resolve("Delete Successful");
+            console.log("tendm_delete: ", tendm_delete.id);
+            let loaisanpham = await db.loaiSanPham.findAll({
+                where: {
+                    Madm: tendm_delete.id,
+                },
+            });
+            if (loaisanpham.length > 0) {
+                resolve("Danh mục tồn tại loại sản phẩm");
             } else {
-                resolve("Danhmuc not exist");
+                if (tendm_delete) {
+                    await tendm_delete.destroy();
+                    resolve("Xóa thành công");
+                } else {
+                    resolve("Danhmuc không tồn tại");
+                }
             }
+            
         } catch (e) {
             reject(e);
         }

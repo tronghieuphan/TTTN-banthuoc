@@ -32,6 +32,9 @@ function MenuBar() {
                     <NavLink className="w-85 d-block fw-bold fs-5" to="/dondathang-list">
                         Quản lý đơn đặt hàng
                     </NavLink>
+                    <NavLink className="w-85 d-block fw-bold fs-5" to="/khuyenmai-list">
+                        Quản lý khuyến mãi
+                    </NavLink>
                     <NavLink className="w-85 d-block fw-bold fs-5" to="/loaisanpham-list">
                         Quản lý loại sản phẩm
                     </NavLink>
