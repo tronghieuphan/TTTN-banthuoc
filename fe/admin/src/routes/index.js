@@ -10,7 +10,6 @@ import LoginPage from "../pages/FormLogin/LoginPage";
 import NguoidungList from "../pages/Nguoidung/NguoidungList";
 import NguoidungDetail from "../pages/Nguoidung/NguoidungDetail";
 import SanphamDetail from "../pages/SanPham/SanphamDetail";
-import LoaisanphamDetail from "../pages/Loaisanpham/Loaisanpham";
 
 const PageWeb = [
     {
