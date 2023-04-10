@@ -30,12 +30,12 @@ let createHinhAnh = async (data) => {
                 },
                 defaults: {
                     id: randomId.randomId("HA"),
-                    Masp:data.Masp
+                    Masp: data.Masp,
                 },
             });
             console.log(hinhanh);
             if (hinhanh[1]) {
-                resolve({ message: "Create Successfully",data:hinhanh[0] });
+                resolve({ message: "Create Successfully", data: hinhanh[0] });
             } else {
                 resolve({ message: "HinhAnh Exist" });
             }
@@ -53,7 +53,7 @@ let deleteHinhAnh = async (url) => {
                 where: {
                     Url: url,
                 },
-            })
+            });
             if (url_delete) {
                 await url_delete.destroy();
                 resolve("Delete Successful");
@@ -72,7 +72,7 @@ let deleteHinhAnhid = async (id) => {
                 where: {
                     id: id,
                 },
-            })
+            });
             if (id_delete) {
                 await id_delete.destroy();
                 resolve("Delete Successful");
@@ -97,19 +97,17 @@ let updateHinhAnh = async (data) => {
             if (findHinhAnh) {
                 let upha = await db.hinhAnh.update(
                     {
-                        id: data.id,
-                        Masp:data.Masp
-
+                        Url: data.Url,
+                        Masp: data.Masp,
                     },
                     {
                         where: {
-                            Url: data.Url,
-
+                            id: data.id,
                         },
                     }
                 );
                 console.log(">>>", upha);
-                resolve({message:"Update HinhAnh Successful",data:upha});
+                resolve({ message: "Update HinhAnh Successful", data: upha });
             } else {
                 resolve("HinhAnh not exist");
             }

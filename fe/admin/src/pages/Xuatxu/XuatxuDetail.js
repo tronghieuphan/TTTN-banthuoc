@@ -17,8 +17,8 @@ function XuatxuDetail(props) {
 
     //SET STORE TRUYỀN DỮ LIỆU TRỪ LIST QUA CHO DETAIL
     useEffect(() => {
-   ;     setTenxx(xuatxu.Tenxx);
-    }, [xuatxu])
+        setTenxx(xuatxu.Tenxx);
+    }, [xuatxu]);
 
     //XỬ LÝ NHẬP LIỆU
     const handleOnChange = (e) => {
@@ -62,6 +62,7 @@ function XuatxuDetail(props) {
         setTenxx("");
         dispatch(setDataXX([]));
     };
+
     return (
         <>
             <motion.div

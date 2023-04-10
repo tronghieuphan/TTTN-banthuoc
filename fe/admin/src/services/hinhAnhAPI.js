@@ -10,7 +10,7 @@ const hinhAnhAPI = {
         return axios.post(`http://localhost:9000/create-hinhAnh`, obj);
     },
     update: (obj) => {
-        return axios.put(`http://localhost:9000/update/`, obj);
+        return axios.put(`http://localhost:9000/update-hinhanh`, obj);
     },
     // delete: (hinhAnh_url) => {
     //     return axios.delete(`http://localhost:9000/delete-hinhAnh/${hinhAnh_url}`);

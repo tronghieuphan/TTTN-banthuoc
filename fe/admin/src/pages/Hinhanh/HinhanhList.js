@@ -2,15 +2,13 @@ import { Table, Button, Popconfirm } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
- import hinhAnhAPI from "../../services/hinhAnhAPI";
- import HinhanhDetail from "./HinhanhDetail";
+import hinhAnhAPI from "../../services/hinhAnhAPI";
+import HinhanhDetail from "./HinhanhDetail";
 import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
-// import Swal from "sweetalert2";
-import { setDataHA } from "../../slices/hinhanhdanhmucSlice";
 import { successDialog, deleteSuccess, exist } from "../../components/Dialog/Dialog";
-
-function HinhanhList() {
+import { setDataHa } from "../../slices/dataAdd";
+    function HinhanhList() {
     const [listHa, setList] = useState([]);
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
@@ -27,20 +25,14 @@ function HinhanhList() {
     useEffect(() => {
         getAllHa();
     }, []);
-    console.log("listHa: ", listHa);
 
-
-
-    const handleGetDataToCreate = (record) => {
-        console.log(record);
-        dispatch(setDataHA(record));
+    const handleAddStore = (record) => {
+        dispatch(setDataHa(record));
     };
 
     // dellete
     const handleDelete = async (record) => {
-       
         const data = await hinhAnhAPI.delete(record.id);
-            console.log(record.id);
         if (data.data === "Delete Successful") {
             deleteSuccess();
             getAllHa();
@@ -59,7 +51,7 @@ function HinhanhList() {
     //SỬA
     const handleUpdate = async (obj) => {
         const data = await hinhAnhAPI.update(obj);
-        if (data.data === "Delete Successful") {
+        if (data.data.message === "Update HinhAnh Successful") {
             successDialog();
             getAllHa();
         }
@@ -96,7 +88,7 @@ function HinhanhList() {
             dataIndex: "",
             align: "center",
             render: (record) => (
-                <Button className="bg-light" onClick={() => handleGetDataToCreate(record)}>
+                <Button className="bg-light" onClick={() => handleAddStore(record)}>
                     <FontAwesomeIcon icon={faEdit} className="text-dark" />
                 </Button>
             ),
@@ -105,32 +97,32 @@ function HinhanhList() {
     return (
         <>
             <motion.div
-                initial={{ opacity:0 }}
-                animate={{ opacity:1 }}
-                exit={{opacity:0 , transition: {duration:0.8} }}  >
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0, transition: { duration: 0.8 } }}
+            >
                 <div className="m-4 ">
                     <div className="bd-radius bg-content p-4 text-muted fw-bold">
                         <div className="d-flex justify-content-between">
                             <p className="fs-3 w-75">QUẢN LÝ HÌNH ẢNH</p>
-                           
                         </div>
                         <br />
                         <div className="row">
                             <div className="col-md-7">
-                                <Table columns={columns} 
-                                dataSource={listHa} 
-                                bordered={true} 
-                                loading={loading}
+                                <Table
+                                    columns={columns}
+                                    dataSource={listHa}
+                                    bordered={true}
+                                    loading={loading}
                                 />
                             </div>
                             <div className="col-md-5">
-                                < HinhanhDetail
-                                handleCreate={handleCreate}
-                                handleUpdate={handleUpdate}
+                                <HinhanhDetail
+                                    handleCreate={handleCreate}
+                                    handleUpdate={handleUpdate}
                                 />
                             </div>
                         </div>
-                        
                     </div>
                 </div>
             </motion.div>

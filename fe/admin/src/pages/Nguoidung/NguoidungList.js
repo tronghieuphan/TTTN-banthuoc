@@ -1,6 +1,5 @@
 import { Table, Button, Input, Tooltip } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
@@ -9,12 +8,13 @@ import nguoiDungAPI from "../../services/nguoiDungAPI";
 import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
 import { setDataNd } from "../../slices/dataAdd";
-import nhaCungCapAPI from "../../services/nhaCungCapAPI";
+import address from "../../services/addressAPI";
 function NguoidungList() {
     const [listNd, setList] = useState([]);
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
     const [keysearch, setValueSearch] = useState("");
+    const [city, listCity] = useState([]);
 
     const getAllNd = async () => {
         try {
@@ -26,12 +26,25 @@ function NguoidungList() {
             throw new Error(err);
         }
     };
+
     useEffect(() => {
         getAllNd();
     }, []);
+    const getAllCity = async () => {
+        try {
+            const response = await address.getAll_Province();
+            listCity(response.data);
+        } catch (err) {
+            throw new Error(err);
+        }
+    };
+    useEffect(() => {
+        getAllCity();
+    }, []);
+    let arraycity = [];
+    city.map((values, index) => arraycity.push({ name: values.name, code: values.code }));
     const onChange = (value) => console.log(value);
     const handleAddStore = (record) => {
-        console.log(record);
         dispatch(setDataNd(record));
     };
     const getByName = async () => {
@@ -46,6 +59,7 @@ function NguoidungList() {
     const handleChange = (e) => {
         setValueSearch(e.target.value);
     };
+
     const columns = [
         {
             title: "ID",

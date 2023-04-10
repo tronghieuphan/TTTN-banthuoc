@@ -1,173 +1,133 @@
-import { Input, Button } from "antd";
+import { Input, Button, Form, Select } from "antd";
 import { useEffect, useState } from "react";
 // import { useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import sanPhamAPI from "../../services/sanPhamAPI";
 import React from "react";
-import { setDataHA } from "../../slices/hinhanhdanhmucSlice";
 import Swal from "sweetalert2";
 
 function HinhanhDetail(props) {
-  const handleCreate = props.handleCreate;
-  const handleUpdate = props.handleUpdate;
+    const handleCreate = props.handleCreate;
+    const handleUpdate = props.handleUpdate;
 
-  const { hinhanh } = useSelector((state) => state.hadm);
-  
-  const dispatch = useDispatch();
-  //SET GIÁ TRỊ CHO BIẾN
-  const [url, setUrl] = useState("");
-  const [masp, setMasp] = useState("");
+    const { hinhanh } = useSelector((state) => state.dataAdd);
 
-  // useEffect(() => {}, [hinhanh]);
+    const [sanphamList, setSanphamList] = useState([]);
 
-  // TẠO STATE CHO CÁC THÔNG TIN
-  const initialValues = {
-    id: hinhanh ? hinhanh.id : "",
-    url: hinhanh ? hinhanh.url : "",
-    Masp: hinhanh ? hinhanh.Masp : "",
-  };
-
-  const [values, setValues] = useState(initialValues);
-  const [sanphamList, setSanphamList] = useState([]);
-
-  useEffect(() => {
     const getAllSp = async () => {
-      const res = await sanPhamAPI.getAll();
-      setSanphamList(res.data);
+        const res = await sanPhamAPI.getAll();
+        setSanphamList(res.data);
     };
-    setUrl(hinhanh.Url);
-    setMasp(hinhanh.Tensp);
-    getAllSp();
-  }, [hinhanh]);
-  //Xử lý nhập liệu url
-  const handleOnChange = (e) => {
-    setUrl(e.target.value);
-  };
-
-  //XỬ LÝ THAY ĐỔI SP
-  const handleChangeSP = (e) => {
-    const { id, name } = e.target;
-    const index = e.target.selectedIndex;
-    const el = e.target.childNodes[index];
-
-    setValues({
-      ...values,
-      [id]: el.getAttribute("id"),
-      [name]: el.getAttribute("value"),
-    });
-  };
-
-   // XỬ LÝ THÊM SỬA
-   const handleSubmit = (e) => {
-    e.preventDefault();
-    let obj = {
-        id: hinhanh.id,
-        Url: url,
-        Masp:values.Masp,
+    useEffect(() => {
+        getAllSp();
+    }, []);
+    let listSp = [];
+    sanphamList.map((values, index) => listSp.push({ id: values.id, Tensp: values.Tensp }));
+    //XỬ LÝ THAY ĐỔI SP
+    const onChange = (value) => {
+        console.log(`selected ${value}`);
     };
-    console.log(">>>", obj);
-    Swal.fire({
-        title: "BẠN CÓ MUỐN LƯU THÔNG TIN?",
-        confirmButtonText: "Lưu",
-        showCancelButton: true,
-        cancelButtonText: "Hủy",
-        customClass: {
-            title: "fs-5 text-dark",
-            confirmButton: "bg-primary shadow-none",
-            cancelButton: "bg-warning shadow-none",
-        },
-    }).then((result) => {
-        if (result.isConfirmed) {
-            //UPDATE
-            if (hinhanh.Url) {
-                handleUpdate(obj);
+    const onSearch = (value) => {
+        console.log("search:", value);
+    };
+    // XỬ LÝ THÊM SỬA
+    const handleSubmit = (e) => {
+        console.log(">>>", e);
+        Swal.fire({
+            title: "BẠN CÓ MUỐN LƯU THÔNG TIN?",
+            confirmButtonText: "Lưu",
+            showCancelButton: true,
+            cancelButtonText: "Hủy",
+            customClass: {
+                title: "fs-5 text-dark",
+                confirmButton: "bg-primary shadow-none",
+                cancelButton: "bg-warning shadow-none",
+            },
+        }).then((result) => {
+            if (result.isConfirmed) {
+                //UPDATE
+                if (hinhanh.Url) {
+                    handleUpdate(e);
+                }
+                //CREATE
+                else {
+                    handleCreate(e);
+                }
             }
-            //CREATE
-            else {
-                handleCreate(obj);
-            }
-        }
-    });
-};
+        });
+    };
 
-  //RESET LẠI GIÁ TRỊ VỀ BAN ĐẦU
-  const handleReset = () => {
-    setUrl("");
-    setMasp("");
-    dispatch(setDataHA([]));
-  };
-
-  return (
-    <>
-      <div className="bd-radius bg-content p-4 text-muted fw-bold text-center">
-        <div>
-          <form onSubmit={handleSubmit} method="post">
-            <div className="d-flex flex-wrap justify-content-between">
-              <div className="justify-content-cen ter w-100 ">
-                <label className="m-2 w-100">Đường dẫn</label>
-                <Input
-                  className="m-1 w-100"
-                  id="inputUrl"
-                  label="Tên xuất xứ"
-                  variant="outlined"
-                  type="text"
-                  name="url"
-                  value={url || ""}
-                  onChange={handleOnChange}
-                />
-              </div>
-              <div className="justify-content-center w-60 ">
-                <label className="m-2 w-100">Mã Sản phẩm</label>
-                <select
-                  value={ values.Masp ? masp : "choose"}
-                  onChange={handleChangeSP}
-                  className="form-select"
-                  aria-label="Default select example"
-                  id="Masp"
-                  name="Masp"
-                >
-                  <option value="choose">Mã sản phẩm</option>
-                  {sanphamList.map((sanpham) => {
-                    console.log(sanpham);
-                    return (
-                      <option
-                        value={sanpham.Tensp}
-                        key={sanpham.id}
-                        id={sanpham.id}
-                      >
-                        {sanpham.Tensp}
-                      </option>
-                    );
-                  })}
-                </select>
-              </div>
-              <button
-                type="submit"
-                className="mx-2"
-                style={{
-                  background: "#1677FF",
-                  color: "#fff",
-                  border: "1px solid #1677FF",
-                  padding: "3px 15px",
-                  borderRadius: "5px",
-                }}
-              >
-                {hinhanh.Url ? "Lưu" : "Thêm"}
-              </button>
-              <Button
-                type="primary"
-                className="mx-2"
-                
-                onClick={handleReset}
-              >
-                Hủy
-              </Button>
+    return (
+        <>
+            <div className="bd-radius bg-content p-4 text-muted fw-bold text-center">
+                <div>
+                    <Form onFinish={handleSubmit}>
+                        {hinhanh.id ? (
+                            <Form.Item name="id" label="Id" initialValue={hinhanh.id}>
+                                <Input disabled/>
+                            </Form.Item>
+                        ) : (
+                            ""
+                        )}
+                        <div className="d-flex flex-wrap justify-content-between">
+                            <div className="justify-content-cen ter w-100 ">
+                                <Form.Item
+                                    className="my-2 w-100"
+                                    name="Url"
+                                    label="Đường dẫn"
+                                    initialValue={hinhanh.Url}
+                                >
+                                    <Input className=" w-100" type="text" />
+                                </Form.Item>
+                            </div>
+                            <div className="justify-content-center w-100 ">
+                                <Form.Item
+                                    className="my-2 w-33"
+                                    name="Masp"
+                                    label="Sản phẩm"
+                                    initialValue={hinhanh.Masp}
+                                >
+                                    <Select
+                                        className="w-100"
+                                        showSearch
+                                        style={{
+                                            width: 160,
+                                        }}
+                                        defaultValue=""
+                                        placeholder="Chọn sản phẩm"
+                                        optionFilterProp="children"
+                                        onChange={onChange}
+                                        onSearch={onSearch}
+                                        filterOption={(input, option) =>
+                                            (option?.label ?? "")
+                                                .toLowerCase()
+                                                .includes(input.toLowerCase())
+                                        }
+                                        options={sanphamList.map((item) => ({
+                                            value: item.id,
+                                            label: item.Tensp,
+                                        }))}
+                                    />
+                                </Form.Item>
+                            </div>
+                            <div className="d-flex w-100 justify-content-center">
+                                <Form.Item>
+                                    <Button type="primary" htmlType="submit" className="m-2">
+                                        Lưu
+                                    </Button>
+                                </Form.Item>
+                                <Form.Item>
+                                    <Button type="primary" className="m-2">
+                                        Hủy
+                                    </Button>
+                                </Form.Item>
+                            </div>
+                        </div>
+                    </Form>
+                </div>
             </div>
-          </form>
-        </div>
-      </div>
-    </>
-  );
+        </>
+    );
 }
 
 export default HinhanhDetail;
