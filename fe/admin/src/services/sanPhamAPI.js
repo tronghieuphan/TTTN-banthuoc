@@ -7,7 +7,7 @@ const sanphamAPI = {
         return axios.get(`http://localhost:9000/getall-sanpham`);
     },
     getByName: (sanpham_name) => {
-        return axios.get(`http://localhost:9000/find-sanpham?datafind=${sanpham_name}`);
+        return axios.get(`http://localhost:9000/find-sanphambyname?datafind=${sanpham_name}`);
     },
     create: (obj) => {
         return axios.post(`http://localhost:9000/create-sanpham`, obj);
