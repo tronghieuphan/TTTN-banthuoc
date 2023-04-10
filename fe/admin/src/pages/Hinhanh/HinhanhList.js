@@ -30,15 +30,19 @@ function HinhanhList() {
         getAllHa();
     }, []);
     console.log("listHa: ", listHa);
+
+
+
     const handleGetDataToCreate = (record) => {
+        console.log(record);
         dispatch(setDataHA(record));
     };
 
     //XÓA
     const handleDelete = async (record) => {
        
-        const data = await hinhAnhAPI.delete(record.Url);
-            console.log(data);
+        const data = await hinhAnhAPI.delete(record.id);
+            console.log(record.id);
         if (data.data === "Delete Successful") {
             deleteSuccess();
             getAllHa();
@@ -128,6 +132,7 @@ function HinhanhList() {
                                 />
                             </div>
                         </div>
+                        
                     </div>
                 </div>
             </motion.div>

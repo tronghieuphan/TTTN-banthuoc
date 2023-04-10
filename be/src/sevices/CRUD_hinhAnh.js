@@ -65,6 +65,25 @@ let deleteHinhAnh = async (url) => {
         }
     });
 };
+let deleteHinhAnhid = async (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let id_delete = await db.hinhAnh.findOne({
+                where: {
+                    id: id,
+                },
+            })
+            if (id_delete) {
+                await id_delete.destroy();
+                resolve("Delete Successful");
+            } else {
+                resolve("HinhAnh not exist");
+            }
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
 //Cập nhập hình ảnh
 let updateHinhAnh = async (data) => {
     return new Promise(async (resolve, reject) => {
@@ -125,4 +144,5 @@ module.exports = {
     deleteHinhAnh,
     updateHinhAnh,
     getByNameHinhAnh,
+    deleteHinhAnhid,
 };

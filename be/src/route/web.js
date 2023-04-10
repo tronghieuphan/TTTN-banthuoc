@@ -67,7 +67,8 @@ let initWebRotes = (app) => {
     router.post("/create-hinhAnh", hinhAnhController.create_hinhAnh);
     router.get("/getall-hinhAnh", hinhAnhController.getAll_hinhAnh);
     router.get("/getbyName-hinhAnh", hinhAnhController.getName_hinhAnh);
-    router.delete("/delete-hinhAnh/:url", hinhAnhController.delete_hinhAnh);
+    //router.delete("/delete-hinhAnh/:url", hinhAnhController.delete_hinhAnh);
+    router.delete("/delete-hinhAnhid/:id", hinhAnhController.delete_hinhAnhid);
     router.put("/update-hinhAnh", hinhAnhController.update_hinhAnh);
 
     //CRUD___nhaCungCap
