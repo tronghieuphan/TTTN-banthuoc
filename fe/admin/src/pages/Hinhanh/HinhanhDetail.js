@@ -36,7 +36,7 @@ function HinhanhDetail(props) {
       setSanphamList(res.data);
     };
     setUrl(hinhanh.Url);
-    setMasp(hinhanh.Masp);
+    setMasp(hinhanh.Tensp);
     getAllSp();
   }, [hinhanh]);
   //Xử lý nhập liệu url
@@ -131,11 +131,11 @@ function HinhanhDetail(props) {
                     console.log(sanpham);
                     return (
                       <option
-                        value={sanpham.id}
+                        value={sanpham.Tensp}
                         key={sanpham.id}
                         id={sanpham.id}
                       >
-                        {sanpham.id}
+                        {sanpham.Tensp}
                       </option>
                     );
                   })}

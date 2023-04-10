@@ -1,9 +1,14 @@
-import { Table, Button, Popconfirm, Tooltip } from "antd";
+import { Table, Button, Popconfirm, Tooltip, Input } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { SearchOutlined } from "@ant-design/icons";
+
 import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import sanPhamAPI from "../../services/sanPhamAPI";
 import { motion } from "framer-motion";
+import Swal from "sweetalert2";
+import { successDialog, deleteSuccess, exist } from "../../components/Dialog/Dialog";
 function SanphamList() {
     const [listSp, setList] = useState([]);
     const getAllSp = async () => {
@@ -18,6 +23,21 @@ function SanphamList() {
         getAllSp();
     }, []);
     console.log("listsp: ", listSp);
+     //XỬ LÝ DELETE
+  const handleDelete = async (record) => {
+    console.log(record);
+    const data = await sanPhamAPI.delete(record.Tensp);
+    console.log(data);
+    if (data.data === "Have Product Belongs Hinh ảnh") {
+        Swal.fire({
+            icon: "error",
+            text: "Sản phẩm chứa hình ảnh vui lòng kiểm tra lại!",
+        });
+    } else {
+        deleteSuccess();
+        getAllSp();
+    }
+};
 
     const columns = [
         {
@@ -114,22 +134,12 @@ function SanphamList() {
             dataIndex: "Mancc",
         },
         {
-            title: "Thêm",
-            align: "center",
-            fixed: "right",
-            render: () => (
-                <Button className="bg-light" onClick={() => {}}>
-                    <FontAwesomeIcon icon={faEdit} className="text-dark" />
-                </Button>
-            ),
-        },
-        {
             title: "Xóa",
             dataIndex: "",
             align: "center",
             fixed: "right",
             render: (_, record) => (
-                <Popconfirm title="Bạn có muốn xóa?" onConfirm={() => console.log(record)}>
+                <Popconfirm title="Bạn có muốn xóa?" onConfirm={() => handleDelete(record)}>
                     <Button className="bg-light">
                         <FontAwesomeIcon icon={faTrashAlt} className="text-dark" />
                     </Button>
@@ -137,16 +147,19 @@ function SanphamList() {
             ),
         },
         {
-            title: "Sửa",
-            dataIndex: "",
+            title: "Xem",
             align: "center",
             fixed: "right",
             render: () => (
-                <Button className="bg-light" onClick={[]}>
+                <Link to="/sanpham-detail">
+                    <Button className="bg-light" onClick={() => {}}>
                     <FontAwesomeIcon icon={faEdit} className="text-dark" />
                 </Button>
+                </Link>
+                
             ),
         },
+        
     ];
     return (
         <>
@@ -155,30 +168,34 @@ function SanphamList() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0, transition: { duration: 0.8 } }}
             >
+                
                 <div className="m-4 ">
                     <div className="bd-radius bg-content p-4 text-muted fw-bold">
                         <div className="d-flex justify-content-between">
                             <p className="fs-3 w-75">QUẢN LÝ SẢN PHẨM</p>
-                            {/* <form action="" method="">
+                            <form action="" method="">
                                 <div className="d-flex">
                                     <Input
                                         className="mx-2"
                                         placeholder="Nhập tìm kiếm"
-                                        value={keysearch}
-                                        onChange={handleChange}
+                                        // value={keysearch}
+                                        // onChange={handleChange}
                                     />
                                     <Tooltip title="search">
                                         <Button
                                             type="primary"
                                             shape="circle"
                                             icon={<SearchOutlined />}
-                                            onClick={getByName}
+                                            // onClick={getByName}
                                             style={{ marginTop: "12px" }}
                                         />
                                     </Tooltip>
                                 </div>
-                            </form>{" "} */}
+                            </form>{" "}
                         </div>
+                        <Link to="/sanpham-detail">
+                            <Button className="mb-2">Thêm</Button>
+                        </Link>
                         <br />
                         <Table
                             columns={columns}
@@ -186,7 +203,9 @@ function SanphamList() {
                             bordered={true}
                             scroll={{ x: true }}
                         />
+                        
                     </div>
+                    
                 </div>
             </motion.div>
         </>

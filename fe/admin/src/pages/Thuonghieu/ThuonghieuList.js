@@ -8,7 +8,6 @@ import thuonghieuAPI from "../../services/thuonghieuAPI";
 import ThuonghieuDetail from "./ThuonghieuDetail";
 import { motion } from "framer-motion";
 import { SearchOutlined } from "@ant-design/icons";
-
 import Swal from "sweetalert2";
 import { successDialog, deleteSuccess, exist } from "../../components/Dialog/Dialog";
 
