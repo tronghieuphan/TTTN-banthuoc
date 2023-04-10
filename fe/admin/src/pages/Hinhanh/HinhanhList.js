@@ -12,8 +12,6 @@ import { successDialog, deleteSuccess, exist } from "../../components/Dialog/Dia
 
 function HinhanhList() {
     const [listHa, setList] = useState([]);
-
-
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const getAllHa = async () => {
@@ -38,7 +36,7 @@ function HinhanhList() {
         dispatch(setDataHA(record));
     };
 
-    //XÓA
+    // dellete
     const handleDelete = async (record) => {
        
         const data = await hinhAnhAPI.delete(record.id);
