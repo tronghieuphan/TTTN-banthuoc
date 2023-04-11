@@ -1,5 +1,6 @@
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { Link } from 'react-router-dom';
 
 function CardProduce(props) {
     let mang=props.produce;
@@ -11,7 +12,7 @@ function CardProduce(props) {
         <Card.Text>
         
         </Card.Text>
-        <Button variant="primary">Mua ngay</Button>
+        <Link to="/produce-detail"><Button variant="primary">Mua ngay</Button></Link>
       </Card.Body>
     </Card>
   );

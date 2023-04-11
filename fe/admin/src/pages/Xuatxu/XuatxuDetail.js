@@ -2,37 +2,66 @@ import { Input, Button } from "antd";
 import { motion } from "framer-motion";
 import React from "react";
 import { useState, useEffect } from "react";
-import xuatXuAPI from "../../services/xuatXuAPI";
-import { successDialog } from "../../components/Dialog/Dialog";
-import { useSelector } from "react-redux";
-
+import { useSelector, useDispatch } from "react-redux";
+import Swal from "sweetalert2";
+import { setDataXX } from "../../slices/xuatxudanhmucSlice";
 function XuatxuDetail(props) {
-    const { xuatxu } = useSelector((state) => state.xxdm);
-    const [tenxx, setTenxx] = useState("");
-    const [listxx, setList] = useState([]);
+    //GỌI PROPS TỪ LIST
+    const handleCreate = props.handleCreate;
+    const handleUpdate = props.handleUpdate;
 
+    const { xuatxu } = useSelector((state) => state.xxdm);
+    const dispatch = useDispatch();
+    //SET GIÁ TRỊ CHO BIẾN
+    const [tenxx, setTenxx] = useState("");
+
+    //SET STORE TRUYỀN DỮ LIỆU TRỪ LIST QUA CHO DETAIL
     useEffect(() => {
         setTenxx(xuatxu.Tenxx);
     }, [xuatxu]);
+
+    //XỬ LÝ NHẬP LIỆU
     const handleOnChange = (e) => {
         setTenxx(e.target.value);
     };
-    const getAllXx = async () => {
-        try {
-            const response = await xuatXuAPI.getAll();
-            setList(response.data);
-        } catch (err) {
-            throw new Error(err);
-        }
+
+    // XỬ LÝ THÊM SỬA
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        let obj = {
+            id: xuatxu.id,
+            Tenxx: tenxx, // biến Tenxx phải ghi đúng với phần data.Tenxx bên be
+        };
+        console.log(">>>", obj);
+        Swal.fire({
+            title: "BẠN CÓ MUỐN LƯU THÔNG TIN?",
+            confirmButtonText: "Lưu",
+            showCancelButton: true,
+            cancelButtonText: "Hủy",
+            customClass: {
+                title: "fs-5 text-dark",
+                confirmButton: "bg-primary shadow-none",
+                cancelButton: "bg-warning shadow-none",
+            },
+        }).then((result) => {
+            if (result.isConfirmed) {
+                //UPDATE
+                if (xuatxu.Tenxx) {
+                    handleUpdate(obj);
+                }
+                //CREATE
+                else {
+                    handleCreate(obj);
+                }
+            }
+        });
     };
-    const handleCreate = async (e) => {
-        const response = await xuatXuAPI.create(tenxx);
-        if (response.data.message === "Create Successfully") {
-            successDialog();
-            getAllXx();
-        }
+
+    //RESET LẠI GIÁ TRỊ VỀ BAN ĐẦU
+    const handleReset = () => {
+        setTenxx("");
+        dispatch(setDataXX([]));
     };
-    
     return (
         <>
             <motion.div
@@ -42,7 +71,7 @@ function XuatxuDetail(props) {
             >
                 <div className="bd-radius bg-content p-4 text-muted fw-bold text-center">
                     <div>
-                        <form onSubmit={handleCreate} method="">
+                        <form onSubmit={handleSubmit} method="post">
                             <div className="d-flex flex-wrap justify-content-center">
                                 <div className="justify-content-center w-90 ">
                                     <label className="m-1 w-100">Tên xuất xứ:</label>
@@ -56,8 +85,22 @@ function XuatxuDetail(props) {
                                         value={tenxx || ""}
                                         onChange={handleOnChange}
                                     />
-                                    <Button className="mt-3" type="submit">
-                                        Thêm
+                                    <button
+                                        type="submit"
+                                        className="mx-2"
+                                        style={{
+                                            background: "#1677FF",
+                                            color: "#fff",
+                                            border: "1px solid #1677FF",
+                                            padding: "3px 15px",
+                                            borderRadius: "5px",
+                                        }}
+                                    >
+                                        {xuatxu.Tenxx ? "Lưu" : "Thêm"}
+                                    </button>
+
+                                    <Button type="primary" onClick={handleReset}>
+                                        Hủy
                                     </Button>
                                 </div>
                             </div>

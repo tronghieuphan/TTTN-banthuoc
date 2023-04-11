@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
             sanPham.belongsTo(models.thuongHieu, { foreignKey: "Math" });
             sanPham.belongsTo(models.nhaCungCap, { foreignKey: "Mancc" });
             sanPham.belongsToMany(models.donDatHang, { through: models.chiTietDonHang, foreignKey: "Masp" });
-            sanPham.hasMany(models.hinhAnh, { foreignKey: "Maha" });
+            sanPham.hasMany(models.hinhAnh, { foreignKey: "Masp" });
         }
     }
     sanPham.init(

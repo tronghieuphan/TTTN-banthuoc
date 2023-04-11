@@ -2,11 +2,9 @@ import { Routes, Route } from "react-router-dom";
 import PageWeb from "./routes";
 import HomePageLayout from "./layouts/HomePageLayout/index";
 import LoginRegisterLayout from "./layouts/LoginRegisterLayout/index";
-import DetailUser from "./pages/Profile/DetailUser";
 function App() {
     return (
         <>
-            <DetailUser />
             <Routes>
                 {PageWeb.map((route, index) => {
                     const Page = route.page;

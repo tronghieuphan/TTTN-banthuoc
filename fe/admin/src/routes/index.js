@@ -3,6 +3,9 @@ import NhacungcapList from "../pages/Nhacungcap/NhacungcapList";
 import NhacungcapDetail from "../pages/Nhacungcap/NhacungcapDetail";
 import DanhmucList from "../pages/Danhmuc/DanhmucList";
 import XuatxuList from "../pages/Xuatxu/XuatxuList";
+import Thuonghieulist from "../pages/Thuonghieu/ThuonghieuList";
+import SanphamList from "../pages/SanPham/SanphamList";
+import HinhanhList from "../pages/Hinhanh/HinhanhList";
 import LoginPage from "../pages/FormLogin/LoginPage";
 import NguoidungList from "../pages/Nguoidung/NguoidungList";
 import NguoidungDetail from "../pages/Nguoidung/NguoidungDetail";
@@ -58,6 +61,21 @@ const PageWeb = [
     {
         path: '/nguoidung-detail',
         page: NguoidungDetail,
+        isMainLayout: true
+    },
+    {
+        path: '/thuonghieu-list',
+        page: Thuonghieulist,
+        isMainLayout: true
+    },
+    {
+        path: '/sanpham-list',
+        page: SanphamList,
+        isMainLayout: true
+    },
+    {
+        path: '/hinhanh-list',
+        page: HinhanhList,
         isMainLayout: true
     },
     

@@ -5,10 +5,9 @@ import nguoiDungAPI from "../../services/nguoiDungAPI";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
+import { motion } from "framer-motion";
 import { login } from "../../slices/userSlice";
-import xuatXuAPI from "../../services/xuatXuAPI";
 
 function LoginPage() {
     const dispatch = useDispatch();
@@ -51,10 +50,7 @@ function LoginPage() {
             }
         }
     };
-    const handleCreate=async (obj)=>{
-        const a= await xuatXuAPI.create(obj);
-        console.log(a)
-    }
+    
     return (
         <>
             <motion.div

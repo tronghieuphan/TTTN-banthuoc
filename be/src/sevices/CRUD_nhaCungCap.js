@@ -39,7 +39,7 @@ let createNhaCungCap = async (data) => {
             });
             console.log(nhacungcap);
             if (nhacungcap[1]) {
-                resolve({ message: "Create Successfully",data:nhacungcap[0] });
+                resolve({ message: "Create Successfully", data: nhacungcap[0] });
             } else {
                 resolve({ message: "NhaCungCap Exist" });
             }
@@ -57,13 +57,22 @@ let deleteNhaCungCap = async (tenncc) => {
                 where: {
                     Tenncc: tenncc,
                 },
-            }); 
-
-            if (tenncc_delete) {
-                await tenncc_delete.destroy();
-                resolve("Delete Successful");
+            });
+            console.log("tenncc_delete: ", tenncc_delete.id);
+            let sanpham = await db.sanPham.findAll({
+                where: {
+                    Mancc: tenncc_delete.id,
+                },
+            });
+            if (sanpham.length > 0) {
+                resolve("Have Product Belongs NhaCungCap");
             } else {
-                resolve("NhaCungCap not exist");
+                if (tenncc_delete) {
+                    await tenncc_delete.destroy();
+                    resolve("Delete Successful");
+                } else {
+                    resolve("NhaCungCap not exist");
+                }
             }
         } catch (e) {
             reject(e);
@@ -74,6 +83,7 @@ let deleteNhaCungCap = async (tenncc) => {
 let updateNhaCungCap = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
+           
             let findNhaCungCap = await db.nhaCungCap.findOne({
                 where: {
                     id: data.id,
@@ -97,7 +107,7 @@ let updateNhaCungCap = async (data) => {
                     }
                 );
                 console.log(">>>", upncc);
-                resolve({message:"Update NhaCungCap Successful",data:upncc});
+                resolve({ message: "Update NhaCungCap Successful", data: upncc });
             } else {
                 resolve("NhaCungCap not exist");
             }
