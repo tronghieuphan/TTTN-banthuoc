@@ -10,6 +10,7 @@ function LoaisanphamDetail(props) {
     //GỌI PROPS TỪ LIST
     const handleCreate = props.handleCreate;
     const handleUpdate = props.handleUpdate;
+    const handleUpdate2 = props.handleUpdate;
 
     const { loaisanpham } = useSelector((state) => state.lspdm);
     const dispatch = useDispatch();
@@ -59,7 +60,7 @@ function LoaisanphamDetail(props) {
                     handleUpdate(obj);
                 }
                 if (loaisanpham.Madm) {
-                    handleUpdate(obj);
+                    handleUpdate2(obj);
                 }
                 //CREATE
                 else {

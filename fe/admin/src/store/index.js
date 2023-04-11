@@ -3,7 +3,7 @@ import menuSlice from '../slices/menuSlice';
 import userSlice from '../slices/userSlice';
 import xxdmSlice  from '../slices/xuatxudanhmucSlice';
 import thdmSlice from'../slices/thuonghieudanhmucSlice';
-import hadmSlice from'../slices/hinhanhdanhmucSlice';
+//import hadmSlice from'../slices/hinhanhdanhmucSlice';
 import dataAdd from '../slices/dataAdd';
 import lspdmSlice from'../slices/loaisanphamdanhmucSlice';
 
@@ -13,7 +13,7 @@ const rootReducer = {
     xxdm:xxdmSlice,
     dataAdd:dataAdd,
     thdm:thdmSlice,
-    hadm:hadmSlice,
+    //hadm:hadmSlice,
     lspdm:lspdmSlice,
 };
 

@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import { exist, successDialog } from "../../components/Dialog/Dialog";
 import thuonghieuAPI from "../../services/thuonghieuAPI";
 import xuatXuAPI from "../../services/xuatXuAPI";
-import loaisanPhamAPI from "../../services/loaiSanPhamAPI";
+import loaiSanPhamAPI from "../../services/loaiSanPhamAPI";
 import nhaCungCapAPI from "../../services/nhaCungCapAPI"
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -50,7 +50,7 @@ const getAllXx = async () => {
     };
     const getAllLSP = async () => {
       try {
-          const response = await loaisanPhamAPI.getAll();
+          const response = await loaiSanPhamAPI.getAll();
           setListLSP(response.data);
       } catch (err) {
           throw new Error(err);
