@@ -1,32 +1,130 @@
-import { Select, Input, Form, Button, DatePicker, Switch } from "antd";
+import { Select, Input, Form, Button } from "antd";
 import React from "react";
 import { useState, useEffect } from "react";
+import Swal from "sweetalert2";
+import { exist, successDialog } from "../../components/Dialog/Dialog";
 import thuonghieuAPI from "../../services/thuonghieuAPI";
-import XuatxuAPI from "../../services/xuatXuAPI";
-import loaisanPhamAPI from "../../services/loaisanPhamAPI";
+import xuatXuAPI from "../../services/xuatXuAPI";
+import loaiSanPhamAPI from "../../services/loaiSanPhamAPI";
 import nhaCungCapAPI from "../../services/nhaCungCapAPI"
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-
+import { useSelector, useDispatch } from "react-redux";
+import sanphamAPI from "../../services/sanPhamAPI";
+import { setDataSP } from "../../slices/dataAdd";
 function SanphamDetail() {
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
-  const [listTh, setList] = useState([]);
+
+  const [TH, setListTh] = useState([]);
+  const [XX, setListXX] = useState([]);
+  const [NCC, setListNCC] = useState([]);
+  const [LSP, setListLSP] = useState([]);
+
+   const { sanpham } = useSelector((state) => state.dataAdd);
+const dispatch =useDispatch();
   const getAllTh = async () => {
     try {
-        setLoading(true);
         const response = await thuonghieuAPI.getAll();
         console.log(response);
-        setList(response.data);
-        setLoading(false);
+        setListTh(response.data);
     } catch (err) {
         throw new Error(err);
     }
 };
+const getAllXx = async () => {
+  try {
+      const response = await xuatXuAPI.getAll();
+      setListXX(response.data);
+  } catch (err) {
+      throw new Error(err);
+  }
+};
+ const getAllNcc = async () => {
+        try {
+            const response = await nhaCungCapAPI.getAll();
+            setListNCC(response.data);
+        } catch (err) {
+            throw new Error(err);
+        }
+    };
+    const getAllLSP = async () => {
+      try {
+          const response = await loaiSanPhamAPI.getAll();
+          setListLSP(response.data);
+      } catch (err) {
+          throw new Error(err);
+      }
+  };
+
 useEffect(() => {
   getAllTh();
+  getAllXx();
+  getAllLSP();
+  getAllNcc();
+  
 }, []);
+
+
+//thêm
+const handleCreate = async (obj) => {
+  const data = await sanphamAPI.create(obj);
+  console.log(data.data);
+  if (data.data.message === "SanPham Exist") {
+      exist();
+  } else if (data.data.message === "Create Successfully") {
+      successDialog();
+  }
+};
+//SỬA
+const handleUpdate = async (obj) => {
+  const data = await sanphamAPI.update(obj);
+   console.log('data.data.message: ', data.data.message);
+  if (data.data.message === "Update SanPham Successful") {
+     
+      successDialog();
+  }
+};
+const deleteStore = ()=>
+{
+  dispatch(setDataSP([]))
+}
+const handleSubmit = (e) => {
+  console.log("obj: ", e);
+  Swal.fire({
+      title: "BẠN CÓ MUỐN LƯU THÔNG TIN?",
+      confirmButtonText: "Lưu",
+      showCancelButton: true,
+      cancelButtonText: "Hủy",
+      customClass: {
+          title: "fs-5 text-dark",
+          confirmButton: "bg-primary shadow-none",
+          cancelButton: "bg-warning shadow-none",
+      },
+  }).then((result) => {
+      if (result.isConfirmed) {
+          // UPDATE
+          if (sanpham.id) {
+              // console.log(">>>>");
+              handleUpdate(e);
+          }
+          //CREATE
+          else {
+              handleCreate(e);
+          }
+      }
+  });
+};
+
+
+    let Thuonghieu = [];
+    let Xuatxu = [];
+    let Nhacungcap = [];
+    let Loaisanpham = [];
+    TH.map((values, index) => Thuonghieu.push({ name: values.id, code: values.Tenth }));
+    NCC.map((values, index) => Nhacungcap.push({ name: values.id, code: values.Tenncc }));
+    XX.map((values, index) => Xuatxu.push({ name: values.id, code: values.Tenxx }));
+    LSP.map((values, index) => Loaisanpham.push({ name: values.id, code: values.Tenloai }));
 
   return (
     <>
@@ -36,7 +134,7 @@ useEffect(() => {
         exit={{ opacity: 0, transition: { duration: 0.8 } }}
       >
         <Link to="/sanpham-list">
-          <Button className="mx-4">Quay lại</Button>
+          <Button className="mx-4" onClick={deleteStore}>Quay lại</Button>
         </Link>
         <div className="m-4 ">
           <div className="bd-radius bg-content p-4 text-muted fw-bold">
@@ -46,21 +144,22 @@ useEffect(() => {
             <hr className="w-100 " />
             <br />
             <div>
-              <Form>
-                {/* {sanpham.Tensp ? (
-                  <Form.Item name="id" label="Id:">
-                    <Input />
+              <Form onFinish={handleSubmit}>
+                {sanpham.Tensp ? (
+                  <Form.Item name="id" label="Id:" initialValue={sanpham.id}>
+                     
+                    <Input disabled/>
                   </Form.Item>
                 ) : (
                   ""
-                )} */}
+                )}
                 <div className="d-flex flex-wrap justify-content-between">
                   <div className=" mt-4 justify-content-between w-30 ">
                     <Form.Item
                       className=" w-33"
                       name="Tensp"
                       label="Tên Sản Phẩm"
-                      //   initialValue={nguoidung.Email}
+                        initialValue={sanpham.Tensp}
                     >
                       <Input
                         className=" w-100"
@@ -72,19 +171,21 @@ useEffect(() => {
                   <div className=" mt-4 justify-content-between w-30 ">
                     <Form.Item
                       className=" w-33"
-                      name="dongia"
+                      name="Dongia"
                       label="Đơn giá"
-                      //   initialValue={nguoidung.Email}
+                      initialValue={sanpham.Dongia}
+
                     >
-                      <Input className=" w-100" label="Đơn giá" type="text" />
+                      <Input className=" w-100" type="text" />
                     </Form.Item>
                   </div>
                   <div className=" mt-4 justify-content-between w-30 ">
                     <Form.Item
                       className=" w-33"
-                      name="dvb"
+                      name="Donviban"
                       label="Đơn vị bán"
-                      //   initialValue={nguoidung.Email}
+                      initialValue={sanpham.Donviban}
+
                     >
                       <Input
                         className=" w-100"
@@ -97,9 +198,9 @@ useEffect(() => {
                   <div className=" mt-4 justify-content-between w-30 ">
                     <Form.Item
                       className=" w-33"
-                      name="dbc"
+                      name="Dangbaoche"
                       label="Dạng bào chế"
-                      //   initialValue={nguoidung.Email}
+                         initialValue={sanpham.Dangbaoche}
                     >
                       <Input
                         className=" w-100"
@@ -111,9 +212,9 @@ useEffect(() => {
                   <div className=" mt-4 justify-content-between w-30 ">
                     <Form.Item
                       className=" w-33"
-                      name="dbc"
+                      name="Quycach"
                       label="Quy cách"
-                      //   initialValue={nguoidung.Email}
+                        initialValue={sanpham.Quycach}
                     >
                       <Input className=" w-100" label="Quy cách" type="text" />
                     </Form.Item>
@@ -121,20 +222,22 @@ useEffect(() => {
                   <div className=" mt-4 justify-content-between w-30 ">
                     <Form.Item
                       className=" w-33"
-                      name="dbc"
+                      name="Congdung"
                       label="Công dụng"
-                      //   initialValue={nguoidung.Email}
+                      initialValue={sanpham.Congdung}
+
                     >
-                      <Input className=" w-100" label="Công dụng" type="text" />
+                      <Input className=" w-100" type="text" />
                     </Form.Item>
                   </div>
 
                   <div className=" mt-4 justify-content-between w-30 ">
                     <Form.Item
                       className=" w-33"
-                      name="dbc"
+                      name="Giakm"
                       label="Giá khuyến mãi"
-                      //   initialValue={nguoidung.Email}
+                      initialValue={sanpham.Giakm}
+
                     >
                       <Input
                         className=" w-100"
@@ -146,22 +249,29 @@ useEffect(() => {
                   <div className=" mt-4 justify-content-between w-30 ">
                     <Form.Item
                       className=" w-33"
-                      name="dbc"
+                      name="Soluongtk"
                       label="Số lượng"
-                      //   initialValue={nguoidung.Email}
+                      initialValue={sanpham.Soluongtk}
+
                     >
-                      <Input className=" w-100" label="Số lượng" type="text" />
+                      <Input className=" w-100" type="text" />
                     </Form.Item>
                   </div>
 
                   {/* //khoá ngoại */}
                   {/* Mã loại sp  */}
-                  <div className="justify-content-between w-30">
+                  <div className="mt-3 justify-content-between w-30">
                     <Form.Item
+<<<<<<< HEAD
                       className="my-4 w-33"
                       name="maloai"
+=======
+                      className="my-2 w-33"
+                      name="Maloai"
+>>>>>>> f09ec7031be3a4bd263053ec28691561e1a1c7ac
                       label="Loại sản phẩm"
-                      //   initialValue={nguoidung.Thanhpho}
+                      initialValue={sanpham.Maloai}
+
                     >
                       <Select
                         className="w-100"
@@ -169,29 +279,35 @@ useEffect(() => {
                         style={{
                           width: 160,
                         }}
-                        placeholder="chọn loại sản phẩm"
+                        placeholder="Chọn loại sản phẩm"
                         optionFilterProp="children"
                         // onChange={onChange}
-                        // onSearch={onSearch}
+                        //  onSearch={onSearch}
                         filterOption={(input, option) =>
                           (option?.label ?? "")
                             .toLowerCase()
                             .includes(input.toLowerCase())
                         }
-                        // options={arraycity.map((item) => ({
-                        //   value: item.code,
-                        //   label: item.name,
-                        // }))}
+                        options={Loaisanpham.map((item) => ({
+                          value: item.name,
+                          label: item.code,
+                        }))}
                       />
                     </Form.Item>
                   </div>
                   {/* Xuất Xứ */}
                   <div className="justify-content-between w-30">
                     <Form.Item
+<<<<<<< HEAD
                       className="my-4 w-33"
                       name="maxx"
+=======
+                      className="my-2 w-33"
+                      name="Maxx"
+>>>>>>> f09ec7031be3a4bd263053ec28691561e1a1c7ac
                       label="Xuất xứ"
-                      //   initialValue={nguoidung.Thanhpho}
+                      initialValue={sanpham.Maxx}
+
                     >
                       <Select
                         className="w-100"
@@ -199,7 +315,7 @@ useEffect(() => {
                         style={{
                           width: 160,
                         }}
-                        placeholder="chọn nơi xuất xứ "
+                        placeholder="Chọn nơi xuất xứ "
                         optionFilterProp="children"
                         // onChange={onChange}
                         // onSearch={onSearch}
@@ -208,20 +324,27 @@ useEffect(() => {
                             .toLowerCase()
                             .includes(input.toLowerCase())
                         }
-                        // options={arraycity.map((item) => ({
-                        //   value: item.code,
-                        //   label: item.name,
-                        // }))}
+                        options={Xuatxu.map((item) => ({
+                          value: item.name,
+                          label: item.code,
+                        }
+                        ))}
                       />
                     </Form.Item>
                   </div>
                   {/* Thương hiệu */}
                   <div className="justify-content-between w-30">
                     <Form.Item
+<<<<<<< HEAD
                       className="my-4 w-33"
                       name="maxx"
+=======
+                      className="my-2 w-33"
+                      name="Math"
+>>>>>>> f09ec7031be3a4bd263053ec28691561e1a1c7ac
                       label="Thương hiệu"
-                      initialValue={thuonghieuAPI.Thanhpho}
+                      initialValue={sanpham.Math}
+
                     >
                       <Select
                         className="w-100"
@@ -229,7 +352,7 @@ useEffect(() => {
                         style={{
                           width: 160,
                         }}
-                        placeholder="chọn thương hiệu "
+                        placeholder="Chọn thương hiệu "
                         optionFilterProp="children"
                         // onChange={onChange}
                         // onSearch={onSearch}
@@ -238,20 +361,26 @@ useEffect(() => {
                             .toLowerCase()
                             .includes(input.toLowerCase())
                         }
-                        // options={arraycity.map((item) => ({
-                        //   value: item.code,
-                        //   label: item.name,
-                        // }))}
+                        options={Thuonghieu.map((item) => ({
+                          value: item.name,
+                          label: item.code,
+                        }))}
                       />
                     </Form.Item>
                   </div>
                   {/* Nhà cung cấp */}
                   <div className="justify-content-between w-30">
                     <Form.Item
+<<<<<<< HEAD
                       className="my-4 w-33"
                       name="mancc"
+=======
+                      className="my-2 w-33"
+                      name="Mancc"
+>>>>>>> f09ec7031be3a4bd263053ec28691561e1a1c7ac
                       label="Nhà cung cấp"
-                      //   initialValue={nguoidung.Thanhpho}
+                      initialValue={sanpham.Mancc}
+
                     >
                       <Select
                         className="w-100"
@@ -268,10 +397,10 @@ useEffect(() => {
                             .toLowerCase()
                             .includes(input.toLowerCase())
                         }
-                        // options={arraycity.map((item) => ({
-                        //   value: item.code,
-                        //   label: item.name,
-                        // }))}
+                        options={Nhacungcap.map((item) => ({
+                          value: item.name,
+                          label: item.code,
+                        }))}
                       />
                     </Form.Item>
                   </div>

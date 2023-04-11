@@ -1,20 +1,27 @@
 import { Table, Button, Popconfirm, Tooltip, Input } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SearchOutlined } from "@ant-design/icons";
-
 import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import sanPhamAPI from "../../services/sanPhamAPI";
 import { motion } from "framer-motion";
+import { useDispatch } from "react-redux";
+import { setDataSP } from "../../slices/dataAdd";
 import Swal from "sweetalert2";
-import { successDialog, deleteSuccess, exist } from "../../components/Dialog/Dialog";
+import {deleteSuccess} from "../../components/Dialog/Dialog";
 function SanphamList() {
     const [listSp, setList] = useState([]);
+    const dispatch = useDispatch();
+    const [loading, setLoading] = useState(false);
+    const [keysearch, setValueSearch] = useState("");
+
     const getAllSp = async () => {
         try {
+            setLoading(true);
             const response = await sanPhamAPI.getAll();
             setList(response.data);
+            setLoading(false);
         } catch (err) {
             throw new Error(err);
         }
@@ -37,6 +44,22 @@ function SanphamList() {
         deleteSuccess();
         getAllSp();
     }
+};
+const handleAddStore = (record) => {
+    console.log(record);
+    dispatch(setDataSP(record));
+};
+const getByName = async () => {
+    setLoading(true);
+    const data = await sanPhamAPI.getByName(keysearch);
+    console.log("keysearch: ", keysearch);
+    console.log("data.data: ", data.data);
+    setList(data.data);
+
+    setLoading(false);
+};
+const handleChange = (e) => {
+    setValueSearch(e.target.value);
 };
 
     const columns = [
@@ -150,9 +173,9 @@ function SanphamList() {
             title: "Xem",
             align: "center",
             fixed: "right",
-            render: () => (
+            render: (record) => (
                 <Link to="/sanpham-detail">
-                    <Button className="bg-light" onClick={() => {}}>
+                    <Button className="bg-light" onClick={() => handleAddStore(record)}>
                     <FontAwesomeIcon icon={faEdit} className="text-dark" />
                 </Button>
                 </Link>
@@ -178,15 +201,15 @@ function SanphamList() {
                                     <Input
                                         className="mx-2"
                                         placeholder="Nhập tìm kiếm"
-                                        // value={keysearch}
-                                        // onChange={handleChange}
+                                        value={keysearch}
+                                        onChange={handleChange}
                                     />
                                     <Tooltip title="search">
                                         <Button
                                             type="primary"
                                             shape="circle"
                                             icon={<SearchOutlined />}
-                                            // onClick={getByName}
+                                            onClick={getByName}
                                             style={{ marginTop: "12px" }}
                                         />
                                     </Tooltip>
@@ -201,6 +224,7 @@ function SanphamList() {
                             columns={columns}
                             dataSource={listSp}
                             bordered={true}
+                            loading={loading}
                             scroll={{ x: true }}
                         />
                         

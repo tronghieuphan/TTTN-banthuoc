@@ -1,37 +1,46 @@
-import { Input, Button } from "antd";
+import { Input, Button, Form } from "antd";
 import { motion } from "framer-motion";
 import React from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Swal from "sweetalert2";
-import { setDataDM } from "../../slices/xuatxudanhmucSlice";
+import { setDataLSP } from "../../slices/loaisanphamdanhmucSlice";
 
-function DanhmucDetail(props) {
+function LoaisanphamDetail(props) {
     //GỌI PROPS TỪ LIST
     const handleCreate = props.handleCreate;
     const handleUpdate = props.handleUpdate;
+    const handleUpdate2 = props.handleUpdate;
 
-    const { danhmuc } = useSelector((state) => state.xxdm);
+    const { loaisanpham } = useSelector((state) => state.lspdm);
     const dispatch = useDispatch();
     //SET GIÁ TRỊ CHO BIẾN
-    const [tendm, setTendm] = useState("");
+    const [tenloai, setTenloai] = useState("");
+    const [madm, setMadm] = useState("");
+    
 
     //SET STORE TRUYỀN DỮ LIỆU TRỪ LIST QUA CHO DETAIL
     useEffect(() => {
-        setTendm(danhmuc.Tendm);
-    }, [danhmuc]);
+        setTenloai(loaisanpham.Tenloai);
+        setMadm(loaisanpham.Madm);
+    }, [loaisanpham]);
 
     //XỬ LÝ NHẬP LIỆU
     const handleOnChange = (e) => {
-        setTendm(e.target.value);
+        setTenloai(e.target.value);
     };
+    const handleOnChange2 = (e) => {
+        setMadm(e.target.value);
+    };
+    
 
     // XỬ LÝ THÊM SỬA
     const handleSubmit = (e) => {
         e.preventDefault();
         let obj = {
-            id: danhmuc.id,
-            Tendm: tendm, // biến Tendm phải ghi đúng với phần data.Tendm bên be
+            id: loaisanpham.id,
+            Tenloai: tenloai, // biến Tendm phải ghi đúng với phần data.Tenloai bên be
+            Madm: madm
         };
         console.log(">>>", obj);
         Swal.fire({
@@ -47,8 +56,11 @@ function DanhmucDetail(props) {
         }).then((result) => {
             if (result.isConfirmed) {
                 //UPDATE
-                if (danhmuc.Tendm) {
+                if (loaisanpham.Tenloai) {
                     handleUpdate(obj);
+                }
+                if (loaisanpham.Madm) {
+                    handleUpdate2(obj);
                 }
                 //CREATE
                 else {
@@ -60,8 +72,9 @@ function DanhmucDetail(props) {
 
     //RESET LẠI GIÁ TRỊ VỀ BAN ĐẦU
     const handleReset = () => {
-        setTendm("");
-        dispatch(setDataDM([]));
+        setTenloai("");
+        setMadm("");
+        dispatch(setDataLSP([]));
     };
     return (
         <>
@@ -75,18 +88,38 @@ function DanhmucDetail(props) {
                         <form onSubmit={handleSubmit} method="post">
                             <div className="d-flex flex-wrap justify-content-center">
                                 <div className="justify-content-center w-90 ">
-                                    <label className="m-1 w-100">Tên danh mục:</label>
+                                    <label className="m-1 w-100">Tên loại sản phẩm:</label>
                                     <Input
                                         className="m-1 w-100"
                                         id="outlined-basic"
                                         label="Tên loại sản phẩm"
                                         variant="outlined"
                                         type="text"
-                                        name="tendm"
-                                        value={tendm || ""}
+                                        name="tenloai"
+                                        value={tenloai || ""}
                                         onChange={handleOnChange}
                                     />
-                                    <button
+                                    <label className="m-1 w-100">Mã danh mục:</label>
+                                    <Input
+                                        className="m-1 w-100"
+                                        id="outlined-basic"
+                                        label="Mã danh mục"
+                                        variant="outlined"
+                                        type="text"
+                                        name="madm"
+                                        value={madm || ""}
+                                        onChange={handleOnChange2}
+                                    />
+                                    {/* <Form.Item
+                                        className="m-1 w-33"
+                                        name="madm"
+                                        label="Mã danh mục"
+                                        initialValue={loaisanpham.Madm}
+                                    >
+                                        <Input className="m-1 w-100" id="outlined-basic" />
+                                    </Form.Item> */}
+                                    
+                                    {/* <button
                                         type="submit"
                                         className="mx-2"
                                         style={{
@@ -97,8 +130,14 @@ function DanhmucDetail(props) {
                                             borderRadius: "5px",
                                         }}
                                     >
-                                        {danhmuc.Tendm ? "Lưu" : "Thêm"}
-                                    </button>
+                                        {loaisanpham.Tenloai  ? "Lưu" : "Thêm"}
+                                        {loaisanpham.Madm ? "Lưu" : "Thêm"}
+                                    </button> */}
+                                    <Form.Item>
+                                        <Button type="primary" htmlType="submit" className="m-2">
+                                        {loaisanpham.Tenloai  ? "Lưu" : "Thêm"}
+                                        </Button>
+                                    </Form.Item>
 
                                     <Button type="primary" onClick={handleReset}>
                                         Hủy
@@ -113,7 +152,7 @@ function DanhmucDetail(props) {
     );
 }
 
-// function DanhmucDetail() {
+// function LoaisanphamDetail(props) {
 //     return (
 //         <>
 //             <div className="bd-radius bg-content p-4 text-muted fw-bold text-center">
@@ -121,7 +160,7 @@ function DanhmucDetail(props) {
 //                     <form action="" method="">
 //                         <div className="d-flex flex-wrap justify-content-center">
 //                             <div className="justify-content-center w-90 ">
-//                                 <label className="m-1 w-100">Tên danh mục:</label>
+//                                 <label className="m-1 w-100">Tên loại sản phẩm:</label>
 //                                 <Input
 //                                     className="m-1 w-100"
 //                                     id="outlined-basic"
@@ -139,6 +178,4 @@ function DanhmucDetail(props) {
 //     );
 // }
 
-
-
-export default DanhmucDetail;
+export default LoaisanphamDetail;

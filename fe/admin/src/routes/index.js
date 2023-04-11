@@ -9,6 +9,9 @@ import HinhanhList from "../pages/Hinhanh/HinhanhList";
 import LoginPage from "../pages/FormLogin/LoginPage";
 import NguoidungList from "../pages/Nguoidung/NguoidungList";
 import NguoidungDetail from "../pages/Nguoidung/NguoidungDetail";
+import KhuyenmaiList from "../pages/Khuyenmai/KhuyenmaiList";
+import LoaisanphamList from "../pages/Loaisanpham/LoaisanphamList";
+
 import SanphamDetail from "../pages/SanPham/SanphamDetail";
 import DondathangList from "../pages/Dondathang/DondathangList";
 import DonDatHangDetail from "../pages/Dondathang/DondathangDetail";
@@ -39,12 +42,22 @@ const PageWeb = [
         isMainLayout: true,
     },
     {
-        path: "/xuatxu-list",
+        path: '/loaisanpham-list',
+        page: LoaisanphamList,
+        isMainLayout: true
+    },
+    {
+        path: '/xuatxu-list',
         page: XuatxuList,
         isMainLayout: true,
     },
     {
-        path: "/nguoidung-list",
+        path: '/khuyenmai-list',
+        page: KhuyenmaiList,
+        isMainLayout: true
+    },
+    {
+        path: '/nguoidung-list',
         page: NguoidungList,
         isMainLayout: true,
     },

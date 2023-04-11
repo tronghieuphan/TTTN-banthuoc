@@ -4,23 +4,23 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setDataDM } from "../../slices/xuatxudanhmucSlice";
-import danhMucAPI from "../../services/danhMucAPI";
-import DanhmucDetail from "./DanhmucDetail";
+import { setDataLSP } from "../../slices/loaisanphamdanhmucSlice";
+import loaiSanPhamAPI from "../../services/loaiSanPhamAPI";
+import LoaisanphamDetail from "./LoaisanphamDetail";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 import { SearchOutlined } from "@ant-design/icons";
 import { successDialog, deleteSuccess, exist } from "../../components/Dialog/Dialog";
 
-function DanhmucList() {
-    const [listDm, setList] = useState([]);
+function LoaisanphamList() {
+    const [listLoaisanpham, setList] = useState([]);
     const [keysearch, setValueSearch] = useState("");
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const getAllDm = async () => {
         try {
             setLoading(true);
-            const response = await danhMucAPI.getAll();
+            const response = await loaiSanPhamAPI.getAll();
             setList(response.data);
             setLoading(false);
         } catch (err) {
@@ -29,31 +29,32 @@ function DanhmucList() {
     };
     const getByName = async () => {
         setLoading(true);
-        const data = await danhMucAPI.getByName(keysearch);
+        const data = await loaiSanPhamAPI.getByName(keysearch);
         setList(data.data);
         setLoading(false);
     };
     useEffect(() => {
         getAllDm();
     }, []);
-    console.log("listDm: ", listDm);
+    console.log("listLoaisanpham: ", listLoaisanpham);
 
     const handleChange = (e) => {
         setValueSearch(e.target.value);
     };
 
     const handleGetDataToCreate = (record) => {
-        dispatch(setDataDM(record));
+        dispatch(setDataLSP(record));
     };
+
 
     //XÓA
     const handleDelete = async (record) => {
         // console.log(record)
-        const data = await danhMucAPI.delete(record.Tendm);
-        if (data.data === "Danh mục tồn tại loại sản phẩm") {
+        const data = await loaiSanPhamAPI.delete(record.Tenloai);
+        if (data.data === "Loại sản phẩm tồn tại sản phẩm") {
             Swal.fire({
                 icon: "error",
-                text: "Danh mục đang có loại sản phẩm!",
+                text: "Loại sản phẩm đang có sản phẩm!",
             });
         } else {
             deleteSuccess();
@@ -62,8 +63,8 @@ function DanhmucList() {
     };
     //THÊM
     const handleCreate = async (obj) => {
-        const data = await danhMucAPI.create(obj);
-        if (data.data.message === "Danhmuc Exist") {
+        const data = await loaiSanPhamAPI.create(obj);
+        if (data.data.message === "LoaiSanPham Exist") {
             exist();
         } else if (data.data.message === "Create Successfully") {
             successDialog();
@@ -72,8 +73,8 @@ function DanhmucList() {
     };
     //SỬA
     const handleUpdate = async (obj) => {
-        const data = await danhMucAPI.update(obj);
-        if (data.data.message === "Update DanhMuc Successful") {
+        const data = await loaiSanPhamAPI.update(obj);
+        if (data.data.message === "Update LoaiSanPham Successful") {
             successDialog();
             getAllDm();
         }
@@ -87,8 +88,12 @@ function DanhmucList() {
             align: "center",
         },
         {
-            title: "Tên danh mục",
-            dataIndex: "Tendm",
+            title: "Tên loại sản phẩm",
+            dataIndex: "Tenloai",
+        },
+        {
+            title: "Mã danh mục",
+            dataIndex: "Madm",
         },
         {
             title: "Xóa",
@@ -113,6 +118,7 @@ function DanhmucList() {
             ),
         },
     ];
+
     return (
         <>
             <motion.div
@@ -122,7 +128,7 @@ function DanhmucList() {
                 <div className="m-4 ">
                     <div className="bd-radius bg-content p-4 text-muted fw-bold">
                         <div className="d-flex justify-content-between">
-                            <p className="fs-3 w-75">QUẢN LÝ DANH MỤC</p>
+                            <p className="fs-3 w-75">QUẢN LÝ LOẠI SẢN PHẨM</p>
                             <form action="" method="">
                                 <div className="d-flex">
                                     <Input
@@ -144,16 +150,16 @@ function DanhmucList() {
                         </div>
                         <br />
                         <div className="row">
-                        <div className="col-md-7">
+                            <div className="col-md-7">
                                 <Table
                                     columns={columns}
-                                    dataSource={listDm}
+                                    dataSource={listLoaisanpham}
                                     bordered={true}
                                     loading={loading}
                                 />
                             </div>
                             <div className="col-md-5">
-                                <DanhmucDetail 
+                                <LoaisanphamDetail 
                                 handleCreate={handleCreate}
                                 handleUpdate={handleUpdate}
                                 />
@@ -166,4 +172,4 @@ function DanhmucList() {
     );
 }
 
-export default DanhmucList;
+export default LoaisanphamList;

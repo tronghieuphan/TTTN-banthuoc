@@ -10,7 +10,7 @@ import nguoiDungAPI from "../../services/nguoiDungAPI";
 import { Link } from "react-router-dom";
 import { setDataNd } from "../../slices/dataAdd";
 function NguoidungDetail() {
-    const [city, listCity] = useState([]);
+    const [city, listCity] = useState([]);  
     const [district, listDistrict] = useState([]);
     const [ward, listWard] = useState([]);
     const [swicth, setSwitch] = useState(true);

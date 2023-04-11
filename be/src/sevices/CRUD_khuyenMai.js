@@ -84,6 +84,7 @@ let deleteKhuyenMai = async (tenkm) => {
                     resolve("KhuyenMai not exist");
                 }
             }
+            
         } catch (e) {
             reject(e);
         }

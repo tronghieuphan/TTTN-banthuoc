@@ -10,8 +10,9 @@ function HinhanhDetail(props) {
     const handleCreate = props.handleCreate;
     const handleUpdate = props.handleUpdate;
 
-    const { hinhanh } = useSelector((state) => state.dataAdd);
 
+    const { hinhanh } = useSelector((state) => state.dataAdd);
+    const dispatch = useDispatch();
     const [sanphamList, setSanphamList] = useState([]);
 
     //SET GIÁ TRỊ CHO BIẾN
@@ -64,6 +65,7 @@ function HinhanhDetail(props) {
         });
     };
 
+
     return (
         <>
             <div className="bd-radius bg-content p-4 text-muted fw-bold text-center">
@@ -101,7 +103,7 @@ function HinhanhDetail(props) {
                                         style={{
                                             width: 160,
                                         }}
-                                        defaultValue=""
+                                        // defaultValue=""
                                         placeholder="Chọn sản phẩm"
                                         optionFilterProp="children"
                                         onChange={onChange}
@@ -125,7 +127,7 @@ function HinhanhDetail(props) {
                                     </Button>
                                 </Form.Item>
                                 <Form.Item>
-                                    <Button type="primary" className="m-2">
+                                    <Button type="primary">
                                         Hủy
                                     </Button>
                                 </Form.Item>
