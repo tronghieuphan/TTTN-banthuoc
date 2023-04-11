@@ -62,6 +62,7 @@ function XuatxuDetail(props) {
         setTenxx("");
         dispatch(setDataXX([]));
     };
+
     return (
         <>
             <motion.div

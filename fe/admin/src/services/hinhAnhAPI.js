@@ -9,11 +9,14 @@ const hinhAnhAPI = {
     create: (obj) => {
         return axios.post(`http://localhost:9000/create-hinhAnh`, obj);
     },
-    update: (hinhAnh_id, obj) => {
-        return axios.put(`http://localhost:9000/update/${hinhAnh_id}`, obj);
+    update: (obj) => {
+        return axios.put(`http://localhost:9000/update-hinhanh`, obj);
     },
-    delete: (hinhAnh_url) => {
-        return axios.delete(`http://localhost:9000/delete-hinhAnh/${hinhAnh_url}`);
+    // delete: (hinhAnh_url) => {
+    //     return axios.delete(`http://localhost:9000/delete-hinhAnh/${hinhAnh_url}`);
+    // },
+    delete: (hinhAnh_id) => {
+        return axios.delete(`http://localhost:9000/delete-hinhAnhid/${hinhAnh_id}`);
     },
 
 };

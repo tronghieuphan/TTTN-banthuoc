@@ -77,12 +77,22 @@ let deleteSanPham = async (tensp) => {
                     Tensp: tensp,
                 },
             });
-            if (tensp_delete) {
-                await tensp_delete.destroy();
-                resolve("Delete Successful");
-            } else {
-                resolve("SanPham not exist");
+            let hinhanh = await db.hinhAnh.findAll({
+                where: {
+                    Masp: tensp_delete.id,
+                },
+            });
+            if (hinhanh.length > 0) {
+                resolve("Have Product Belongs Hinh ảnh");
+            } else{
+                if (tensp_delete) {
+                    await tensp_delete.destroy();
+                    resolve("Delete Successful");
+                } else {
+                    resolve("SanPham not exist");
+                }
             }
+           
         } catch (e) {
             reject(e);
         }

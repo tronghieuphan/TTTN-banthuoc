@@ -7,13 +7,13 @@ const sanphamAPI = {
         return axios.get(`http://localhost:9000/getall-sanpham`);
     },
     getByName: (sanpham_name) => {
-        return axios.get(`http://localhost:9000/getbyName-sanpham?datafind=${sanpham_name}`);
+        return axios.get(`http://localhost:9000/find-sanphambyname?datafind=${sanpham_name}`);
     },
     create: (obj) => {
         return axios.post(`http://localhost:9000/create-sanpham`, obj);
     },
-    update: (sanpham_id, obj) => {
-        return axios.put(`http://localhost:9000/update/${sanpham_id}`, obj);
+    update: ( obj) => {
+        return axios.put(`http://localhost:9000/update-sanpham/`, obj);
     },
     delete: (sanpham_name) => {
         return axios.delete(`http://localhost:9000/delete-sanpham/${sanpham_name}`);

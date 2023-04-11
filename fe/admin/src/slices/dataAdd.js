@@ -3,18 +3,25 @@ import { createSlice } from "@reduxjs/toolkit";
 export const dataAddSlice = createSlice({
     name: "dataAdd",
     initialState: {
-        nhacungcap:[],
-        nguoidung:[]
+        nhacungcap: [],
+        nguoidung: [],
+        hinhanh: [],
+        sanpham:[],
     },
     reducers: {
-        setDataNcc: (state,action) => {
-           state.nhacungcap= action.payload      
+        setDataNcc: (state, action) => {
+            state.nhacungcap = action.payload;
         },
-        setDataNd: (state,action) => {
-            state.nguoidung= action.payload      
+        setDataNd: (state, action) => {
+            state.nguoidung = action.payload;
         },
-       
+        setDataHa: (state, action) => {
+            state.hinhanh = action.payload;
+        },
+        setDataSP: (state,action) => {
+            state.sanpham= action.payload      
+        },
     },
 });
-export const { setDataNcc, setDataNd } = dataAddSlice.actions;
+export const { setDataNcc, setDataNd, setDataHa, setDataSP } = dataAddSlice.actions;
 export default dataAddSlice.reducer;

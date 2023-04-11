@@ -12,31 +12,32 @@ import NguoidungDetail from "../pages/Nguoidung/NguoidungDetail";
 import KhuyenmaiList from "../pages/Khuyenmai/KhuyenmaiList";
 import LoaisanphamList from "../pages/Loaisanpham/LoaisanphamList";
 
+import SanphamDetail from "../pages/SanPham/SanphamDetail";
 
 const PageWeb = [
     {
-        path: '/',
-        page: LoginPage
+        path: "/",
+        page: LoginPage,
     },
     {
-        path: '/home',
+        path: "/home",
         page: Content,
-        isMainLayout: true
+        isMainLayout: true,
     },
     {
-        path: '/nhacungcap-list',
+        path: "/nhacungcap-list",
         page: NhacungcapList,
-        isMainLayout: true
+        isMainLayout: true,
     },
     {
-        path: '/nhacungcap-detail',
+        path: "/nhacungcap-detail",
         page: NhacungcapDetail,
-        isMainLayout: true
+        isMainLayout: true,
     },
     {
-        path: '/danhmuc-list',
+        path: "/danhmuc-list",
         page: DanhmucList,
-        isMainLayout: true
+        isMainLayout: true,
     },
     {
         path: '/loaisanpham-list',
@@ -46,7 +47,7 @@ const PageWeb = [
     {
         path: '/xuatxu-list',
         page: XuatxuList,
-        isMainLayout: true
+        isMainLayout: true,
     },
     {
         path: '/khuyenmai-list',
@@ -56,29 +57,33 @@ const PageWeb = [
     {
         path: '/nguoidung-list',
         page: NguoidungList,
-        isMainLayout: true
+        isMainLayout: true,
     },
     {
-        path: '/nguoidung-detail',
+        path: "/nguoidung-detail",
         page: NguoidungDetail,
-        isMainLayout: true
+        isMainLayout: true,
     },
     {
-        path: '/thuonghieu-list',
+        path: "/thuonghieu-list",
         page: Thuonghieulist,
-        isMainLayout: true
+        isMainLayout: true,
     },
     {
-        path: '/sanpham-list',
+        path: "/sanpham-list",
         page: SanphamList,
-        isMainLayout: true
+        isMainLayout: true,
     },
     {
-        path: '/hinhanh-list',
+        path: "/hinhanh-list",
         page: HinhanhList,
-        isMainLayout: true
+        isMainLayout: true,
     },
-    
-]
+    {
+        path: "/sanpham-detail",
+        page: SanphamDetail,
+        isMainLayout: true,
+    },
+];
 
-export default PageWeb
+export default PageWeb;

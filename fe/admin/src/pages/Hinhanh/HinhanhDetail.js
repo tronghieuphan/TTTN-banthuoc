@@ -1,112 +1,135 @@
-import { Input, Button } from "antd";
+import { Input, Button, Form, Select } from "antd";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import sanPhamAPI from "../../services/sanPhamAPI";
 import React from "react";
+import Swal from "sweetalert2";
 
-function HinhanhDetail() {
-  //XỬ LÝ LƯU THÔNG TIN SẢN PHẨM VỪA CHỌN Ở DATATABLE
-  const { state } = useLocation();
-  let hinhanh = null;
-  if (state) {
-    //nếu có state thì lưu, không thì giữ nguyên là null
-    hinhanh = state.record;
-  }
-
-  // TẠO STATE CHO CÁC THÔNG TIN
-  const initialValues = {
-    id: hinhanh ? hinhanh.id : "",
-    url: hinhanh ? hinhanh.url : "",
-    Masp: hinhanh ? hinhanh.idmsp : "",
-  };
+function HinhanhDetail(props) {
+    const handleCreate = props.handleCreate;
+    const handleUpdate = props.handleUpdate;
 
 
-  
-  const [values, setValues] = useState(initialValues);
-  const [sanphamList, setSanphamList] = useState([]);
+    const { hinhanh } = useSelector((state) => state.dataAdd);
+    const dispatch = useDispatch();
+    const [sanphamList, setSanphamList] = useState([]);
 
-  useEffect(() => {
     const getAllSp = async () => {
-      const res = await sanPhamAPI.getAll();
-      setSanphamList(res.data);
+        const res = await sanPhamAPI.getAll();
+        setSanphamList(res.data);
     };
-    getAllSp();
-  }, []);
+    useEffect(() => {
+        getAllSp();
+    }, []);
+    let listSp = [];
+    sanphamList.map((values, index) => listSp.push({ id: values.id, Tensp: values.Tensp }));
+    //XỬ LÝ THAY ĐỔI SP
+    const onChange = (value) => {
+        console.log(`selected ${value}`);
+    };
+    const onSearch = (value) => {
+        console.log("search:", value);
+    };
+    // XỬ LÝ THÊM SỬA
+    const handleSubmit = (e) => {
+        console.log(">>>", e);
+        Swal.fire({
+            title: "BẠN CÓ MUỐN LƯU THÔNG TIN?",
+            confirmButtonText: "Lưu",
+            showCancelButton: true,
+            cancelButtonText: "Hủy",
+            customClass: {
+                title: "fs-5 text-dark",
+                confirmButton: "bg-primary shadow-none",
+                cancelButton: "bg-warning shadow-none",
+            },
+        }).then((result) => {
+            if (result.isConfirmed) {
+                //UPDATE
+                if (hinhanh.Url) {
+                    handleUpdate(e);
+                }
+                //CREATE
+                else {
+                    handleCreate(e);
+                }
+            }
+        });
+    };
 
-  //XỬ LÝ THAY ĐỔI SP
-  const handleChangeSP = (e) => {
-    const { id, name } = e.target;
-    const index = e.target.selectedIndex;
-    const el = e.target.childNodes[index];
 
-    setValues({
-      ...values,
-      [id]: el.getAttribute("id"),
-      [name]: el.getAttribute("value"),
-    });
-  };
-
-  return (
-    <>
-      <div className="bd-radius bg-content p-4 text-muted fw-bold text-center">
-        <div>
-          <form action="" method="post">
-            <div className="d-flex flex-wrap justify-content-between">
-              <div className="justify-content-cen ter w-100 ">
-                <label className="m-2 w-100">Đường dẫn</label>
-                <Input
-                  className="m-1 w-100"
-                  id="outlined-basic"
-                  label="Url"
-                  type="text"
-                  variant="outlined"
-                  value=""
-                />
-              </div>
-              <div className="justify-content-center w-60 ">
-                <label className="m-2 w-33">Tên Sản phẩm</label>
-                <select
-                  value={values.Tensp ? values.Tensp : "choose"}
-                  onChange={handleChangeSP}
-                  className="form-select"
-                  aria-label="Default select example"
-                  id="Masp"
-                  name="Tensp"
-                >
-                  <option value="choose">Mã sản phẩm</option>
-                  {sanphamList.map((sanpham) => {
-                    console.log(sanpham);
-                    return (
-                      <option
-                        value={sanpham.Tensp}
-                        key={sanpham.id}
-                        id={sanpham.id}
-                      >
-                        {sanpham.Tensp}
-                      </option>
-                    );
-                  })}
-                </select>
-              </div>
-              <button
-                type="submit"
-                className="mx-2"
-                style={{
-                  background: "#1677FF",
-                  color: "#fff",
-                  border: "1px solid #1677FF",
-                  padding: "3px 15px",
-                  borderRadius: "5px",
-                }}
-              >
-                {/* {xuatxu.Tenxx ? "Lưu" : "Thêm"} */}
-              </button>
+    return (
+        <>
+            <div className="bd-radius bg-content p-4 text-muted fw-bold text-center">
+                <div>
+                    <Form onFinish={handleSubmit}>
+                        {hinhanh.id ? (
+                            <Form.Item name="id" label="Id" initialValue={hinhanh.id}>
+                                <Input disabled/>
+                            </Form.Item>
+                        ) : (
+                            ""
+                        )}
+                        <div className="d-flex flex-wrap justify-content-between">
+                            <div className="justify-content-cen ter w-100 ">
+                                <Form.Item
+                                    className="my-2 w-100"
+                                    name="Url"
+                                    label="Đường dẫn"
+                                    initialValue={hinhanh.Url}
+                                >
+                                    <Input className=" w-100" type="text" />
+                                </Form.Item>
+                            </div>
+                            <div className="justify-content-center w-100 ">
+                                <Form.Item
+                                    className="my-2 w-33"
+                                    name="Masp"
+                                    label="Sản phẩm"
+                                    initialValue={hinhanh.Masp}
+                                >
+                                    <Select
+                                        className="w-100"
+                                        showSearch
+                                        style={{
+                                            width: 160,
+                                        }}
+                                        // defaultValue=""
+                                        placeholder="Chọn sản phẩm"
+                                        optionFilterProp="children"
+                                        onChange={onChange}
+                                        onSearch={onSearch}
+                                        filterOption={(input, option) =>
+                                            (option?.label ?? "")
+                                                .toLowerCase()
+                                                .includes(input.toLowerCase())
+                                        }
+                                        options={sanphamList.map((item) => ({
+                                            value: item.id,
+                                            label: item.Tensp,
+                                        }))}
+                                    />
+                                </Form.Item>
+                            </div>
+                            <div className="d-flex w-100 justify-content-center">
+                                <Form.Item>
+                                    <Button type="primary" htmlType="submit" className="m-2">
+                                        Lưu
+                                    </Button>
+                                </Form.Item>
+                                <Form.Item>
+                                    <Button type="primary">
+                                        Hủy
+                                    </Button>
+                                </Form.Item>
+                            </div>
+                        </div>
+                    </Form>
+                </div>
             </div>
-          </form>
-        </div>
-      </div>
-    </>
-  );
+        </>
+    );
 }
 
 export default HinhanhDetail;

@@ -1,6 +1,5 @@
 import { Table, Button, Input, Tooltip } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
@@ -9,12 +8,13 @@ import nguoiDungAPI from "../../services/nguoiDungAPI";
 import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
 import { setDataNd } from "../../slices/dataAdd";
-import nhaCungCapAPI from "../../services/nhaCungCapAPI";
+import address from "../../services/addressAPI";
 function NguoidungList() {
     const [listNd, setList] = useState([]);
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
     const [keysearch, setValueSearch] = useState("");
+    const [city, listCity] = useState([]);
 
     const getAllNd = async () => {
         try {
@@ -26,27 +26,40 @@ function NguoidungList() {
             throw new Error(err);
         }
     };
+
     useEffect(() => {
         getAllNd();
     }, []);
+    const getAllCity = async () => {
+        try {
+            const response = await address.getAll_Province();
+            listCity(response.data);
+        } catch (err) {
+            throw new Error(err);
+        }
+    };
+    useEffect(() => {
+        getAllCity();
+    }, []);
+    let arraycity = [];
+    city.map((values, index) => arraycity.push({ name: values.name, code: values.code }));
     const onChange = (value) => console.log(value);
     const handleAddStore = (record) => {
-        console.log(record);
         dispatch(setDataNd(record));
     };
     const getByName = async () => {
         setLoading(true);
         const data = await nguoiDungAPI.getByName(keysearch);
-        console.log('keysearch: ', keysearch);
-           console.log('data.data: ', data.data);
+        console.log("keysearch: ", keysearch);
+        console.log("data.data: ", data.data);
         setList(data.data);
-     
+
         setLoading(false);
     };
     const handleChange = (e) => {
         setValueSearch(e.target.value);
-        
     };
+
     const columns = [
         {
             title: "ID",
@@ -67,10 +80,28 @@ function NguoidungList() {
         {
             title: "Giới tính",
             dataIndex: "Gioitinh",
+            render: (Gioitinh) => (
+                <div
+                    style={{
+                        width: "50px",
+                    }}
+                >
+                    {Gioitinh === true ? "Nữ" : "Nam"}
+                </div>
+            ),
         },
         {
             title: "Ngày sinh",
             dataIndex: "Ngaysinh",
+            render: (Ngaysinh) => (
+                <div
+                    style={{
+                        width: "120px",
+                    }}
+                >
+                    {Ngaysinh}
+                </div>
+            ),
         },
         {
             title: "Số điện thoại",
@@ -84,14 +115,41 @@ function NguoidungList() {
         {
             title: "Phường/xã",
             dataIndex: "Phuong",
+            render: (Phuong) => (
+                <div
+                    style={{
+                        width: "120px",
+                    }}
+                >
+                    {Phuong}
+                </div>
+            ),
         },
         {
             title: "Quận/huyện",
             dataIndex: "Quan",
+            render: (Quan) => (
+                <div
+                    style={{
+                        width: "120px",
+                    }}
+                >
+                    {Quan}
+                </div>
+            ),
         },
         {
             title: "Thành phố/tỉnh",
             dataIndex: "Thanhpho",
+            render: (Thanhpho) => (
+                <div
+                    style={{
+                        width: "160px",
+                    }}
+                >
+                    {Thanhpho}
+                </div>
+            ),
         },
         {
             title: "Tên đăng nhập",
@@ -125,10 +183,14 @@ function NguoidungList() {
                 <div className="m-4 ">
                     <div className="bd-radius bg-content p-4 text-muted fw-bold">
                         <div className="d-flex justify-content-between">
-                            <p className="fs-3" style={{width:"30%"}}>QUẢN LÝ NGƯỜI DÙNG</p>
+                            <p className="fs-3" style={{ width: "30%" }}>
+                                QUẢN LÝ NGƯỜI DÙNG
+                            </p>
                             <form action="" method="">
                                 <div className="d-flex">
-                                    <p className="fst-italic fw-lighter">Mình có thể tìm theo tên hoặc theo số điện thoại (*)</p>
+                                    <p className="fst-italic fw-lighter">
+                                        Mình có thể tìm theo tên hoặc theo số điện thoại (*)
+                                    </p>
                                     <Input
                                         className="mx-2"
                                         placeholder="Nhập tìm kiếm"
@@ -141,7 +203,7 @@ function NguoidungList() {
                                             shape="circle"
                                             icon={<SearchOutlined />}
                                             onClick={getByName}
-                                            style={{marginTop:"12px"}}
+                                            style={{ marginTop: "12px" }}
                                         />
                                     </Tooltip>
                                 </div>

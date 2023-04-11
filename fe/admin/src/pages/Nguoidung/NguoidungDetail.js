@@ -5,15 +5,17 @@ import addressAPI from "../../services/addressAPI";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 import { exist, successDialog } from "../../components/Dialog/Dialog";
-import { useSelector } from "react-redux";
+import { useSelector ,useDispatch} from "react-redux";
 import nguoiDungAPI from "../../services/nguoiDungAPI";
 import { Link } from "react-router-dom";
+import { setDataNd } from "../../slices/dataAdd";
 function NguoidungDetail() {
-    const [city, listCity] = useState([]);
+    const [city, listCity] = useState([]);  
     const [district, listDistrict] = useState([]);
     const [ward, listWard] = useState([]);
     const [swicth, setSwitch] = useState(true);
     const { nguoidung } = useSelector((state) => state.dataAdd);
+    const dispatch= useDispatch();
     //Lây API Thành phố
     const getAllCity = async () => {
         try {
@@ -49,6 +51,7 @@ function NguoidungDetail() {
         getAllDistrict(e);
     };
     const onChangeDistrict = (e) => {
+        
         getAllWard(e);
     };
     const onSearch = (value) => {
@@ -73,9 +76,8 @@ function NguoidungDetail() {
     //SỬA
     const handleUpdate = async (obj) => {
         const data = await nguoiDungAPI.update(obj);
-         console.log('data.data.message: ', data.data.message);
+        console.log("data.data.message: ", data.data.message);
         if (data.data.message === "Update Nguoidung Successful") {
-           
             successDialog();
         }
     };
@@ -110,6 +112,7 @@ function NguoidungDetail() {
             }
         });
     };
+
     const [date, SetDate] = useState("");
     const onChangeDate = (date, dateString) => {
         console.log(date, ">>>", dateString);
@@ -122,8 +125,12 @@ function NguoidungDetail() {
     let arrayward = [];
     city.map((values, index) => arraycity.push({ name: values.name, code: values.code }));
     district.map((values, index) => arraydistrict.push({ name: values.name, code: values.code }));
-    console.log(ward);
     ward.map((values, index) => arrayward.push({ name: values.name, code: values.code }));
+
+    //Xóa store khi quay lại 
+    const deleteStort =()=>{
+        dispatch(setDataNd([]))
+    }
     return (
         <>
             <motion.div
@@ -132,7 +139,7 @@ function NguoidungDetail() {
                 exit={{ opacity: 0, transition: { duration: 0.8 } }}
             >
                 <Link to="/nguoidung-list">
-                    <Button className="mx-4">Quay lại</Button>
+                    <Button className="mx-4" onClick={deleteStort}>Quay lại</Button>
                 </Link>
                 <div className="m-4 ">
                     <div className="bd-radius bg-content p-4 text-muted fw-bold">
@@ -229,7 +236,9 @@ function NguoidungDetail() {
                                             className="m-1 w-33"
                                             name="Gioitinh"
                                             label="Giới tính"
-                                            initialValue={nguoidung.Gioitinh === 1 ? "Nữ" : "Nam"}
+                                            initialValue={
+                                                nguoidung.Gioitinh === true ? "Nữ" : "Nam"
+                                            }
                                         >
                                             <Select
                                                 className="m-1 w-100"
@@ -251,7 +260,6 @@ function NguoidungDetail() {
                                         </Form.Item>
                                     </div>
 
-                                 
                                     <div className="justify-content-between w-30">
                                         <Form.Item
                                             className="my-2 w-33"
@@ -347,16 +355,10 @@ function NguoidungDetail() {
                                             label="Email"
                                             initialValue={nguoidung.Email}
                                         >
-                                            <Input
-                                                className=" w-100"
-                                                label="Email"
-                                                type="email"
-                                            />
+                                            <Input className=" w-100" label="Email" type="email" />
                                         </Form.Item>
                                     </div>
-                                    <div
-                                        className="mt-4 justify-content-between w-30"
-                                    >
+                                    <div className="mt-4 justify-content-between w-30">
                                         <Form.Item
                                             className=" w-33"
                                             name="Tendangnhap"
@@ -371,20 +373,22 @@ function NguoidungDetail() {
                                             />
                                         </Form.Item>
                                     </div>
-                                    <div
-                                        className="mt-4 justify-content-between w-30 "
-                                    >
+                                    <div className="mt-4 justify-content-between w-30 ">
                                         <Form.Item
                                             className=" w-33"
                                             name="Matkhau"
                                             label="Mật khẩu"
                                             initialValue={nguoidung.Matkhau}
                                         >
-                                            <Input
-                                                className=" w-100"
-                                                type="password"
-                                                disabled={swicth ? true : false}
-                                            />
+                                            {nguoidung.id ? (
+                                                <Input
+                                                    className=" w-100"
+                                                    type="password"
+                                                    disabled={swicth ? true : false}
+                                                />
+                                            ) : (
+                                                <Input className=" w-100" type="password" />
+                                            )}
                                         </Form.Item>
                                     </div>
                                     {nguoidung.id ? (
