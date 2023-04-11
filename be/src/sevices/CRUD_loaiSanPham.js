@@ -131,6 +131,26 @@ let getByNameLoaiSanPham = (data) => {
         }
     });
 };
+let getLoaiSanPhamByDanhMuc = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let loaiSanPhamByName = await db.loaiSanPham.findAll({
+                where: {
+                    Madm: data.Madm,
+                },
+                raw: true,
+                nest: true,
+            });
+            if (loaiSanPhamByName) {
+                resolve(loaiSanPhamByName);
+            } else {
+                resolve("Not Found");
+            }
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
 
 module.exports = {
     createLoaiSanPham,
@@ -138,4 +158,5 @@ module.exports = {
     deleteLoaiSanPham,
     updateLoaiSanPham,
     getByNameLoaiSanPham,
+    getLoaiSanPhamByDanhMuc
 };

@@ -14,6 +14,13 @@ function HinhanhDetail(props) {
 
     const [sanphamList, setSanphamList] = useState([]);
 
+    //SET GIÁ TRỊ CHO BIẾN
+    const [ha, setHinhanh] = useState({});
+    console.log(">>>>", ha.id);
+    //SET STORE TRUYỀN DỮ LIỆU TRỪ LIST QUA CHO DETAIL
+    useEffect(() => {
+        setHinhanh(hinhanh);
+    }, [hinhanh]);
     const getAllSp = async () => {
         const res = await sanPhamAPI.getAll();
         setSanphamList(res.data);
@@ -62,20 +69,21 @@ function HinhanhDetail(props) {
             <div className="bd-radius bg-content p-4 text-muted fw-bold text-center">
                 <div>
                     <Form onFinish={handleSubmit}>
-                        {hinhanh.id ? (
-                            <Form.Item name="id" label="Id" initialValue={hinhanh.id}>
-                                <Input disabled/>
-                            </Form.Item>
-                        ) : (
-                            ""
-                        )}
                         <div className="d-flex flex-wrap justify-content-between">
+                            {hinhanh.id ? (
+                                <Form.Item name="id" label="Id" initialValue={ha.id}>
+                                    <Input disabled />
+                                </Form.Item>
+                            ) : (
+                                ""
+                            )}
+
                             <div className="justify-content-cen ter w-100 ">
                                 <Form.Item
                                     className="my-2 w-100"
                                     name="Url"
                                     label="Đường dẫn"
-                                    initialValue={hinhanh.Url}
+                                    initialValue={ha.Url}
                                 >
                                     <Input className=" w-100" type="text" />
                                 </Form.Item>
@@ -85,7 +93,7 @@ function HinhanhDetail(props) {
                                     className="my-2 w-33"
                                     name="Masp"
                                     label="Sản phẩm"
-                                    initialValue={hinhanh.Masp}
+                                    initialValue={ha.Masp}
                                 >
                                     <Select
                                         className="w-100"

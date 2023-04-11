@@ -1,4 +1,5 @@
-import { Button, Link } from "@mui/material";
+import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
 import { Input } from "antd";
 import { useState } from "react";
 function InfoProduct() {
@@ -10,8 +11,8 @@ function InfoProduct() {
         }
     };
     let handleDecrease = () => {
-        if (quatity >0) {
-            setQuatity(quatity -1);
+        if (quatity > 0) {
+            setQuatity(quatity - 1);
         }
     };
     return (
@@ -33,6 +34,10 @@ function InfoProduct() {
                 <p>
                     <span className="fw-bold">Danh mục: </span>
                     <span>Dung dịch</span>
+                </p>
+                <p>
+                    <span className="fw-bold">Loại sản phẩm: </span>
+                    <span>Chăm sóc da</span>
                 </p>
                 <p>
                     <span className="fw-bold"> Quy cách: </span>
@@ -68,7 +73,6 @@ function InfoProduct() {
                                 type="text"
                                 value={quatity}
                                 readOnly
-                            
                             />
                             <Button onClick={handleIncrease}>+</Button>
                         </div>

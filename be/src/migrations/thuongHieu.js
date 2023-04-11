@@ -11,7 +11,9 @@ module.exports = {
             Tenth: {
                 type: Sequelize.STRING(25),
             },
-
+            Hinhanh: {
+                type: Sequelize.TEXT,
+            },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE,

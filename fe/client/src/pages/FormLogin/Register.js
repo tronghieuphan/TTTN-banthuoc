@@ -1,7 +1,7 @@
 import "./FormLogin.scss";
-import { TextField, Button } from "@mui/material";
 import logo from "../../assets/image/logo.png";
-
+import { Form, Input, Button } from "antd";
+import { Link } from "react-router-dom";
 function RegisterPage() {
     return (
         <>
@@ -19,67 +19,43 @@ function RegisterPage() {
                         <h3 className="color-text1">Xin chào bạn đến với HLVLH!</h3>
                         <p className="color-text2">Hãy nhập thông tin để đăng ký tài khoản nào</p>
 
-                        <form action="" method="">
-                            <div className="d-flex w-100">
-                                <TextField
-                                    className="py-2 w-50"
-                                    id="standard-basic"
-                                    label="Họ lót"
-                                    value=""
-                                    variant="standard"
-                                />
-                                <br />
-
-                                <TextField
-                                    className="py-2 w-50 "
-                                    id="standard-basic"
-                                    label="Tên"
-                                    value=""
-                                    variant="standard"
-                                    style={{ marginLeft: "10%" }}
-                                />
-                                <br />
+                        <Form onFinish={[]} layout="vertical" size="lagre">
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <Form.Item className="fw-bold" label="Họ lót" name="Holot">
+                                        <Input className="py-2 " />
+                                    </Form.Item>
+                                </div>{" "}
+                                <div className="col-md-6">
+                                    <Form.Item name="Ten" className="fw-bold" label="Tên">
+                                        <Input className="py-2" />
+                                    </Form.Item>
+                                </div>
                             </div>
-                            <TextField
-                                className="w-100 py-2"
-                                id="standard-basic"
-                                label="Tên đăng nhập"
-                                value=""
-                                variant="standard"
-                            />
-                            <br />
-                            <TextField
-                                className="w-100 py-2"
-                                id="standard-password-input"
-                                label="Mật khẩu"
-                                type="password"
-                                autoComplete="current-password"
-                                variant="standard"
-                                value="fafasfs"
-                            />
-                            <TextField
-                                className="w-100 py-2"
-                                id="standard-basic"
-                                label="Số điện thoại"
-                                value=""
-                                variant="standard"
-                                type="tel"
-                            />
-                            <br />
-                            <TextField
-                                className="w-100 py-2"
-                                id="standard-basic"
-                                label="Email"
-                                value=""
-                                variant="standard"
-                                type="email"
-                            />
-                            <br />
-
-                            <Button className="mt-4 w-100 p-3 fs-5 fw-bold  " variant="contained">
-                                Tạo tài khoản
-                            </Button>
-                        </form>
+                            <Form.Item className="fw-bold" label="Tên đăng nhập" name="Tendangnhap">
+                                <Input className="w-100 py-2" />
+                            </Form.Item>
+                            <Form.Item name="Matkhau" className="fw-bold" label="Mật khẩu">
+                                <Input className="w-100 py-2" type="password" />
+                            </Form.Item>
+                            <Form.Item name="Sodienthoai" className="fw-bold" label="Số điện thoại">
+                                <Input className="w-100 py-2" type="tel" />
+                            </Form.Item>
+                            <Form.Item name="Email" className="fw-bold" label="Email">
+                                <Input className="w-100 py-2" type="email" />
+                            </Form.Item>
+                            <Form.Item>
+                                <Button
+                                    className=" w-100 fw-bold  "
+                                    size="large"
+                                    type="primary"
+                                    htmlType="submit"
+                                >
+                                    Tạo tài khoản
+                                </Button>
+                            </Form.Item>
+                        </Form>
+                        <Link to="/login">Quay trở lại </Link>
                     </div>
                 </div>
             </div>

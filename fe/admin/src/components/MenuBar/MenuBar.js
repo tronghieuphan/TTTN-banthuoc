@@ -17,7 +17,11 @@ function MenuBar() {
                 </div>
                 <hr className="w-75 d-block mx-auto" />
                 <div className="w-100 p-3 bg">
-                    <NavLink className="w-85 d-block fw-bold fs-5" to="/home" acticveclasname="active" >
+                    <NavLink
+                        className="w-85 d-block fw-bold fs-5"
+                        to="/home"
+                        acticveclasname="active"
+                    >
                         Trang chủ
                     </NavLink>
                     <NavLink className="w-85 d-block fw-bold fs-5" to="/nguoidung-list">
@@ -43,6 +47,9 @@ function MenuBar() {
                     </NavLink>
                     <NavLink className="w-85 d-block fw-bold fs-5" to="/danhmuc-list">
                         Quản lý danh mục
+                    </NavLink>
+                    <NavLink className="w-85 d-block fw-bold fs-5" to="/khuyenmai-list">
+                        Quản lý khuyến mãi
                     </NavLink>
                     <NavLink className="w-85 d-block fw-bold fs-5" to="/nhacungcap-list">
                         Quản lý nhà cung cấp

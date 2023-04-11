@@ -5,7 +5,7 @@ import addressAPI from "../../services/addressAPI";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 import { exist, successDialog } from "../../components/Dialog/Dialog";
-import { useSelector ,useDispatch} from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import nguoiDungAPI from "../../services/nguoiDungAPI";
 import { Link } from "react-router-dom";
 import { setDataNd } from "../../slices/dataAdd";
@@ -15,7 +15,7 @@ function NguoidungDetail() {
     const [ward, listWard] = useState([]);
     const [swicth, setSwitch] = useState(true);
     const { nguoidung } = useSelector((state) => state.dataAdd);
-    const dispatch= useDispatch();
+    const dispatch = useDispatch();
     //Lây API Thành phố
     const getAllCity = async () => {
         try {
@@ -48,10 +48,10 @@ function NguoidungDetail() {
         getAllCity();
     }, []);
     const onChange = (e) => {
-        getAllDistrict(e);
+        console.log(">>>", e);
+        // getAllDistrict(e);
     };
     const onChangeDistrict = (e) => {
-        
         getAllWard(e);
     };
     const onSearch = (value) => {
@@ -127,10 +127,10 @@ function NguoidungDetail() {
     district.map((values, index) => arraydistrict.push({ name: values.name, code: values.code }));
     ward.map((values, index) => arrayward.push({ name: values.name, code: values.code }));
 
-    //Xóa store khi quay lại 
-    const deleteStort =()=>{
-        dispatch(setDataNd([]))
-    }
+    //Xóa store khi quay lại
+    const deleteStort = () => {
+        dispatch(setDataNd([]));
+    };
     return (
         <>
             <motion.div
@@ -139,7 +139,9 @@ function NguoidungDetail() {
                 exit={{ opacity: 0, transition: { duration: 0.8 } }}
             >
                 <Link to="/nguoidung-list">
-                    <Button className="mx-4" onClick={deleteStort}>Quay lại</Button>
+                    <Button className="mx-4" onClick={deleteStort}>
+                        Quay lại
+                    </Button>
                 </Link>
                 <div className="m-4 ">
                     <div className="bd-radius bg-content p-4 text-muted fw-bold">
@@ -151,7 +153,7 @@ function NguoidungDetail() {
                         <br />
 
                         <div>
-                            <Form onFinish={handleSubmit}>
+                            <Form onFinish={handleSubmit} layout="vertical">
                                 {nguoidung.Tennd ? (
                                     <Form.Item name="id" label="Id:">
                                         <Input />
@@ -162,6 +164,7 @@ function NguoidungDetail() {
                                 <div className="d-flex flex-wrap justify-content-between">
                                     <div className="justify-content-center w-30 ">
                                         <Form.Item
+                                            className="m-1"
                                             name="Loaind"
                                             label="Loại người dùng"
                                             initialValue={
@@ -173,7 +176,7 @@ function NguoidungDetail() {
                                             }
                                         >
                                             <Select
-                                                className="m-1 w-100"
+                                                className=" m-1 w-100"
                                                 style={{
                                                     width: 120,
                                                 }}
@@ -216,8 +219,8 @@ function NguoidungDetail() {
                                         </Form.Item>
                                     </div>
                                     <div className="justify-content-between w-30 ">
-                                        <Form.Item name="Ngaysinh" label="Ngày sinh">
-                                            <DatePicker picker="date" onChange={onChangeDate} />
+                                        <Form.Item name="Ngaysinh" label="Ngày sinh" className="m-1 w-33" >
+                                            <DatePicker className="m-1 w-100" picker="date" onChange={onChangeDate} />
                                         </Form.Item>
                                     </div>
 
@@ -262,14 +265,14 @@ function NguoidungDetail() {
 
                                     <div className="justify-content-between w-30">
                                         <Form.Item
-                                            className="my-2 w-33"
+                                            className="m-1 w-33"
                                             name="Thanhpho"
                                             label="Thành phố/tỉnh"
                                             initialValue={nguoidung.Thanhpho}
                                         >
                                             <Select
-                                                className="w-100"
-                                                showSearch
+                                                className="m-1 w-100"
+                                                showSearch 
                                                 style={{
                                                     width: 160,
                                                 }}
@@ -292,13 +295,13 @@ function NguoidungDetail() {
 
                                     <div className="justify-content-between w-30">
                                         <Form.Item
-                                            className="m-2 w-33"
+                                            className="m-1 w-33"
                                             name="Quan"
                                             label="Quận/huyện"
                                             initialValue={nguoidung.Quan}
                                         >
                                             <Select
-                                                className="w-100"
+                                                className="m-1 w-100"
                                                 showSearch
                                                 style={{
                                                     width: 160,
@@ -321,13 +324,13 @@ function NguoidungDetail() {
                                     </div>
                                     <div className="justify-content-between w-30">
                                         <Form.Item
-                                            className="m-2 w-33"
+                                            className="m-1 w-33"
                                             name="Phuong"
                                             label="Phường/xã"
                                             initialValue={nguoidung.Phuong}
                                         >
                                             <Select
-                                                className=" w-100"
+                                                className="m-1 w-100"
                                                 showSearch
                                                 fieldNames="phuong"
                                                 style={{
@@ -348,41 +351,41 @@ function NguoidungDetail() {
                                             />
                                         </Form.Item>
                                     </div>
-                                    <div className=" mt-4 justify-content-between w-30 ">
+                                    <div className="justify-content-between w-30 ">
                                         <Form.Item
-                                            className=" w-33"
+                                            className="m-1 w-33"
                                             name="Email"
                                             label="Email"
                                             initialValue={nguoidung.Email}
                                         >
-                                            <Input className=" w-100" label="Email" type="email" />
+                                            <Input className="m-1 w-100" label="Email" type="email" />
                                         </Form.Item>
                                     </div>
-                                    <div className="mt-4 justify-content-between w-30">
+                                    <div className="justify-content-between w-30">
                                         <Form.Item
-                                            className=" w-33"
+                                            className="m-1 w-33"
                                             name="Tendangnhap"
                                             label="Tên đăng nhập"
                                             initialValue={nguoidung.Tendangnhap}
                                         >
                                             <Input
-                                                className=" w-100"
+                                                className="m-1 w-100"
                                                 type="text"
                                                 variant="outlined"
                                                 disabled={nguoidung.id ? true : false}
                                             />
                                         </Form.Item>
                                     </div>
-                                    <div className="mt-4 justify-content-between w-30 ">
+                                    <div className="justify-content-between w-30 ">
                                         <Form.Item
-                                            className=" w-33"
+                                            className="m-1 w-33"
                                             name="Matkhau"
                                             label="Mật khẩu"
                                             initialValue={nguoidung.Matkhau}
                                         >
                                             {nguoidung.id ? (
                                                 <Input
-                                                    className=" w-100"
+                                                    className="m-1 w-100"
                                                     type="password"
                                                     disabled={swicth ? true : false}
                                                 />

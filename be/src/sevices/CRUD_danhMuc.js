@@ -6,13 +6,13 @@ import randomId from "./randomId";
 let getAllDanhMuc = async () => {
     return new Promise(async (resolve, reject) => {
         try {
-            let listDanhMuc = await db.danhMuc.findAll();
-            let count = await db.danhMuc.count();
-            if (count > 0) {
-                resolve(listDanhMuc);
-            } else {
-                resolve("List null");
-            }
+                let listDanhMuc = await db.danhMuc.findAll();
+                let count = await db.danhMuc.count();
+                if (count > 0) {
+                    resolve(listDanhMuc);
+                } else {
+                    resolve("List null");
+                }
         } catch (e) {
             reject(e);
         }
@@ -34,9 +34,9 @@ let createDanhMuc = async (data) => {
             });
             console.log(danhmuc);
             if (danhmuc[1]) {
-                resolve({ message: "Create Successfully",data:danhmuc[0] });
+                resolve({ message: "Create Successfully", data: danhmuc[0] });
             } else {
-                resolve({message: "Danhmuc Exist" });
+                resolve({ message: "Danhmuc Exist" });
             }
         } catch (e) {
             reject(e);
@@ -86,7 +86,7 @@ let updateDanhMuc = async (data) => {
                     }
                 );
                 console.log(">>>", updm);
-                resolve({message:"Update DanhMuc Successful",data:updm});
+                resolve({ message: "Update DanhMuc Successful", data: updm });
             } else {
                 resolve("DanhMuc not exist");
             }

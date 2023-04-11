@@ -55,6 +55,7 @@ let initWebRotes = (app) => {
     router.get("/getbyName-loaisanpham", loaiSanPhamController.getName_loaiSanPham);
     router.delete("/delete-loaisanpham/:tenloai", loaiSanPhamController.delete_loaiSanPham);
     router.put("/update-loaisanpham", loaiSanPhamController.update_loaiSanPham);
+    router.get("/get-loaisanphambydanhmuc", loaiSanPhamController.get_loaiSanPhamByDanhMuc);
 
     //CRUD___khuyenMai
     router.post("/create-khuyenMai", khuyenMaiController.create_khuyenMai);
@@ -85,9 +86,14 @@ let initWebRotes = (app) => {
     router.put("/update-sanpham", sanPhamController.update_sanPham);
     router.get("/find-sanpham", sanPhamController.find_sanPham);
     router.get("/find-sanphambyname", sanPhamController.find_sanPhamByName);
+    router.get("/getnew-sanpham", sanPhamController.getNew_sanPham);
+    router.get("/getkhuyenmai-sanpham", sanPhamController.getKhuyenMai_sanPham);
+    router.post("/getrandom-sanpham", sanPhamController.getRandom_sanPham);
 
     //CRUD___donDatHang
     router.post("/create-dondathang", donDatHangController.create_donDatHang);
+    router.post("/getchitiet-dondathang", donDatHangController.getChiTiet_donDatHang);
+    
     router.get("/getall-dondathang", donDatHangController.getAll_donDatHang);
     router.delete("/delete-dondathang/:madondathang", donDatHangController.delete_donDatHang);
     router.put("/update-dondathang", donDatHangController.update_donDatHang);

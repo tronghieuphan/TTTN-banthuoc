@@ -19,9 +19,6 @@ module.exports = {
             Thanhtien: {
                 type: Sequelize.INTEGER,
             },
-            Ngaydat: {
-                type: Sequelize.DATEONLY,
-            },
 
             createdAt: {
                 allowNull: false,

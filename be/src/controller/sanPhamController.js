@@ -29,6 +29,19 @@ let update_sanPham = async (req, res) => {
     let sanpham = await CRUD_sanPham.updateSanPham(req.body);
     res.status(200).json(sanpham);
 };
+let getNew_sanPham = async (req, res) => {
+    let sanpham = await CRUD_sanPham.getNewSanPham();
+    res.status(200).json(sanpham);
+};
+let getKhuyenMai_sanPham = async (req, res) => {
+    let sanpham = await CRUD_sanPham.getSanPhamKhuyenMai();
+    res.status(200).json(sanpham);
+};
+let getRandom_sanPham = async (req, res) => {
+    console.log(req.body);
+    // let sanpham = await CRUD_sanPham.getRandomSanPham(req.body);
+    // res.status(200).json(sanpham);
+};
 
 module.exports = {
     create_sanPham,
@@ -37,4 +50,7 @@ module.exports = {
     update_sanPham,
     find_sanPham,
     find_sanPhamByName,
+    getNew_sanPham,
+    getKhuyenMai_sanPham,
+    getRandom_sanPham,
 };

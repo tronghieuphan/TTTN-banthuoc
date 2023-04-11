@@ -43,7 +43,7 @@ let createKhuyenMai = async (data) => {
             });
             console.log(khuyenmai);
             if (khuyenmai[1]) {
-                resolve({ message: "Create Successfully",data:khuyenmai[0] });
+                resolve({ message: "Create Successfully", data: khuyenmai[0] });
             } else {
                 resolve({ message: "KhuyenMai Exist" });
             }
@@ -62,11 +62,27 @@ let deleteKhuyenMai = async (tenkm) => {
                     Tenkm: tenkm,
                 },
             });
-            if (tenkm_delete) {
-                await tenkm_delete.destroy();
-                resolve("Delete Successful");
+            let khuyenmainguoidung = await db.chiTietKhuyenMai.findAll({
+                where: {
+                    Makm: tenkm_delete.id,
+                },
+            });
+            let khuyenmaidonhang = await db.donDatHang.findAll({
+                where: {
+                    Makm: tenkm_delete.id,
+                },
+            });
+            if (khuyenmaidonhang.lenght > 0) {
+                resolve("Have DonDatHang belongs KhuyenMai");
+            } else if (khuyenmainguoidung.length > 0) {
+                resolve("Have NguoiDung belongs KhuyenMai");
             } else {
-                resolve("KhuyenMai not exist");
+                if (tenkm_delete) {
+                    await tenkm_delete.destroy();
+                    resolve("Delete Successful");
+                } else {
+                    resolve("KhuyenMai not exist");
+                }
             }
         } catch (e) {
             reject(e);
@@ -100,7 +116,7 @@ let updateKhuyenMai = async (data) => {
                     }
                 );
                 console.log(">>>", upKm);
-                resolve({message:"Update KhuyenMai Successful",data:upKm});
+                resolve({ message: "Update KhuyenMai Successful", data: upKm });
             } else {
                 resolve("KhuyenMai not exist");
             }

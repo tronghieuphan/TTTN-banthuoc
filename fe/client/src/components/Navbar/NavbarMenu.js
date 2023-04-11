@@ -1,10 +1,27 @@
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-// import NavDropdown from "react-bootstrap/NavDropdown";
-import { NavLink } from "react-router-dom";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import { Link, NavLink } from "react-router-dom";
 import "./Nav.scss";
+import { useState, useEffect } from "react";
+import danhMucAPI from "../../services/danhmucAPI";
+import loaiSanPhamAPI from "../../services/loaisanphamAPI";
 function NavbarMenu() {
+    const [danhmuc, setDanhMuc] = useState([]);
+    const [loaiSanPham, setLoaiSanPham] = useState([]);
+    const getAllDM = async () => {
+        const data = await danhMucAPI.getAll();
+        setDanhMuc(data.data);
+    };
+    const getLoaiByDM = async (obj) => {
+        const data = await loaiSanPhamAPI.getLoaiByDanhMuc(obj);
+        setDanhMuc(data.data);
+    };
+    useEffect(() => {
+        getAllDM();
+    }, []);
+
     return (
         <Navbar collapseOnSelect expand="lg" style={{ backgroundColor: "#0644B5" }}>
             <Container>
@@ -12,33 +29,11 @@ function NavbarMenu() {
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <div className="row w-100 text-center fw-bold">
                         <Nav className="me-auto link">
-                            <NavLink className="col-2" to="/" acticveClassName="active">
-                                {/* <NavDropdown
-                                    className="col-2 link hover-nav"
-                                    title="Dropdown"
-                                    menuVariant="white"
-                                >
-                                    <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                                </NavDropdown> */}
-                                Lo
-                            </NavLink>
-
-                            <NavLink className="col-2" to="/login">
-                                Features
-                            </NavLink>
-
-                            <NavLink className="col-2" to="/register">
-                                Features
-                            </NavLink>
-                            <NavLink className="col-2" to="/shopping">
-                                Features
-                            </NavLink>
-                            <NavLink className="col-2" to="/cart">
-                                Features
-                            </NavLink>
-                            <NavLink className="col-2" to="/detail">
-                                Features
-                            </NavLink>
+                            <Link className="col">CHĂM SÓC CÁ NHÂN</Link>
+                            <Link className="col">THỰC PHẨM CHỨC NĂNG</Link>
+                            <Link className="col">DƯỢC MỸ PHẨM</Link>
+                            <Link className="col">THUỐC</Link>
+                            <Link className="col">THIẾT BỊ Y TẾ</Link>
                         </Nav>
                     </div>
                 </Navbar.Collapse>

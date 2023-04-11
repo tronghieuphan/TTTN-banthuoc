@@ -1,11 +1,10 @@
-import { Table, Button, Popconfirm } from "antd";
+import { Table, Button } from "antd";
 import Search from "antd/es/transfer/search";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
-import nhaCungCapAPI from "../../services/nhaCungCapAPI";
+import { Link } from "react-router-dom";
 function DondathangList() {
- 
     const columns = [
         {
             title: "ID",
@@ -27,7 +26,8 @@ function DondathangList() {
         {
             title: "Số điện thoại",
             dataIndex: "Sdt",
-        },  {
+        },
+        {
             title: "Trạng thái",
             dataIndex: "Trangthai",
         },
@@ -60,9 +60,11 @@ function DondathangList() {
             dataIndex: "",
             align: "center",
             render: () => (
-                <Button className="bg-light" onClick={[]}>
-                    <FontAwesomeIcon icon={faEdit} className="text-dark" />
-                </Button>
+                <Link to="/dondathang-detail">
+                    <Button className="bg-light" onClick={[]}>
+                        <FontAwesomeIcon icon={faEdit} className="text-dark" />
+                    </Button>
+                </Link>
             ),
         },
     ];

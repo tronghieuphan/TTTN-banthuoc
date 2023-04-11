@@ -1,7 +1,7 @@
 import express from "express";
 import db from "../models/index";
 import randomId from "./randomId";
-
+var Sequelize = require("sequelize");
 import { Op, where } from "sequelize";
 
 //Hiển thị tất cả sản phẩm
@@ -58,7 +58,7 @@ let createSanPham = async (data) => {
             });
             console.log(sanpham);
             if (sanpham[1]) {
-                resolve({ message: "Create Successfully" ,data:sanpham[0]});
+                resolve({ message: "Create Successfully", data: sanpham[0] });
             } else {
                 resolve({ message: "SanPham Exist" });
             }
@@ -84,7 +84,7 @@ let deleteSanPham = async (tensp) => {
             });
             if (hinhanh.length > 0) {
                 resolve("Have Product Belongs Hinh ảnh");
-            } else{
+            } else {
                 if (tensp_delete) {
                     await tensp_delete.destroy();
                     resolve("Delete Successful");
@@ -92,7 +92,6 @@ let deleteSanPham = async (tensp) => {
                     resolve("SanPham not exist");
                 }
             }
-           
         } catch (e) {
             reject(e);
         }
@@ -133,7 +132,7 @@ let updateSanPham = async (data) => {
                     }
                 );
                 console.log(">>>", upSp);
-                resolve({message:"Update SanPham Successful",data:upSp});
+                resolve({ message: "Update SanPham Successful", data: upSp });
             } else {
                 resolve("SanPham not exist");
             }
@@ -143,28 +142,25 @@ let updateSanPham = async (data) => {
     });
 };
 //
-let findSanPhamByName=(data)=>{
-    return new Promise(async(resolve, reject)=>{
-        try{
-            let name=await db.sanPham.findAll(
-                {
-                    where:{
-                        Tensp:data.datafind
-                    },
-                    raw:true
-                }     
-            ) 
+let findSanPhamByName = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let name = await db.sanPham.findAll({
+                where: {
+                    Tensp: data.datafind,
+                },
+                raw: true,
+            });
             if (name) {
-                    resolve(name);
-                } else {
-                    resolve("Not Found");
-                }
-        }
-        catch(e){
+                resolve(name);
+            } else {
+                resolve("Not Found");
+            }
+        } catch (e) {
             reject(e);
         }
-    })
-}
+    });
+};
 //Tìm theo sản phẩm
 let findSanPham = (data) => {
     return new Promise(async (resolve, reject) => {
@@ -201,11 +197,7 @@ let findSanPham = (data) => {
                     { model: db.loaiSanPham },
                 ],
                 where: {
-                    [Op.or]: [
-                        { Math: id.id },
-                        { Maxx: id.id },
-                        { Maloai: id.id },
-                    ],
+                    [Op.or]: [{ Math: id.id }, { Maxx: id.id }, { Maloai: id.id }],
                 },
                 raw: true,
                 nest: true,
@@ -222,11 +214,56 @@ let findSanPham = (data) => {
     });
 };
 
+let getNewSanPham = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let sanpham = await db.sanPham.findAll({
+                limit: 6,
+                order: [["createdAt", "DESC"]],
+            });
+            resolve(sanpham);
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+let getSanPhamKhuyenMai = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let sanpham = await db.sanPham.findAll({
+                limit: 6,
+                where: { Giakm: { [Op.not]: null } },
+            });
+            resolve(sanpham);
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+let getRandomSanPham = (maloai) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let sanpham = await db.sanPham.findAll({
+                order: [[Sequelize.literal("RAND()")]],
+                limit: 6,
+                where: {
+                    Maloai: maloai.maloai,
+                },
+            });
+            resolve(sanpham);
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
 module.exports = {
     createSanPham,
     getAllSanPham,
     deleteSanPham,
     updateSanPham,
     findSanPham,
-    findSanPhamByName
+    findSanPhamByName,
+    getNewSanPham,
+    getSanPhamKhuyenMai,
+    getRandomSanPham,
 };

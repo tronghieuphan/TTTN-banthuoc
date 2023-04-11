@@ -24,11 +24,16 @@ let update_donDatHang = async (req, res) => {
     let dondathang = await CRUD_donDatHang.updateDonDatHang(req.body);
     res.status(200).json(dondathang);
 };
-
+let getChiTiet_donDatHang = async (req, res) => {
+    let dondathang = await CRUD_donDatHang.getChiTietDDH(req.body);
+    console.log(dondathang);
+    res.status(200).json(dondathang);
+};
 module.exports = {
     create_donDatHang,
     getAll_donDatHang,
     delete_donDatHang,
     update_donDatHang,
     find_donDatHang,
+    getChiTiet_donDatHang,
 };

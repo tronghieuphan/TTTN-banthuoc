@@ -10,6 +10,8 @@ import LoginPage from "../pages/FormLogin/LoginPage";
 import NguoidungList from "../pages/Nguoidung/NguoidungList";
 import NguoidungDetail from "../pages/Nguoidung/NguoidungDetail";
 import SanphamDetail from "../pages/SanPham/SanphamDetail";
+import DondathangList from "../pages/Dondathang/DondathangList";
+import DonDatHangDetail from "../pages/Dondathang/DondathangDetail";
 
 const PageWeb = [
     {
@@ -69,6 +71,16 @@ const PageWeb = [
     {
         path: "/sanpham-detail",
         page: SanphamDetail,
+        isMainLayout: true,
+    },
+    {
+        path: "/dondathang-list",
+        page: DondathangList,
+        isMainLayout: true,
+    },
+    {
+        path: "/dondathang-detail",
+        page: DonDatHangDetail,
         isMainLayout: true,
     },
 ];

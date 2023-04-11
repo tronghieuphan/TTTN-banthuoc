@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import PageWeb from "./routes";
 import HomePageLayout from "./layouts/HomePageLayout/index";
 import LoginRegisterLayout from "./layouts/LoginRegisterLayout/index";
+
 function App() {
     return (
         <>

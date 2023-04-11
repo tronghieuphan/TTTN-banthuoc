@@ -14,7 +14,12 @@ let getAll_loaiSanPham = async (req, res) => {
 let getName_loaiSanPham = async (req, res) => {
     let loaisanpham = await CRUD_loaiSanPham.getByNameLoaiSanPham(req.query);
     res.status(200).json(loaisanpham);
-};
+};   
+let get_loaiSanPhamByDanhMuc = async (req, res) => {
+    let loaisanpham = await CRUD_loaiSanPham.getLoaiSanPhamByDanhMuc(req.body);
+    res.status(200).json(loaisanpham);
+};  
+
 
 let delete_loaiSanPham = async (req, res) => {
     let tenloaisanpham = req.params.tenloai;
@@ -32,4 +37,5 @@ module.exports = {
     delete_loaiSanPham,
     update_loaiSanPham,
     getName_loaiSanPham,
+    get_loaiSanPhamByDanhMuc
 };

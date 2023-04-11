@@ -86,7 +86,7 @@ let createNguoiDung = async (data) => {
 let createNguoiDung_Admin = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            console.log(data)
+            console.log(data);
             let mk = await hashPasswordUser(data.Matkhau);
             console.log("mk: ", mk);
 
@@ -112,7 +112,7 @@ let createNguoiDung_Admin = async (data) => {
             });
             console.log(nguoidung);
             if (nguoidung[1]) {
-                resolve( { message:"Create Successfull",data:nguoidung[0]} );
+                resolve({ message: "Create Successfull", data: nguoidung[0] });
             } else {
                 resolve({ result: "NguoiDung Exist" });
             }

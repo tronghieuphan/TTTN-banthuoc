@@ -184,12 +184,10 @@ function HomePage() {
                     <p className="text-center">
                         <FcFlashOn /> SẢN PHẨM NỔI BẬT <FcFlashOn />
                     </p>
-                    <div className="d-flex flex-wrap">
-                        
-                            {produce.map((produce) => (
-                                <CardProduce produce={produce} />
-                            ))}
-                      
+                    <div className="d-flex flex-wrap justify-content-center">
+                        {produce.map((produce) => (
+                            <CardProduce produce={produce} />
+                        ))}
                     </div>
                 </Section>
             </div>

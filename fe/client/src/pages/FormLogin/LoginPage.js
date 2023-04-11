@@ -1,50 +1,37 @@
 import "./FormLogin.scss";
-import { TextField, Button} from "@mui/material";
 import logo from "../../assets/image/logo.png";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import nguoiDungAPI from "../../services/nguoiDungAPI";
 import { login } from "../../slices/userSlice";
+import { Form, Input, Button } from "antd";
+import { useState } from "react";
 function LoginPage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const init = {
-        tendangnhap: "",
-        matkhau: "",
-    };
-    const [account, setAccount] = useState(init);
-
-    const handleOnChange = (e) => {
-        const { value, name } = e.target;
-        setAccount({
-            ...account,
-            [name]: value,
-        });
-    };
+    const [err, setError] = useState("");
     const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        let obj = {
-            tendangnhap: account.tendangnhap,
-            matkhau: account.matkhau,
-        };
-        if (account.tendangnhap === "" || account.matkhau === "") {
+        if (e.tendangnhap === undefined || e.matkhau === undefined) {
+            setError("Nhập thông tin đầy đủ nào");
         } else {
-            let a = await nguoiDungAPI.login(obj);
-            console.log('a: ', a.data.data);
+            let a = await nguoiDungAPI.login(e);
+            console.log("a: ", a.data);
             if (a.data === "Fail Login") {
+                setError("Tài khoản không tồn tại");
             } else {
                 if (a.data === "Fail Matkhau") {
+                    setError("Mật khẩu không chính xác");
                 } else {
                     dispatch(login(a.data.data));
-                    navigate("/home");
+                    localStorage.setItem("ACCOUNT", JSON.stringify(a.data.data))
+                    navigate("/");
+
                 }
             }
         }
     };
-    
+
     return (
         <>
             <div className="content-center bg-login">
@@ -62,36 +49,25 @@ function LoginPage() {
                         <p className="color-text2">
                             Hãy đăng nhập để được trãi nghiệm website một cách tốt nhất{" "}
                         </p>
+                        <br />
+                        <Form onFinish={handleSubmit} layout="vertical">
+                            <Form.Item name="tendangnhap" label="Tên đăng nhập" className="fw-bold">
+                                <Input className="w-100 py-2" id="standard-basic" />
+                            </Form.Item>
 
-                        <form onSubmit={handleSubmit} method="post">
-                            <TextField
-                                className="w-100 py-2"
-                                id="standard-basic"
-                                label="Tên đăng nhập"
-                                name="tendangnhap"
-                                variant="standard"
-                                onChange={handleOnChange}
-
-                            />
-                            <br />
-                            <TextField
-                                className="w-100 py-2"
-                                id="standard-password-input"
-                                label="Mật khẩu"
-                                type="password"
-                                name="matkhau"
-                                autoComplete="current-password"
-                                variant="standard"
-                                onChange={handleOnChange}
-
-                            />
-                            <br />
-                            <Button className="mt-4 w-100 p-3 fs-5 fw-bold  " variant="contained" type="submit">
+                            <Form.Item name="matkhau" label="Mật khẩu" className="fw-bold">
+                                <Input className="w-100 py-2" type="password" />
+                            </Form.Item>
+                            <span className="text-danger">{err}</span>
+                            <Button type="primary" htmlType="submit" size="large" className="w-100">
                                 Đăng nhập
                             </Button>
-                        </form>
+                        </Form>
                         <p className="pt-3 text-center">
-                            Bạn chưa có tài khoản?<Link to="/register"><div>Tạo tài khoản</div></Link>
+                            Bạn chưa có tài khoản?
+                            <Link to="/register">
+                                <div>Tạo tài khoản</div>
+                            </Link>
                         </p>
                     </div>
                 </div>

@@ -158,7 +158,7 @@ useEffect(() => {
                   {/* Mã loại sp  */}
                   <div className="justify-content-between w-30">
                     <Form.Item
-                      className="my-2 w-33"
+                      className="my-4 w-33"
                       name="maloai"
                       label="Loại sản phẩm"
                       //   initialValue={nguoidung.Thanhpho}
@@ -188,7 +188,7 @@ useEffect(() => {
                   {/* Xuất Xứ */}
                   <div className="justify-content-between w-30">
                     <Form.Item
-                      className="my-2 w-33"
+                      className="my-4 w-33"
                       name="maxx"
                       label="Xuất xứ"
                       //   initialValue={nguoidung.Thanhpho}
@@ -218,7 +218,7 @@ useEffect(() => {
                   {/* Thương hiệu */}
                   <div className="justify-content-between w-30">
                     <Form.Item
-                      className="my-2 w-33"
+                      className="my-4 w-33"
                       name="maxx"
                       label="Thương hiệu"
                       initialValue={thuonghieuAPI.Thanhpho}
@@ -248,7 +248,7 @@ useEffect(() => {
                   {/* Nhà cung cấp */}
                   <div className="justify-content-between w-30">
                     <Form.Item
-                      className="my-2 w-33"
+                      className="my-4 w-33"
                       name="mancc"
                       label="Nhà cung cấp"
                       //   initialValue={nguoidung.Thanhpho}

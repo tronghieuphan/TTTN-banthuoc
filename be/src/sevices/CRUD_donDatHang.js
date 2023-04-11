@@ -8,8 +8,7 @@ let getAllDonDatHang = async () => {
     return new Promise(async (resolve, reject) => {
         try {
             let listDonDatHang = await db.donDatHang.findAll();
-            let count = await db.donDatHang.count();
-            if (count > 0) {
+            if (listDonDatHang.length > 0) {
                 resolve(listDonDatHang);
             } else {
                 resolve("List null");
@@ -24,74 +23,61 @@ let getAllDonDatHang = async () => {
 let createDonDatHang = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let dondathang = await db.donDatHang.create({
-                id: randomId.randomId("DH"),
+            // console.log(data);
+            const Maddh = await randomId.randomId("DH");
+            let donhang = await db.donDatHang.create({
+                id: Maddh,
                 Ngaydathang: data.Ngaydathang,
                 Tongtien: data.Tongtien,
                 Pttt: data.Pttt,
+                Trangthai: data.Trangthai,
                 Sdt: data.Sdt,
                 Phuong: data.Phuong,
                 Quan: data.Quan,
                 Thanhpho: data.Thanhpho,
-                Trangthai: data.Trangthai,
                 Ghichu: data.Ghichu,
                 Mand: data.Mand,
                 Makm: data.Makm,
             });
-            console.log(dondathang);
-
-            resolve({ message: "Create Successfully",data:dondathang });
-        } catch (e) {
-            reject(e);
-        }
-    });
-};
-//Thêm đơn đặt hàng
-let createChitiet = async (data) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            let chitiet = await db.chiTietDonHang.create({
-                Maddh: randomId.randomId("DH"),
-                Ngaydathang: data.Ngaydathang,
-                Tongtien: data.Tongtien,
-                Pttt: data.Pttt,
-                Sdt: data.Sdt,
-                Phuong: data.Phuong,
-                Quan: data.Quan,
-                Thanhpho: data.Thanhpho,
-                Trangthai: data.Trangthai,
-                Ghichu: data.Ghichu,
-                Mand: data.Mand,
-                Makm: data.Makm,
-            });
-            console.log(dondathang);
-
+            console.log(donhang);
+            let listSp = data.ListSP;
+            console.log("listSp : ", listSp);
+            listSp &&
+                listSp.map(async (a) => {
+                    console.log("a: ", a);
+                    await db.chiTietDonDatHang.create({
+                        Maddh: Maddh,
+                        Masp: a.Masp,
+                        Soluong: a.Soluong,
+                        Thanhtien: a.Thanhtien,
+                    });
+                });
             resolve({ message: "Create Successfully" });
         } catch (e) {
             reject(e);
         }
     });
 };
-//Xóa đơn đặt hàng
-let deleteDonDatHang = async (madondathang) => {
+
+let getChiTietDDH = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let madon = await db.donDatHang.findOne({
+            console.log(data);
+            const chitietddh = await db.donDatHang.findOne({
+                include: [{ model: db.sanPham}],
+                rest: true,
                 where: {
-                    id: madondathang.madondathang,
+                    id: data.id,
                 },
             });
-            if (madon) {
-                await madon.destroy();
-                resolve("Delete Successful");
-            } else {
-                resolve("Dondathang not exist");
-            }
+            resolve(chitietddh.sanPhams);
         } catch (e) {
             reject(e);
         }
     });
 };
+
+
 //Cập nhập đơn đặt hàng
 let updateDonDatHang = async (data) => {
     return new Promise(async (resolve, reject) => {
@@ -124,7 +110,7 @@ let updateDonDatHang = async (data) => {
                     }
                 );
                 console.log(">>>", upDDH);
-                resolve({message:"Update DonDatHang Successful",data:upDDH});
+                resolve({ message: "Update DonDatHang Successful", data: upDDH });
             } else {
                 resolve("DonDatHang not exist");
             }
@@ -158,7 +144,7 @@ let findDonDatHang = (data) => {
 module.exports = {
     createDonDatHang,
     getAllDonDatHang,
-    deleteDonDatHang,
     updateDonDatHang,
     findDonDatHang,
+    getChiTietDDH,
 };
