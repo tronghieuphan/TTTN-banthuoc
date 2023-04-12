@@ -8,6 +8,7 @@ import CardProduce from "../../components/Card/CardProduct/CartProduct";
 import { GiMedicines } from "react-icons/gi";
 import { FaShippingFast } from "react-icons/fa";
 import { MdSecurity } from "react-icons/md";
+import CardProduceDiscount from "../../components/Card/CardProduct/CardProductDiscount";
 
 function HomePage() {
     const info = [
@@ -126,10 +127,11 @@ function HomePage() {
 
     return (
         <>
-            <div className="row w-100 h-50">
+            <div className="row w-100 h-50 my-3">
                 <div className="col-md-8">
                     <Slider />
                 </div>
+                
                 <div className="col-md-4 mt-4">
                     <Image
                         className="d-block customers-carousel-img w-100 mb-3 height-slide rounded-5"
@@ -171,9 +173,9 @@ function HomePage() {
             </div>
             <Section>
                 <p>
-                    <FcLike /> DANH MỤC NỔI BẬT <FcLike />
+                    <FcLike /> LOẠI SẢN PHẨM NỔI BẬT <FcLike />
                 </p>
-                <div className="d-flex flex-wrap justify-content-between">
+                <div className="d-flex flex-wrap justify-content-center">
                     {cartcategory.map((cartcategory) => (
                         <Cardcate cartcategory={cartcategory} />
                     ))}
@@ -187,6 +189,19 @@ function HomePage() {
                     <div className="d-flex flex-wrap justify-content-center">
                         {produce.map((produce) => (
                             <CardProduce produce={produce} />
+                        ))}
+                    </div>
+                </Section>
+            </div>
+            <div className="section_5">
+                <Section>
+                    <p>
+                        <FcLike />
+                        SẢN PHẨM KHUYẾN MÃI <FcLike />
+                    </p>
+                    <div className="d-flex flex-wrap justify-content-center">
+                    {produce.map((produce) => (
+                            <CardProduceDiscount produce={produce} />
                         ))}
                     </div>
                 </Section>

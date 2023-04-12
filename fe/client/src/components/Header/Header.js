@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../slices/userSlice";
 function Header() {
+    const { account } = useSelector((state) => state.user);
     const setAccountLS = JSON.parse(localStorage.getItem("ACCOUNT"));
     console.log(">>>", setAccountLS);
     const dispatch = useDispatch();
@@ -15,6 +16,7 @@ function Header() {
 
     const handleLogout = () => {
         dispatch(logout());
+        localStorage.removeItem("ACCOUNT");
         navigate("/");
     };
     return (
@@ -40,7 +42,7 @@ function Header() {
                             <div className="col">
                                 <Card />
                             </div>
-                            {setAccountLS.id ? (
+                            {setAccountLS ? (
                                 <div className="col">
                                     <div className="col-10">
                                         <Dropdown>

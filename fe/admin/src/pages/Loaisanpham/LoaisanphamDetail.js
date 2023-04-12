@@ -1,11 +1,11 @@
-import { Input, Button, Form } from "antd";
+import { Input, Button, Select } from "antd";
 import { motion } from "framer-motion";
 import React from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import { setDataLSP } from "../../slices/loaisanphamdanhmucSlice";
-
+import danhMucAPI from "../../services/danhMucAPI";
 function LoaisanphamDetail(props) {
     //GỌI PROPS TỪ LIST
     const handleCreate = props.handleCreate;
@@ -13,34 +13,40 @@ function LoaisanphamDetail(props) {
     const handleUpdate2 = props.handleUpdate;
 
     const { loaisanpham } = useSelector((state) => state.lspdm);
+
     const dispatch = useDispatch();
     //SET GIÁ TRỊ CHO BIẾN
     const [tenloai, setTenloai] = useState("");
-    const [madm, setMadm] = useState("");
-    
-
+    const [danhmuc, setDanhMuc] = useState([]);
+    const [valueDM, setValueDM] = useState("");
+    const getAllDM = async () => {
+        const data = await danhMucAPI.getAll();
+        setDanhMuc(data.data);
+    };
     //SET STORE TRUYỀN DỮ LIỆU TRỪ LIST QUA CHO DETAIL
     useEffect(() => {
         setTenloai(loaisanpham.Tenloai);
-        setMadm(loaisanpham.Madm);
+        setValueDM(loaisanpham.Madm);
+        getAllDM();
     }, [loaisanpham]);
 
     //XỬ LÝ NHẬP LIỆU
     const handleOnChange = (e) => {
         setTenloai(e.target.value);
     };
-    const handleOnChange2 = (e) => {
-        setMadm(e.target.value);
+    const onChange = (value) => {
+        setValueDM(value);
     };
-    
-
+    const onSearch = (value) => {
+        console.log("search:", value);
+    };
     // XỬ LÝ THÊM SỬA
     const handleSubmit = (e) => {
         e.preventDefault();
         let obj = {
             id: loaisanpham.id,
             Tenloai: tenloai, // biến Tendm phải ghi đúng với phần data.Tenloai bên be
-            Madm: madm
+            Madm: valueDM,
         };
         console.log(">>>", obj);
         Swal.fire({
@@ -65,6 +71,7 @@ function LoaisanphamDetail(props) {
                 //CREATE
                 else {
                     handleCreate(obj);
+                    handleReset();
                 }
             }
         });
@@ -73,7 +80,7 @@ function LoaisanphamDetail(props) {
     //RESET LẠI GIÁ TRỊ VỀ BAN ĐẦU
     const handleReset = () => {
         setTenloai("");
-        setMadm("");
+        setValueDM("");
         dispatch(setDataLSP([]));
     };
     return (
@@ -99,49 +106,41 @@ function LoaisanphamDetail(props) {
                                         value={tenloai || ""}
                                         onChange={handleOnChange}
                                     />
-                                    <label className="m-1 w-100">Mã danh mục:</label>
-                                    <Input
+                                    <label className="m-1 w-100">Chọn danh mục:</label>
+                                    <Select
                                         className="m-1 w-100"
-                                        id="outlined-basic"
-                                        label="Mã danh mục"
-                                        variant="outlined"
-                                        type="text"
-                                        name="madm"
-                                        value={madm || ""}
-                                        onChange={handleOnChange2}
-                                    />
-                                    {/* <Form.Item
-                                        className="m-1 w-33"
-                                        name="madm"
-                                        label="Mã danh mục"
-                                        initialValue={loaisanpham.Madm}
-                                    >
-                                        <Input className="m-1 w-100" id="outlined-basic" />
-                                    </Form.Item> */}
-                                    
-                                    {/* <button
-                                        type="submit"
-                                        className="mx-2"
+                                        showSearch
                                         style={{
-                                            background: "#1677FF",
-                                            color: "#fff",
-                                            border: "1px solid #1677FF",
-                                            padding: "3px 15px",
-                                            borderRadius: "5px",
+                                            width: 160,
                                         }}
-                                    >
-                                        {loaisanpham.Tenloai  ? "Lưu" : "Thêm"}
-                                        {loaisanpham.Madm ? "Lưu" : "Thêm"}
-                                    </button> */}
-                                    <Form.Item>
+                                        placeholder="Chọn danh mục"
+                                        optionFilterProp="children"
+                                        onSearch={onSearch}
+                                        onChange={onChange}
+                                        value={loaisanpham.Madm || valueDM}
+                                        filterOption={(input, option) =>
+                                            (option?.label ?? "")
+                                                .toLowerCase()
+                                                .includes(input.toLowerCase())
+                                        }
+                                        options={danhmuc.map((item) => ({
+                                            value: item.id,
+                                            label: item.Tendm,
+                                        }))}
+                                    />
+                                    <div className="d-flex justify-content-center">
                                         <Button type="primary" htmlType="submit" className="m-2">
-                                        {loaisanpham.Tenloai  ? "Lưu" : "Thêm"}
+                                            {loaisanpham.Tenloai ? "Lưu" : "Thêm"}
                                         </Button>
-                                    </Form.Item>
 
-                                    <Button type="primary" onClick={handleReset}>
-                                        Hủy
-                                    </Button>
+                                        <Button
+                                            type="primary"
+                                            onClick={handleReset}
+                                            className="m-2"
+                                        >
+                                            Hủy
+                                        </Button>
+                                    </div>
                                 </div>
                             </div>
                         </form>

@@ -10,7 +10,7 @@ import nguoiDungAPI from "../../services/nguoiDungAPI";
 import { Link } from "react-router-dom";
 import { setDataNd } from "../../slices/dataAdd";
 function NguoidungDetail() {
-    const [city, listCity] = useState([]);  
+    const [city, listCity] = useState([]);
     const [district, listDistrict] = useState([]);
     const [ward, listWard] = useState([]);
     const [swicth, setSwitch] = useState(true);
@@ -219,8 +219,16 @@ function NguoidungDetail() {
                                         </Form.Item>
                                     </div>
                                     <div className="justify-content-between w-30 ">
-                                        <Form.Item name="Ngaysinh" label="Ngày sinh" className="m-1 w-33" >
-                                            <DatePicker className="m-1 w-100" picker="date" onChange={onChangeDate} />
+                                        <Form.Item
+                                            name="Ngaysinh"
+                                            label="Ngày sinh"
+                                            className="m-1 w-33"
+                                        >
+                                            <DatePicker
+                                                className="m-1 w-100"
+                                                picker="date"
+                                                onChange={onChangeDate}
+                                            />
                                         </Form.Item>
                                     </div>
 
@@ -272,7 +280,7 @@ function NguoidungDetail() {
                                         >
                                             <Select
                                                 className="m-1 w-100"
-                                                showSearch 
+                                                showSearch
                                                 style={{
                                                     width: 160,
                                                 }}
@@ -358,7 +366,11 @@ function NguoidungDetail() {
                                             label="Email"
                                             initialValue={nguoidung.Email}
                                         >
-                                            <Input className="m-1 w-100" label="Email" type="email" />
+                                            <Input
+                                                className="m-1 w-100"
+                                                label="Email"
+                                                type="email"
+                                            />
                                         </Form.Item>
                                     </div>
                                     <div className="justify-content-between w-30">

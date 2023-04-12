@@ -5,10 +5,10 @@ import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setDataLSP } from "../../slices/loaisanphamdanhmucSlice";
-import loaiSanPhamAPI from "../../services/loaiSanPhamAPI";
 import LoaisanphamDetail from "./LoaisanphamDetail";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
+import loaiSanPhamAPI from "../../services/loaiSanPham";
 import { SearchOutlined } from "@ant-design/icons";
 import { successDialog, deleteSuccess, exist } from "../../components/Dialog/Dialog";
 
@@ -45,7 +45,6 @@ function LoaisanphamList() {
     const handleGetDataToCreate = (record) => {
         dispatch(setDataLSP(record));
     };
-
 
     //XÓA
     const handleDelete = async (record) => {
@@ -122,9 +121,10 @@ function LoaisanphamList() {
     return (
         <>
             <motion.div
-                initial={{ opacity:0 }}
-                animate={{ opacity:1 }}
-                exit={{opacity:0 , transition: {duration:0.8} }}  >
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0, transition: { duration: 0.8 } }}
+            >
                 <div className="m-4 ">
                     <div className="bd-radius bg-content p-4 text-muted fw-bold">
                         <div className="d-flex justify-content-between">
@@ -159,9 +159,9 @@ function LoaisanphamList() {
                                 />
                             </div>
                             <div className="col-md-5">
-                                <LoaisanphamDetail 
-                                handleCreate={handleCreate}
-                                handleUpdate={handleUpdate}
+                                <LoaisanphamDetail
+                                    handleCreate={handleCreate}
+                                    handleUpdate={handleUpdate}
                                 />
                             </div>
                         </div>

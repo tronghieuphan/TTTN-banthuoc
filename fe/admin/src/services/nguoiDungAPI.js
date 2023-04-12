@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 const nguoiDungAPI = {
     getAll: () => {
         return axios.get(`http://localhost:9000/getall-nguoidung`);
@@ -16,6 +15,9 @@ const nguoiDungAPI = {
     },
     delete: (nguoidung_name) => {
         return axios.delete(`http://localhost:9000/delete-nguoidung/${nguoidung_name}`);
+    },
+    login: (obj) => {
+        return axios.post(`http://localhost:9000/login-nguoidung`, obj);
     },
 };
 
