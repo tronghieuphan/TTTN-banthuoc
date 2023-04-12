@@ -36,7 +36,6 @@ function LoaisanphamList() {
     useEffect(() => {
         getAllDm();
     }, []);
-    console.log("listLoaisanpham: ", listLoaisanpham);
 
     const handleChange = (e) => {
         setValueSearch(e.target.value);

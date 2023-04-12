@@ -12,6 +12,7 @@ import { setDataHa } from "../../slices/dataAdd";
     const [listHa, setList] = useState([]);
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
+
     const getAllHa = async () => {
         try {
             setLoading(true);
@@ -28,6 +29,7 @@ import { setDataHa } from "../../slices/dataAdd";
 
     const handleAddStore = (record) => {
         dispatch(setDataHa(record));
+        getAllHa()
     };
 
     // dellete

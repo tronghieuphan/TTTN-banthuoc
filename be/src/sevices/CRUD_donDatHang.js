@@ -30,7 +30,7 @@ let createDonDatHang = async (data) => {
                 Ngaydathang: data.Ngaydathang,
                 Tongtien: data.Tongtien,
                 Pttt: data.Pttt,
-                Trangthai: data.Trangthai,
+                Trangthai: 0,
                 Sdt: data.Sdt,
                 Phuong: data.Phuong,
                 Quan: data.Quan,
@@ -64,7 +64,7 @@ let getChiTietDDH = async (data) => {
         try {
             console.log(data);
             const chitietddh = await db.donDatHang.findOne({
-                include: [{ model: db.sanPham}],
+                include: [{ model: db.sanPham }],
                 rest: true,
                 where: {
                     id: data.id,
@@ -77,43 +77,32 @@ let getChiTietDDH = async (data) => {
     });
 };
 
-
 //Cập nhập đơn đặt hàng
 let updateDonDatHang = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let findDonDatHang = await db.donDatHang.findOne({
-                where: {
-                    id: data.Id,
+            let upDDH = await db.donDatHang.update(
+                {
+                    Ngaydathang: data.Ngaydathang,
+                    Tongtien: data.Tongtien,
+                    Pttt: data.Pttt,
+                    Sdt: data.Sdt,
+                    Phuong: data.Phuong,
+                    Quan: data.Quan,
+                    Thanhpho: data.Thanhpho,
+                    Trangthai: data.Trangthai,
+                    Ghichu: data.Ghichu,
+                    Mand: data.Mand,
+                    Makm: data.Makm,
                 },
-            });
-            console.log("findDonDatHang: ", findDonDatHang);
-            if (findDonDatHang) {
-                let upDDH = await db.donDatHang.update(
-                    {
-                        Ngaydathang: data.Ngaydathang,
-                        Tongtien: data.Tongtien,
-                        Pttt: data.Pttt,
-                        Sdt: data.Sdt,
-                        Phuong: data.Phuong,
-                        Quan: data.Quan,
-                        Thanhpho: data.Thanhpho,
-                        Trangthai: data.Trangthai,
-                        Ghichu: data.Ghichu,
-                        Mand: data.Mand,
-                        Makm: data.Makm,
+                {
+                    where: {
+                        id: data.id,
                     },
-                    {
-                        where: {
-                            id: data.Id,
-                        },
-                    }
-                );
-                console.log(">>>", upDDH);
-                resolve({ message: "Update DonDatHang Successful", data: upDDH });
-            } else {
-                resolve("DonDatHang not exist");
-            }
+                }
+            );
+            console.log(">>>", upDDH);
+            resolve({ message: "Update DonDatHang Successful", data: upDDH });
         } catch (e) {
             reject(e);
         }

@@ -1,12 +1,27 @@
 import { Button, Table } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {  faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { motion } from "framer-motion";
+import { useSelector } from "react-redux";
+import dondathangAPI from "../../services/donDatHangAPI";
 function DonDatHangDetail() {
+    const { dondathang } = useSelector((state) => state.dataAdd);
+    const [listchitiet, setChiTiet] = useState([]);
+    let id = {
+        id: dondathang.id,
+    };
+    const getChitiet = async (id) => {
+        const data = await dondathangAPI.getChiTietSanPham(id);
+        setChiTiet(data.data);
+    };
+    useEffect(() => {
+        getChitiet(id);
+    }, [dondathang]);
     const columns = [
         {
             title: "Mã sản phẩm",
-            dataIndex: "Masp",
+            dataIndex: "id",
         },
         {
             title: "Tên sản phẩm",
@@ -24,29 +39,25 @@ function DonDatHangDetail() {
             title: "Thành tiền",
             dataIndex: "Thanhtien",
         },
-        {
-            title: "Sửa",
-            dataIndex: "",
-            align: "center",
-            render: () => (
-                <Button className="bg-light" onClick={[]}>
-                    <FontAwesomeIcon icon={faEdit} className="text-dark" />
-                </Button>
-            ),
-        },
     ];
     return (
         <>
-            <div className="m-4 ">
-                <div className="bd-radius bg-content p-4 text-muted fw-bold">
-                    <div className="d-flex justify-content-between">
-                        <p className="fs-3 w-75">THÔNG TIN CHI TIẾT ĐƠN ĐẶT HÀNG</p>
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0, transition: { duration: 0.8 } }}
+            >
+                <div className="m-4 ">
+                    <div className="bd-radius bg-content p-4 text-muted fw-bold">
+                        <div className="d-flex justify-content-between">
+                            <p className="fs-3 w-75">THÔNG TIN CHI TIẾT ĐƠN ĐẶT HÀNG</p>
+                        </div>
+                        <hr className="w-100 " />
+                        <br />
+                        <Table columns={columns} dataSource={listchitiet} />
                     </div>
-                    <hr className="w-100 " />
-                    <br />
-                    <Table columns={columns} dataSource={[]}/>
                 </div>
-            </div>
+            </motion.div>
         </>
     );
 }

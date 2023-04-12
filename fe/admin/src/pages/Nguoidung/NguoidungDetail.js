@@ -6,9 +6,9 @@ import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 import { exist, successDialog } from "../../components/Dialog/Dialog";
 import { useSelector, useDispatch } from "react-redux";
-import nguoiDungAPI from "../../services/nguoiDungAPI";
 import { Link } from "react-router-dom";
 import { setDataNd } from "../../slices/dataAdd";
+import nguoiDungAPI from "../../services/nguoiDungAPI";
 function NguoidungDetail() {
     const [city, listCity] = useState([]);
     const [district, listDistrict] = useState([]);
@@ -47,12 +47,11 @@ function NguoidungDetail() {
     useEffect(() => {
         getAllCity();
     }, []);
-    const onChange = (e) => {
-        console.log(">>>", e);
-        // getAllDistrict(e);
+    const onChange = (e, obj) => {
+        getAllDistrict(obj.id);
     };
-    const onChangeDistrict = (e) => {
-        getAllWard(e);
+    const onChangeDistrict = (e, obj) => {
+        getAllWard(obj.id);
     };
     const onSearch = (value) => {
         console.log("search:", value);
@@ -294,8 +293,9 @@ function NguoidungDetail() {
                                                         .includes(input.toLowerCase())
                                                 }
                                                 options={arraycity.map((item) => ({
-                                                    value: item.code,
+                                                    value: item.name,
                                                     label: item.name,
+                                                    id: item.code,
                                                 }))}
                                             />
                                         </Form.Item>
@@ -324,8 +324,9 @@ function NguoidungDetail() {
                                                         .includes(input.toLowerCase())
                                                 }
                                                 options={arraydistrict.map((item) => ({
-                                                    value: item.code,
+                                                    value: item.name,
                                                     label: item.name,
+                                                    id: item.code,
                                                 }))}
                                             />
                                         </Form.Item>
@@ -353,7 +354,7 @@ function NguoidungDetail() {
                                                         .includes(input.toLowerCase())
                                                 }
                                                 options={arrayward.map((item) => ({
-                                                    value: item.code,
+                                                    value: item.name,
                                                     label: item.name,
                                                 }))}
                                             />

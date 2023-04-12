@@ -50,8 +50,6 @@ function NguoidungList() {
     const getByName = async () => {
         setLoading(true);
         const data = await nguoiDungAPI.getByName(keysearch);
-        console.log("keysearch: ", keysearch);
-        console.log("data.data: ", data.data);
         setList(data.data);
 
         setLoading(false);
