@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import dondathangAPI from "../../services/donDatHangAPI";
 function DonDatHangDetail() {
     const { dondathang } = useSelector((state) => state.dataAdd);
@@ -11,6 +12,12 @@ function DonDatHangDetail() {
     let id = {
         id: dondathang.id,
     };
+
+    let obj = {
+        ...listchitiet.sanpham,
+        Tensp: listchitiet.thongtin,
+    };
+    console.log("obj: ", obj);
     const getChitiet = async (id) => {
         const data = await dondathangAPI.getChiTietSanPham(id);
         setChiTiet(data.data);
@@ -21,7 +28,7 @@ function DonDatHangDetail() {
     const columns = [
         {
             title: "Mã sản phẩm",
-            dataIndex: "id",
+            dataIndex: "Masp",
         },
         {
             title: "Tên sản phẩm",
@@ -54,7 +61,7 @@ function DonDatHangDetail() {
                         </div>
                         <hr className="w-100 " />
                         <br />
-                        <Table columns={columns} dataSource={listchitiet} />
+                        <Table columns={columns} dataSource={[]} />
                     </div>
                 </div>
             </motion.div>

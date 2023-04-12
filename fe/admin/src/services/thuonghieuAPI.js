@@ -12,13 +12,12 @@ const thuonghieuAPI = {
     create: (obj) => {
         return axios.post(`http://localhost:9000/create-thuonghieu`, obj);
     },
-    update: (thuonghieu_id, obj) => {
-        return axios.put(`http://localhost:9000/update/${thuonghieu_id}`, obj);
+    update: (obj) => {
+        return axios.put(`http://localhost:9000/update-thuonghieu`, obj);
     },
     delete: (thuonghieu_name) => {
         return axios.delete(`http://localhost:9000/delete-thuonghieu/${thuonghieu_name}`);
     },
-
 };
 
 export default thuonghieuAPI;

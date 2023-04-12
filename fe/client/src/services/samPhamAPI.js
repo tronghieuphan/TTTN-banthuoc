@@ -13,6 +13,9 @@ const sanPhamAPI = {
     getSanPhamLienQuan: () => {
         return axios.get(`http://localhost:9000/getrandom-sanpham`);
     },
+    getSanPhamTrungBay: () => {
+        return axios.get(`http://localhost:9000/gettrungbay-sanpham`);
+    },
 };
 
 export default sanPhamAPI;

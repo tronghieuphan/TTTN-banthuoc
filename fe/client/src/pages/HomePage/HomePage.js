@@ -8,9 +8,21 @@ import CardProduce from "../../components/Card/CardProduct/CartProduct";
 import { GiMedicines } from "react-icons/gi";
 import { FaShippingFast } from "react-icons/fa";
 import { MdSecurity } from "react-icons/md";
+import { useEffect, useState } from "react";
 import CardProduceDiscount from "../../components/Card/CardProduct/CardProductDiscount";
+import sanPhamAPI from "../../services/samPhamAPI";
 
 function HomePage() {
+    const [sptrungbay, setSPTrungBay] = useState([]);
+    console.log('sptrungbay: ', sptrungbay);
+    const getSanPhamTrungBay = async () => {
+        const data = await sanPhamAPI.getSanPhamTrungBay();
+        setSPTrungBay(data.data);
+    };
+
+    useEffect(() => {
+        getSanPhamTrungBay();
+    }, []);
     const info = [
         {
             picture: "https://i.imgur.com/ZMBeY33.png",
@@ -131,7 +143,7 @@ function HomePage() {
                 <div className="col-md-8">
                     <Slider />
                 </div>
-                
+
                 <div className="col-md-4 mt-4">
                     <Image
                         className="d-block customers-carousel-img w-100 mb-3 height-slide rounded-5"
@@ -187,8 +199,8 @@ function HomePage() {
                         <FcFlashOn /> SẢN PHẨM NỔI BẬT <FcFlashOn />
                     </p>
                     <div className="d-flex flex-wrap justify-content-center">
-                        {produce.map((produce) => (
-                            <CardProduce produce={produce} />
+                        {sptrungbay.map((value) => (
+                            <CardProduce produce={value} key={value.id} />
                         ))}
                     </div>
                 </Section>
@@ -200,7 +212,7 @@ function HomePage() {
                         SẢN PHẨM KHUYẾN MÃI <FcLike />
                     </p>
                     <div className="d-flex flex-wrap justify-content-center">
-                    {produce.map((produce) => (
+                        {produce.map((produce) => (
                             <CardProduceDiscount produce={produce} />
                         ))}
                     </div>

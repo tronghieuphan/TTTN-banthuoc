@@ -84,7 +84,7 @@ function NguoidungDetail() {
     const handleSubmit = (e) => {
         let obj = {
             ...e,
-            Ngaysinh: date,
+            Ngaysinh: date.value,
         };
         console.log("obj: ", obj);
         Swal.fire({
@@ -112,11 +112,16 @@ function NguoidungDetail() {
         });
     };
 
-    const [date, SetDate] = useState("");
+    const [date, SetDate] = useState([]);
+    console.log("date: ", date);
     const onChangeDate = (date, dateString) => {
-        console.log(date, ">>>", dateString);
-        SetDate(dateString);
+        let obj = {
+            id: date,
+            value: dateString,
+        };
+        SetDate(obj);
     };
+
     console.log(date);
     // Lấy API Thành Phố
     let arraycity = [];
@@ -167,11 +172,12 @@ function NguoidungDetail() {
                                             name="Loaind"
                                             label="Loại người dùng"
                                             initialValue={
-                                                nguoidung.Loaind === 1
-                                                    ? "Khách hàng thành viên"
-                                                    : nguoidung.Loaind === 2
-                                                    ? "Khách vãng lai"
-                                                    : "Nhân viên"
+                                                nguoidung.Loaind
+                                                // nguoidung.Loaind === 1
+                                                //     ? "Khách hàng thành viên"
+                                                //     : nguoidung.Loaind === 2
+                                                //     ? "Khách vãng lai"
+                                                //     : "Nhân viên"
                                             }
                                         >
                                             <Select

@@ -1,4 +1,4 @@
-import { Input, Button, Select } from "antd";
+import { Input, Button, Select, Form } from "antd";
 import { motion } from "framer-motion";
 import React from "react";
 import { useState, useEffect } from "react";
@@ -107,17 +107,18 @@ function LoaisanphamDetail(props) {
                                         onChange={handleOnChange}
                                     />
                                     <label className="m-1 w-100">Chọn danh mục:</label>
+
                                     <Select
                                         className="m-1 w-100"
                                         showSearch
                                         style={{
                                             width: 160,
                                         }}
+                                        value= {valueDM}
                                         placeholder="Chọn danh mục"
                                         optionFilterProp="children"
                                         onSearch={onSearch}
                                         onChange={onChange}
-                                        value={loaisanpham.Madm || valueDM}
                                         filterOption={(input, option) =>
                                             (option?.label ?? "")
                                                 .toLowerCase()

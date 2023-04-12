@@ -256,6 +256,19 @@ let getRandomSanPham = (maloai) => {
         }
     });
 };
+let getRandomSanPhamTrungBay = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let sanpham = await db.sanPham.findAll({
+                order: [[Sequelize.literal("RAND()")]],
+                limit: 12
+            });
+            resolve(sanpham);
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
 module.exports = {
     createSanPham,
     getAllSanPham,
@@ -266,4 +279,5 @@ module.exports = {
     getNewSanPham,
     getSanPhamKhuyenMai,
     getRandomSanPham,
+    getRandomSanPhamTrungBay
 };

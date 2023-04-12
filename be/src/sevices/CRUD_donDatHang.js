@@ -64,13 +64,19 @@ let getChiTietDDH = async (data) => {
         try {
             console.log(data);
             const chitietddh = await db.donDatHang.findOne({
-                include: [{ model: db.sanPham }],
+                include: [{ model: db.sanPham, attributes: ["id", "Tensp", "Dongia"] }],
                 rest: true,
                 where: {
                     id: data.id,
                 },
             });
-            resolve(chitietddh.sanPhams);
+
+            // const chitietddh1 = await db.chiTietDonDatHang.findAll({
+            //     where: {
+            //         Maddh: data.id,
+            //     },
+            // });
+            resolve({ sanpham: chitietddh});
         } catch (e) {
             reject(e);
         }
