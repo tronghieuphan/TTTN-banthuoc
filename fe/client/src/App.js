@@ -2,6 +2,9 @@ import { Routes, Route } from "react-router-dom";
 import PageWeb from "./routes";
 import HomePageLayout from "./layouts/HomePageLayout/index";
 import LoginRegisterLayout from "./layouts/LoginRegisterLayout/index";
+import { ToastContainer, toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
     return (
@@ -26,7 +29,19 @@ function App() {
                     );
                 })}
             </Routes>
-           
+            <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
+            <ToastContainer />
         </>
     );
 }

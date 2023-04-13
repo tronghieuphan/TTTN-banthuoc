@@ -82,11 +82,6 @@ function NguoidungDetail() {
     };
     // XỬ LÝ THÊM SỬA
     const handleSubmit = (e) => {
-        let obj = {
-            ...e,
-            Ngaysinh: date.value,
-        };
-        console.log("obj: ", obj);
         Swal.fire({
             title: "BẠN CÓ MUỐN LƯU THÔNG TIN?",
             confirmButtonText: "Lưu",
@@ -101,28 +96,16 @@ function NguoidungDetail() {
             if (result.isConfirmed) {
                 // UPDATE
                 if (nguoidung.id) {
-                    // console.log(">>>>");
-                    handleUpdate(obj);
+                    handleUpdate(e);
                 }
                 //CREATE
                 else {
-                    handleCreate(obj);
+                    handleCreate(e);
                 }
             }
         });
     };
 
-    const [date, SetDate] = useState([]);
-    console.log("date: ", date);
-    const onChangeDate = (date, dateString) => {
-        let obj = {
-            id: date,
-            value: dateString,
-        };
-        SetDate(obj);
-    };
-
-    console.log(date);
     // Lấy API Thành Phố
     let arraycity = [];
     let arraydistrict = [];
@@ -228,12 +211,9 @@ function NguoidungDetail() {
                                             name="Ngaysinh"
                                             label="Ngày sinh"
                                             className="m-1 w-33"
+                                            initialValue={nguoidung.Ngaysinh}
                                         >
-                                            <DatePicker
-                                                className="m-1 w-100"
-                                                picker="date"
-                                                onChange={onChangeDate}
-                                            />
+                                            <Input className="m-1 w-100" type="date" />
                                         </Form.Item>
                                     </div>
 

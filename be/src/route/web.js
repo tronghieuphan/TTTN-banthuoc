@@ -95,7 +95,6 @@ let initWebRotes = (app) => {
     //CRUD___donDatHang
     router.post("/create-dondathang", donDatHangController.create_donDatHang);
     router.post("/getchitiet-dondathang", donDatHangController.getChiTiet_donDatHang);
-
     router.get("/getall-dondathang", donDatHangController.getAll_donDatHang);
     router.delete("/delete-dondathang/:madondathang", donDatHangController.delete_donDatHang);
     router.put("/update-dondathang", donDatHangController.update_donDatHang);

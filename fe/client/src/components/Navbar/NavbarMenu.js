@@ -8,20 +8,6 @@ import { useState, useEffect } from "react";
 import danhMucAPI from "../../services/danhmucAPI";
 import loaiSanPhamAPI from "../../services/loaisanphamAPI";
 function NavbarMenu() {
-    const [danhmuc, setDanhMuc] = useState([]);
-    const [loaiSanPham, setLoaiSanPham] = useState([]);
-    const getAllDM = async () => {
-        const data = await danhMucAPI.getAll();
-        setDanhMuc(data.data);
-    };
-    const getLoaiByDM = async (obj) => {
-        const data = await loaiSanPhamAPI.getLoaiByDanhMuc(obj);
-        setDanhMuc(data.data);
-    };
-    useEffect(() => {
-        getAllDM();
-    }, []);
-
     return (
         <Navbar collapseOnSelect expand="lg" style={{ backgroundColor: "#0644B5" }}>
             <Container>

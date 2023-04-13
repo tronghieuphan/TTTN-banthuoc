@@ -7,26 +7,25 @@ import nguoiDungAPI from "../../services/nguoiDungAPI";
 import { login } from "../../slices/userSlice";
 import { Form, Input, Button } from "antd";
 import { useState } from "react";
+import { toast } from "react-toastify";
 function LoginPage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [err, setError] = useState("");
     const handleSubmit = async (e) => {
         if (e.tendangnhap === undefined || e.matkhau === undefined) {
-            setError("Nhập thông tin đầy đủ nào");
+            toast.error("Nhập thông tin đầy đủ nào");
         } else {
             let a = await nguoiDungAPI.login(e);
-            console.log("a: ", a.data);
             if (a.data === "Fail Login") {
-                setError("Tài khoản không tồn tại");
+                toast.error("Tài khoản không tồn tại");
             } else {
                 if (a.data === "Fail Matkhau") {
-                    setError("Mật khẩu không chính xác");
+                    toast.error("Mật khẩu không chính xác");
                 } else {
+                    toast.success("Đăng nhập thàng công");
                     dispatch(login(a.data.data));
-                    localStorage.setItem("ACCOUNT", JSON.stringify(a.data.data))
+                    localStorage.setItem("ACCOUNT", JSON.stringify(a.data.data));
                     navigate("/");
-
                 }
             }
         }
@@ -58,7 +57,6 @@ function LoginPage() {
                             <Form.Item name="matkhau" label="Mật khẩu" className="fw-bold">
                                 <Input className="w-100 py-2" type="password" />
                             </Form.Item>
-                            <span className="text-danger">{err}</span>
                             <Button type="primary" htmlType="submit" size="large" className="w-100">
                                 Đăng nhập
                             </Button>

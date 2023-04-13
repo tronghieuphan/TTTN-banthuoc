@@ -2,12 +2,10 @@ import logo from "../../assets/image/logo.png";
 import SearchInput from "../Search/Search";
 import CheckOrder from "./CheckOrder";
 import Card from "./Card";
-import { useState } from "react";
 import { Button, Dropdown } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../slices/userSlice";
-import { render } from "react-dom";
 function Header() {
     const { account } = useSelector((state) => state.user);
     const setAccountLS = JSON.parse(localStorage.getItem("ACCOUNT"));
@@ -25,12 +23,14 @@ function Header() {
             <div className="container-fluid">
                 <div className="row align-items-center p-3 bg-header">
                     <div className="col-md-3">
-                        <img
-                            src={logo}
-                            alt=""
-                            className="rounded mx-auto d-block"
-                            style={{ width: "300px", height: "100px" }}
-                        />
+                        <Link to="/">
+                            <img
+                                src={logo}
+                                alt=""
+                                className="rounded mx-auto d-block"
+                                style={{ width: "300px", height: "100px" }}
+                            />
+                        </Link>
                     </div>
                     <div className="col-md-4 text-right">
                         <SearchInput />
@@ -51,13 +51,12 @@ function Header() {
                                                 Xin chào {setAccountLS.Ten}
                                             </Dropdown.Toggle>
                                             <Dropdown.Menu>
-                                                <Dropdown.Item >
+                                                <Dropdown.Item>
                                                     <Link
                                                         to="/user-details"
                                                         style={{ textDecoration: "none" }}
                                                     >
                                                         Profile
-                                                        
                                                     </Link>
                                                 </Dropdown.Item>
                                                 <Dropdown.Item>

@@ -1,20 +1,36 @@
 import React from "react";
 import { Button } from "@mui/material";
-import ChangePassword from "./ChangePass";
 import { useState, useEffect } from "react";
 import addressAPI from "../../services/addressAPI";
 import nguoiDungAPI from "../../services/nguoiDungAPI";
-import Swal from "sweetalert2";
-import { Select, Input } from "antd";
+import { Select, Input, Form, Modal } from "antd";
+import { toast } from "react-toastify";
 import "./InfoUser.scss";
 function InfoUser() {
-    // const [gender, setAge] = useState("");
     const AccountLS = JSON.parse(localStorage.getItem("ACCOUNT"));
+
     const [open, setOpen] = useState(true);
     const [city, listCity] = useState([]);
     const [district, listDistrict] = useState([]);
     const [ward, listWard] = useState([]);
 
+    const handleSubmitPass = async (e) => {
+        let obj = {
+            ...e,
+            Tendangnhap: AccountLS.Tendangnhap,
+        };
+
+        handleUpdatePass(obj);
+    };
+    const [open1, setOpen1] = useState(false);
+    const showModal = () => {
+        setOpen1(true);
+    };
+
+    const handleCancel = (e) => {
+        console.log(e);
+        setOpen1(false);
+    };
     //Lây API Thành phố
     const getAllCity = async () => {
         try {
@@ -24,20 +40,20 @@ function InfoUser() {
             throw new Error(err);
         }
     };
-    //Lây API Thành phố
-    const getAllDistrict = async () => {
+    //Lây API Quan
+    const getAllDistrict = async (code) => {
         try {
-            const response = await addressAPI.getAll_District();
-            listDistrict(response.data);
+            const response = await addressAPI.getAll_District(code);
+            listDistrict(response.data.districts);
         } catch (err) {
             throw new Error(err);
         }
     };
     //Lây API Thành phố
-    const getAllWard = async () => {
+    const getAllWard = async (e) => {
         try {
-            const response = await addressAPI.getAll_Ward();
-            listWard(response.data);
+            const response = await addressAPI.getAll_Ward(e);
+            listWard(response.data.wards);
         } catch (err) {
             throw new Error(err);
         }
@@ -45,256 +61,356 @@ function InfoUser() {
 
     useEffect(() => {
         getAllCity();
-        getAllDistrict();
-        getAllWard();
     }, []);
-    const handleUpdatePass = async (obj) => {
-        const data = await nguoiDungAPI.updatePass(obj);
-        if (data.data === "Change Succesfull") {
-            // successDialog();
-
-        }
+    const onChange = (e, obj) => {
+        getAllDistrict(obj.id);
     };
-
-    const handleOpenUpdateInfo = async (record) => {
-        if (open === true) {
-            const data = await nguoiDungAPI.update();
-            console.log(data);
-            if (data.data.message === "Update Nguoidung Successful") {
-                Swal.fire({
-                    text: "Cập Nhật Thông Tin Thành Công",
-                });
-            } 
-        } else {
-            setOpen(true);
-        }
-    };
-
-    //Xử lý Select
-    const onChange = (value) => {
-        console.log(`selected ${value}`);
+    const onChangeDistrict = (e, obj) => {
+        getAllWard(obj.id);
     };
     const onSearch = (value) => {
         console.log("search:", value);
     };
+
     // Lấy API Thành Phố
     let arraycity = [];
     let arraydistrict = [];
     let arrayward = [];
-    const uniqueSet = new Set(arrayward);
-    city.map((values, index) => arraycity.push(values.name));
-    district.map((values, index) => arraydistrict.push(values.name));
-    ward.map((values, index) => arrayward.push(values.name));
+    city.map((values, index) => arraycity.push({ name: values.name, code: values.code }));
+    district.map((values, index) => arraydistrict.push({ name: values.name, code: values.code }));
+    ward.map((values, index) => arrayward.push({ name: values.name, code: values.code }));
+
+    const handleUpdatePass = async (obj) => {
+        if (
+            obj.Matkhaucu === undefined ||
+            obj.Matkhau === undefined ||
+            obj.Matkhaulai === undefined
+        ) {
+            toast.error("Bạn hãy nhập đầy đủ thông tin");
+        } else if (obj.Matkhaulai !== obj.Matkhau) {
+            toast.error("Mật khẩu nhập lại không trùng khớp");
+        } else {
+            const data = await nguoiDungAPI.changePass(obj);
+            if (data.data === "Change Fail") {
+                toast.error("Mật khẩu cũ không trùng khớp");
+            } else if (data.data === "Change Succesfull") {
+                toast.success("Đổi mật khẩu thành công");
+                setOpen1(false);
+            }
+        }
+    };
+    const handleUpdate = async (obj) => {
+        const data = await nguoiDungAPI.update(obj);
+        console.log("data: ", data.data.data);
+        if ((data.message = "Update Nguoidung Successful")) {
+            toast.success("Cập nhập thành công");
+            localStorage.setItem("ACCOUNT", JSON.stringify(data.data.data));
+        } else {
+            toast.error("Cập nhập thất bại");
+        }
+    };
+
+    const handleSubmit = (e) => {
+        handleUpdate(e);
+        setOpen(true);
+    };
+    const handleOpen = () => {
+        setOpen(false);
+    };
 
     return (
         <>
             <div className="w-100">
                 <h2>THÔNG TIN TÀI KHOẢN CÁ NHÂN</h2>
-                <form action="" method="">
+                <Form onFinish={handleSubmit} layout="vertical">
                     <div className="d-flex flex-wrap justify-content-between">
                         <div className="justify-content-center w-49 ">
-                            <label className="m-2 w-30">Họ lót:</label>
-                            <Input
-                                className="m-2 w-100"
-                                id="outlined-basic"
+                            <Form.Item
+                                className="w-30"
                                 label="Họ lót"
-                                variant="outlined"
-                                value={AccountLS.Holot}
-                                disabled={open}
-                            />
+                                name="Holot"
+                                initialValue={AccountLS.Holot}
+                            >
+                                <Input
+                                    className="w-100"
+                                    id="outlined-basic"
+                                    variant="outlined"
+                                    disabled={open}
+                                />
+                            </Form.Item>
                         </div>
                         <div className="justify-content-center w-49 ">
-                            <label className="m-2 w-30">Tên:</label>
-                            <Input
-                                className="m-2 w-100"
-                                id="outlined-basic"
+                            <Form.Item
+                                className="w-30"
                                 label="Tên"
-                                type="text"
-                                variant="outlined"
-                                value={AccountLS.Ten}
-                                disabled={open}
-                            />
+                                name="Ten"
+                                initialValue={AccountLS.Ten}
+                            >
+                                <Input
+                                    className="w-100"
+                                    id="outlined-basic"
+                                    type="text"
+                                    variant="outlined"
+                                    disabled={open}
+                                />
+                            </Form.Item>
                         </div>
                         <div className="justify-content-center w-49 ">
-                            <label className="m-2 w-30">Số điện thoại:</label>
-                            <Input
-                                className="m-2 w-100"
-                                id="outlined-basic"
-                                label="Số Điện Thoại"
-                                type="tel"
-                                variant="outlined"
-                                value={AccountLS.Sdt}
-                                disabled={open}
-                            />
+                            <Form.Item
+                                className="w-30"
+                                name="Sdt"
+                                label="Số điện thoại"
+                                initialValue={AccountLS.Sdt}
+                            >
+                                <Input
+                                    className="w-100"
+                                    id="outlined-basic"
+                                    type="tel"
+                                    variant="outlined"
+                                    disabled={open}
+                                />
+                            </Form.Item>
                         </div>
                         <div className="justify-content-center w-49 ">
-                            <label className="m-2 w-30">Giới tính:</label>
-                            <Select
-                                value={
-                                    AccountLS.Gioitinh ? "Nữ" : "Nam"
-                                }
-                                disabled={open}
-                                className="m-2 w-100"
-                                showSearch
-                                style={{
-                                    width: 160,
-                                }}
-                                placeholder="Giới tính"
-                                optionFilterProp="children"
-                                onChange={onChange}
-                                onSearch={onSearch}
-                                filterOption={(input, option) =>
-                                    (option?.label ?? "")
-                                        .toLowerCase()
-                                        .includes(input.toLowerCase())
-                                }
-                                options={[
-                                    {
-                                        value: "Nam",
-                                        label: "Nam",
-                                    },
-                                    {
-                                        value: "Nữ",
-                                        label: "Nữ",
-                                    },
-                                ]}
-                            />
+                            <Form.Item
+                                className="w-30"
+                                label="Giới tính"
+                                name="Gioitinh"
+                                initialValue={AccountLS.Gioitinh === 0 ? "Nam" : "Nữ"}
+                            >
+                                <Select
+                                    disabled={open}
+                                    className="w-100"
+                                    showSearch
+                                    style={{
+                                        width: 160,
+                                    }}
+                                    placeholder="Giới tính"
+                                    optionFilterProp="children"
+                                    onChange={onChange}
+                                    onSearch={onSearch}
+                                    filterOption={(input, option) =>
+                                        (option?.label ?? "")
+                                            .toLowerCase()
+                                            .includes(input.toLowerCase())
+                                    }
+                                    options={[
+                                        {
+                                            value: "0",
+                                            label: "Nam",
+                                        },
+                                        {
+                                            value: "1",
+                                            label: "Nữ",
+                                        },
+                                    ]}
+                                />
+                            </Form.Item>
                         </div>
                         <div className="justify-content-center w-49 ">
-                            <label className="m-2 w-30">Ngày sinh:</label>
-                            <Input
-                                className="m-2 w-100"
-                                id="outlined-basic"
-                                label="Ngày Sinh"
-                                type="date"
-                                variant="outlined"
-                                value={AccountLS.Ngaysinh}
-                                disabled={open}
-                            />
+                            <Form.Item
+                                className="w-30"
+                                label="Ngày sinh"
+                                name="Ngaysinh"
+                                initialValue={AccountLS.Ngaysinh}
+                            >
+                                <Input
+                                    className="w-100"
+                                    id="outlined-basic"
+                                    type="date"
+                                    variant="outlined"
+                                    disabled={open}
+                                />
+                            </Form.Item>
                         </div>
 
                         <div className="justify-content-center w-49 ">
-                            <label className="m-2 w-30">Email:</label>
-                            <Input
-                                className="m-2 w-100"
-                                id="outlined-basic"
-                                label="Tên"
-                                type="email"
-                                variant="outlined"
-                                value={AccountLS.Email}
-                                disabled={open}
-                            />
+                            <Form.Item
+                                className="w-30"
+                                label="Email"
+                                name="Email"
+                                initialValue={AccountLS.Email}
+                            >
+                                <Input
+                                    className="w-100"
+                                    id="outlined-basic"
+                                    type="email"
+                                    variant="outlined"
+                                    disabled={open}
+                                />
+                            </Form.Item>
                         </div>
-                        <div className="justify-content-center w-33 ">
-                            <label className="m-2 w-30">Phường/Xã:</label>
 
-                            <Select
-                                value={
-                                    AccountLS.Phuong
-                                }
-                                className="m-2 w-100"
-                                disabled={open}
-                                showSearch
-                                style={{
-                                    width: 160,
-                                }}
-                                placeholder="Chọn phường, xã"
-                                optionFilterProp="children"
-                                onChange={onChange}
-                                onSearch={onSearch}
-                                filterOption={(input, option) =>
-                                    (option?.label ?? "")
-                                        .toLowerCase()
-                                        .includes(input.toLowerCase())
-                                }
-                                options={arrayward.map((item) => ({
-                                    value: item,
-                                    label: item,
-                                }))}
-                            />
+                        <div className="justify-content-between" style={{ width: "30%" }}>
+                            <Form.Item
+                                className="w-30"
+                                name="Thanhpho"
+                                label="Thành phố/tỉnh"
+                                initialValue={AccountLS.Thanhpho}
+                            >
+                                <Select
+                                    className="w-100"
+                                    showSearch
+                                    disabled={open}
+                                    style={{
+                                        width: 160,
+                                    }}
+                                    placeholder="Chọn thành phố, tỉnh"
+                                    optionFilterProp="children"
+                                    onChange={onChange}
+                                    onSearch={onSearch}
+                                    filterOption={(input, option) =>
+                                        (option?.label ?? "")
+                                            .toLowerCase()
+                                            .includes(input.toLowerCase())
+                                    }
+                                    options={arraycity.map((item) => ({
+                                        value: item.name,
+                                        label: item.name,
+                                        id: item.code,
+                                    }))}
+                                />
+                            </Form.Item>
                         </div>
-                        <div className="justify-content-center w-33 ">
-                            <label className="m-2 w-30">Quận/Huyện:</label>
-                            <Select
-                                value={
-                                    AccountLS.Quan || " "
-                                }
-                                className="m-2 w-100"
-                                disabled={open}
-                                showSearch
-                                style={{
-                                    width: 160,
-                                }}
-                                placeholder="Chọn quận, huyện"
-                                optionFilterProp="children"
-                                onChange={onChange}
-                                onSearch={onSearch}
-                                filterOption={(input, option) =>
-                                    (option?.label ?? "")
-                                        .toLowerCase()
-                                        .includes(input.toLowerCase())
-                                }
-                                options={arraydistrict.map((item) => ({
-                                    value: item,
-                                    label: item,
-                                }))}
-                            />
+
+                        <div className="justify-content-between " style={{ width: "30%" }}>
+                            <Form.Item
+                                className="w-33"
+                                name="Quan"
+                                label="Quận/huyện"
+                                initialValue={AccountLS.Quan}
+                            >
+                                <Select
+                                    className="w-100"
+                                    showSearch
+                                    disabled={open}
+                                    style={{
+                                        width: 400,
+                                    }}
+                                    placeholder="Chọn quận, huyện"
+                                    optionFilterProp="children"
+                                    onChange={onChangeDistrict}
+                                    onSearch={onSearch}
+                                    filterOption={(input, option) =>
+                                        (option?.label ?? "")
+                                            .toLowerCase()
+                                            .includes(input.toLowerCase())
+                                    }
+                                    options={arraydistrict.map((item) => ({
+                                        value: item.name,
+                                        label: item.name,
+                                        id: item.code,
+                                    }))}
+                                />
+                            </Form.Item>
                         </div>
-                        <div className="justify-content-center w-33 ">
-                            <label className="m-2 w-30">Thành phố/Tỉnh:</label>
-                            <Select
-                                value={
-                                    AccountLS.Thanhpho
-                                }
-                                className="m-2 w-100"
-                                disabled={open}
-                                showSearch
-                                style={{
-                                    width: 160,
-                                }}
-                                placeholder="Chọn thành phố, tỉnh"
-                                optionFilterProp="children"
-                                onChange={onChange}
-                                onSearch={onSearch}
-                                filterOption={(input, option) =>
-                                    (option?.label ?? "")
-                                        .toLowerCase()
-                                        .includes(input.toLowerCase())
-                                }
-                                options={arraycity.map((item) => ({
-                                    value: item,
-                                    label: item,
-                                }))}
-                            />
+                        <div className="justify-content-between" style={{ width: "30%" }}>
+                            <Form.Item
+                                className="w-33"
+                                name="Phuong"
+                                label="Phường/xã"
+                                initialValue={AccountLS.Phuong}
+                            >
+                                <Select
+                                    className="m-1 w-100"
+                                    showSearch
+                                    disabled={open}
+                                    style={{
+                                        width: 160,
+                                    }}
+                                    placeholder="Chọn phường, xã"
+                                    optionFilterProp="children"
+                                    onSearch={onSearch}
+                                    filterOption={(input, option) =>
+                                        (option?.label ?? "")
+                                            .toLowerCase()
+                                            .includes(input.toLowerCase())
+                                    }
+                                    options={arrayward.map((item) => ({
+                                        value: item.name,
+                                        label: item.name,
+                                    }))}
+                                />
+                            </Form.Item>
                         </div>
-                        <div className="justify-content-center w-100 ">
-                            <label className="m-2 w-30">Tên đăng nhập:</label>
-                            <Input
-                                className="m-2 w-100"
-                                id="outlined-basic"
-                                label="Tên"
-                                type="text"
-                                variant="outlined"
-                                value={AccountLS.Tendangnhap}
-                                disabled={open}
-                            />
+                        <div className="justify-content-center w-49 ">
+                            <Form.Item
+                                className="w-30"
+                                label="Tên đăng nhập"
+                                initialValue={AccountLS.Tendangnhap}
+                                name="Tendangnhap"
+                            >
+                                <Input
+                                    className="w-100"
+                                    id="outlined-basic"
+                                    type="text"
+                                    variant="outlined"
+                                    disabled
+                                />
+                            </Form.Item>
                         </div>
                     </div>
-                </form>
 
-                <div className="w-80 d-flex justify-content-center">
-                    <Button
-                        onClick={handleOpenUpdateInfo}
-                        className="mt-4 w-100 p-3 fs-5 fw-bold m-3 "
-                        variant="contained"
+                    <div className="w-100 d-flex justify-content-center">
+                        {open === false ? (
+                            <Form.Item className="w-100">
+                                <Button
+                                    type="submit"
+                                    className="mt-4 w-100 fs-5 fw-bold"
+                                    variant="contained"
+                                >
+                                    LƯU THÔNG TIN
+                                </Button>
+                            </Form.Item>
+                        ) : (
+                            ""
+                        )}
+                    </div>
+                </Form>
+                <div className="mt-4">
+                    <Button type="primary" onClick={showModal}>
+                        ĐỔI MẬT KHẤU{" "}
+                    </Button>
+                    <Modal
+                        className="h-50"
+                        title="MỜI BẠN NHẬP THÔNG TIN"
+                        open={open1}
+                        onCancel={handleCancel}
+                        cancelButtonProps={{}}
+                        footer={null}
                     >
-                        {open === false ? "Lưu trạng thái" : "Cập nhập"}
-                    </Button >
-                    <ChangePassword
-                        handleUpdatePass={handleUpdatePass}
-                    />
+                        <Form onFinish={handleSubmitPass}>
+                            <Form.Item label="Nhập mật khẩu cũ" name="Matkhaucu">
+                                <Input type="password" />
+                            </Form.Item>
+                            <Form.Item label="Nhập mật khẩu mới" name="Matkhau">
+                                <Input type="password" />
+                            </Form.Item>{" "}
+                            <Form.Item label="Nhập lại mật khẩu mới" name="Matkhaulai">
+                                <Input type="password" />
+                            </Form.Item>
+                            <Form.Item className="text-center">
+                                <Button type="submit">Xác nhận</Button>
+                            </Form.Item>
+                        </Form>
+                    </Modal>
                 </div>
+                {open === true ? (
+                    <Button
+                        className="w-100 mt-4 p-3 fs-5 fw-bold "
+                        variant="contained"
+                        onClick={handleOpen}
+                    >
+                        CẬP NHẬP THÔNG TIN
+                    </Button>
+                ) : (
+                    ""
+                )}
             </div>
+            <br />
+            <br />
+            <br />
+            <br />
         </>
     );
 }
