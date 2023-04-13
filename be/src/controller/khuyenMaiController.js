@@ -2,13 +2,11 @@ import CRUD_khuyenMai from "../sevices/CRUD_khuyenMai";
 
 let create_khuyenMai = async (req, res) => {
     let khuyenmai = await CRUD_khuyenMai.createKhuyenMai(req.body);
-    console.log("req.body: ", req.body);
     res.status(200).json(khuyenmai);
 };
 
 let getAll_khuyenMai = async (req, res) => {
     let khuyenmai = await CRUD_khuyenMai.getAllKhuyenMai();
-    console.log(khuyenmai);
     res.status(200).json(khuyenmai);
 };
 let getName_khuyenMai = async (req, res) => {

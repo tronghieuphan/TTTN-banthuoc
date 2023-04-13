@@ -23,7 +23,6 @@ let getAllXuatXu = async () => {
 let createXuatXu = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            console.log(">>>", data.Tenxx);
             let xuatxu = await db.xuatXu.findOrCreate({
                 where: {
                     Tenxx: data.Tenxx,
@@ -32,7 +31,7 @@ let createXuatXu = async (data) => {
                     id: randomId.randomId("XX"),
                 },
             });
-            console.log(">>>", xuatxu);
+
             if (xuatxu[1]) {
                 resolve({ message: "Create Successfully", data: xuatxu[0] });
             } else {
@@ -53,7 +52,7 @@ let deleteXuatXu = async (Tenxx) => {
                     Tenxx: Tenxx,
                 },
             });
-            console.log("Tenxx_delete: ", Tenxx_delete.id);
+
             let sanpham = await db.sanPham.findAll({
                 where: {
                     Maxx: Tenxx_delete.id,
@@ -83,7 +82,7 @@ let updateXuatXu = async (data) => {
                     id: data.id,
                 },
             });
-            console.log("findXuatXu: ", findXuatXu);
+
             if (findXuatXu) {
                 let upTh = await db.xuatXu.update(
                     {
@@ -95,7 +94,7 @@ let updateXuatXu = async (data) => {
                         },
                     }
                 );
-                console.log(">>>", upTh);
+
                 resolve({ message: "Update XuatXu Successful", data: upTh });
             } else {
                 resolve("XuatXu not exist");

@@ -7,7 +7,6 @@ let create_xuatXu = async (req, res) => {
 
 let getAll_xuatXu = async (req, res) => {
     let xuatxu = await CRUD_xuatXu.getAllXuatXu();
-    console.log(xuatxu);
     res.status(200).json(xuatxu);
 };
 let getName_xuatXu = async (req, res) => {

@@ -25,7 +25,7 @@ let getAllThuongHieu = async () => {
 let createThuongHieu = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            console.log(">>>", data.Tenth);
+            
             let thuonghieu = await db.thuongHieu.findOrCreate({
                 where: {
                     Tenth: data.Tenth,
@@ -34,7 +34,7 @@ let createThuongHieu = async (data) => {
                     id: randomId.randomId("TH"),
                 },
             });
-            console.log(thuonghieu);
+            
             if (thuonghieu[1]) {
                 resolve({ message: "Create Successfully",data:thuonghieu[0] });
             } else {
@@ -85,7 +85,7 @@ let updateThuongHieu = async (data) => {
                     id: data.id,
                 },
             });
-            console.log("findThuongHieu: ", findThuongHieu);
+            
             if (findThuongHieu) {
                 let upTh = await db.thuongHieu.update(
                     {
@@ -97,7 +97,7 @@ let updateThuongHieu = async (data) => {
                         },
                     }
                 );
-                console.log(">>>", upTh);
+                
                 resolve({message:"Update ThuongHieu Successful",data:upTh});
             } else {
                 resolve("ThuongHieu not exist");

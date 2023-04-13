@@ -90,6 +90,7 @@ let initWebRotes = (app) => {
     router.get("/getkhuyenmai-sanpham", sanPhamController.getKhuyenMai_sanPham);
     router.post("/getrandom-sanpham", sanPhamController.getRandom_sanPham);
     router.get("/gettrungbay-sanpham", sanPhamController.getRandom_sanPhamTrungBay);
+    router.post("/getchitiet-sanpham", sanPhamController.getchiTiet_SanPham);
 
     //CRUD___donDatHang
     router.post("/create-dondathang", donDatHangController.create_donDatHang);

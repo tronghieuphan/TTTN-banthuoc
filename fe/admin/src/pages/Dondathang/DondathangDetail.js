@@ -1,4 +1,4 @@
-import { Button, Table } from "antd";
+import { Button, Table, Tooltip } from "antd";
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
@@ -33,18 +33,44 @@ function DonDatHangDetail() {
         {
             title: "Tên sản phẩm",
             dataIndex: "Tensp",
+            render: (Tensp) => (
+                <Tooltip placement="topLeft" title={Tensp}>
+                    <div
+                        style={{
+                            overflow: "hidden",
+                            whiteSpace: "nowrap",
+                            textOverflow: "ellipsis",
+                            width: "500px",
+                        }}
+                    >
+                        {Tensp}
+                    </div>
+                </Tooltip>
+            ),
         },
         {
             title: "Số lượng",
             dataIndex: "Soluong",
+            align: "center",
         },
         {
             title: "Đơn giá",
             dataIndex: "Dongia",
+            align: "center",
         },
         {
             title: "Thành tiền",
             dataIndex: "Thanhtien",
+            align: "center",
+            render: (Thanhtien) => (
+                <div
+                    style={{
+                        width: "120px",
+                    }}
+                >
+                    {Thanhtien}
+                </div>
+            ),
         },
     ];
     return (
@@ -61,7 +87,7 @@ function DonDatHangDetail() {
                         </div>
                         <hr className="w-100 " />
                         <br />
-                        <Table columns={columns} dataSource={[]} />
+                        <Table columns={columns} dataSource={listchitiet} scroll={{ x: true }} />
                     </div>
                 </div>
             </motion.div>

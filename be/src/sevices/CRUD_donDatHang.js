@@ -23,7 +23,6 @@ let getAllDonDatHang = async () => {
 let createDonDatHang = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            // console.log(data);
             const Maddh = await randomId.randomId("DH");
             let donhang = await db.donDatHang.create({
                 id: Maddh,
@@ -39,12 +38,9 @@ let createDonDatHang = async (data) => {
                 Mand: data.Mand,
                 Makm: data.Makm,
             });
-            console.log(donhang);
             let listSp = data.ListSP;
-            console.log("listSp : ", listSp);
             listSp &&
                 listSp.map(async (a) => {
-                    console.log("a: ", a);
                     await db.chiTietDonDatHang.create({
                         Maddh: Maddh,
                         Masp: a.Masp,
@@ -62,21 +58,26 @@ let createDonDatHang = async (data) => {
 let getChiTietDDH = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            console.log(data);
-            const chitietddh = await db.donDatHang.findOne({
-                include: [{ model: db.sanPham, attributes: ["id", "Tensp", "Dongia"] }],
-                rest: true,
+            const chitietddh1 = await db.chiTietDonDatHang.findAll({
                 where: {
-                    id: data.id,
+                    Maddh: data.id,
                 },
+                raw: true,
             });
-
-            // const chitietddh1 = await db.chiTietDonDatHang.findAll({
-            //     where: {
-            //         Maddh: data.id,
-            //     },
-            // });
-            resolve({ sanpham: chitietddh});
+            const danhsach = Promise.all(
+                await chitietddh1.map(async (e) => {
+                    const a = await db.sanPham.findOne({
+                        where: {
+                            id: e.Masp,
+                        },
+                        raw: true,
+                        attributes: ["Tensp", "Dongia"],
+                    });
+                    const b = { ...a, Masp: e.Masp, Soluong: e.Soluong };
+                    return b;
+                })
+            );
+            resolve(danhsach);
         } catch (e) {
             reject(e);
         }
@@ -107,7 +108,6 @@ let updateDonDatHang = async (data) => {
                     },
                 }
             );
-            console.log(">>>", upDDH);
             resolve({ message: "Update DonDatHang Successful", data: upDDH });
         } catch (e) {
             reject(e);

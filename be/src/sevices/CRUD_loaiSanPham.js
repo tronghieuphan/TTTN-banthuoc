@@ -11,7 +11,6 @@ let getAllLoaiSanPham = async () => {
                 raw: true,
                 nest: true,
             }); // listLoaiSanPham.lenght() >0 trả ra list
-            // console.log("listLoaiSanPham: ", listLoaiSanPham[0].danhMuc.Tendm);
             let count = await db.loaiSanPham.count();
             if (count > 0) {
                 resolve(listLoaiSanPham);
@@ -28,7 +27,6 @@ let getAllLoaiSanPham = async () => {
 let createLoaiSanPham = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            console.log(">>>", data.Tenloai);
             let loaisanpham = await db.loaiSanPham.findOrCreate({
                 where: {
                     Tenloai: data.Tenloai,
@@ -38,7 +36,6 @@ let createLoaiSanPham = async (data) => {
                     Madm: data.Madm,
                 },
             });
-            console.log(loaisanpham);
             if (loaisanpham[1]) {
                 resolve({ message: "Create Successfully", data: loaisanpham[0] });
             } else {
@@ -59,7 +56,6 @@ let deleteLoaiSanPham = async (tenloai) => {
                     Tenloai: tenloai,
                 },
             });
-            console.log("tenloai_delete: ", tenloai_delete.id);
             let sanpham = await db.sanPham.findAll({
                 where: {
                     Maloai: tenloai_delete.id,
@@ -89,7 +85,6 @@ let updateLoaiSanPham = async (data) => {
                     id: data.id,
                 },
             });
-            console.log("findLoaiSanPham: ", findLoaiSanPham);
             if (findLoaiSanPham) {
                 let uploai = await db.loaiSanPham.update(
                     {
@@ -102,7 +97,6 @@ let updateLoaiSanPham = async (data) => {
                         },
                     }
                 );
-                console.log(">>>", uploai);
                 resolve({ message: "Update LoaiSanPham Successful", data: uploai });
             } else {
                 resolve("LoaiSanPham not exist");

@@ -56,7 +56,6 @@ let createSanPham = async (data) => {
                     Maxx: data.Maxx,
                 },
             });
-            console.log(sanpham);
             if (sanpham[1]) {
                 resolve({ message: "Create Successfully", data: sanpham[0] });
             } else {
@@ -131,7 +130,6 @@ let updateSanPham = async (data) => {
                         },
                     }
                 );
-                console.log(">>>", upSp);
                 resolve({ message: "Update SanPham Successful", data: upSp });
             } else {
                 resolve("SanPham not exist");
@@ -171,9 +169,7 @@ let findSanPham = (data) => {
                 },
                 raw: true,
             });
-            console.log(id);
             if (!id) {
-                console.log(1);
                 id = await db.xuatXu.findOne({
                     where: {
                         Tenxx: data.datafind,
@@ -181,7 +177,6 @@ let findSanPham = (data) => {
                     raw: true,
                 });
                 if (!id) {
-                    console.log(2);
                     id = await db.loaiSanPham.findOne({
                         where: {
                             Tenloai: data.datafind,
@@ -202,7 +197,6 @@ let findSanPham = (data) => {
                 raw: true,
                 nest: true,
             });
-            // console.log(find[0]);
             if (find) {
                 resolve(find);
             } else {
@@ -218,7 +212,7 @@ let getNewSanPham = () => {
     return new Promise(async (resolve, reject) => {
         try {
             let sanpham = await db.sanPham.findAll({
-                limit: 6,
+                limit: 10,
                 order: [["createdAt", "DESC"]],
             });
             resolve(sanpham);
@@ -231,8 +225,9 @@ let getSanPhamKhuyenMai = () => {
     return new Promise(async (resolve, reject) => {
         try {
             let sanpham = await db.sanPham.findAll({
-                limit: 6,
+                limit: 4,
                 where: { Giakm: { [Op.not]: null } },
+                order: [[Sequelize.literal("RAND()")]],
             });
             resolve(sanpham);
         } catch (e) {
@@ -261,9 +256,52 @@ let getRandomSanPhamTrungBay = () => {
         try {
             let sanpham = await db.sanPham.findAll({
                 order: [[Sequelize.literal("RAND()")]],
-                limit: 12
+                limit: 10,
             });
             resolve(sanpham);
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
+let getChiTietSanPham = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let sanpham = await db.sanPham.findOne({
+                where: {
+                    id: data.id,
+                },
+                include: [
+                    { model: db.thuongHieu },
+                    { model: db.nhaCungCap },
+                    { model: db.loaiSanPham },
+                    { model: db.xuatXu },
+                ],
+                raw: true,
+                nest: true,
+            });
+            let danhmuc = await db.loaiSanPham.findOne({
+                where: {
+                    id: sanpham.loaiSanPham.id,
+                },
+                include: [{ model: db.danhMuc }],
+            });
+
+            let obj = {
+                id: sanpham.id,
+                Tensp: sanpham.Tensp,
+                Tenth: sanpham.thuongHieu.Tenth,
+                Dongia: sanpham.Dongia,
+                Donviban: sanpham.Donviban,
+                Tendm: danhmuc.danhMuc.Tendm,
+                Loai: sanpham.loaiSanPham.Tenloai,
+                Tenxx: sanpham.xuatXu.Tenxx,
+                Quycach: sanpham.Quycach,
+                Tenncc: sanpham.nhaCungCap.Tenncc,
+                Congdung: sanpham.Congdung,
+            };
+            resolve(obj);
         } catch (e) {
             reject(e);
         }
@@ -279,5 +317,6 @@ module.exports = {
     getNewSanPham,
     getSanPhamKhuyenMai,
     getRandomSanPham,
-    getRandomSanPhamTrungBay
+    getRandomSanPhamTrungBay,
+    getChiTietSanPham,
 };

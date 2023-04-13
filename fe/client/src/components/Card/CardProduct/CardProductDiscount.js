@@ -1,28 +1,49 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
-
+import { Tooltip } from "antd";
 function CardProduceDiscount(props) {
-    let mang = props.produce;
+    let mang = props.khuyenmai;
+    console.log("mangkhuyenmai: ", mang);
+    const text = <span>{mang.Tensp}</span>;
+
     return (
         <Card style={{ width: "16rem" }} className="p-3 m-3">
-            <Card.Img variant="top" src={mang.img} />
+            <div style={{ width: "100%", height: "200px", border: "1px solid black" }}>
+                <Card.Img variant="top" className="w-100 " />
+            </div>
             <Card.Body>
-                <Card.Title>{mang.title}</Card.Title>
-                <Card.Text>{mang.title}</Card.Text>
+                <Card.Text>
+                    <div>
+                        <Tooltip placement="top" title={text}>
+                            <div
+                                style={{
+                                    overflow: "hidden",
+                                    width: "100%",
+                                    height: "60px",
+                                    fontSize: "20px",
+                                    textAlign: "left",
+                                }}
+                            >
+                                {mang.Tensp}
+                            </div>
+                        </Tooltip>
+                    </div>
+                </Card.Text>
                 <div className="fs-6 fst-italic">Giá khuyến mãi:</div>
-                <div
-                    className="text-center"
+                <p
+                    className="text-center m-2"
                     style={{ backgroundColor: "rgb(255, 118, 118)", color: "yellow" }}
                 >
-                    12540000
-                </div>
-                <div
+                    {mang.Giakm}
+                </p>
+                <p
                     style={{ fontSize: "15px", fontStyle: "italic", color: "GrayText" }}
-                    className="text-decoration-line-through text-center"
+                    className="text-decoration-line-through text-left"
                 >
-                    Giá gốc: 12000140
-                </div>
+                    Giá gốc: {mang.Dongia}
+                </p>
+                <p style={{ fontSize: "13px", padding: "auto" }}>{mang.Quycach}</p>
 
                 <Link to="/produce-detail">
                     <Button variant="primary" className="d-block m-auto mt-2">

@@ -2,13 +2,11 @@ import CRUD_nhaCungCap from "../sevices/CRUD_nhaCungCap";
 
 let create_nhaCungCap = async (req, res) => {
     let nhacungcap = await CRUD_nhaCungCap.createNhaCungCap(req.body);
-    console.log("req.body: ", req.body);
     res.status(200).json(nhacungcap);
 };
 
 let getAll_nhaCungCap = async (req, res) => {
     let nhacungcap = await CRUD_nhaCungCap.getAllNhaCungCap();
-    console.log(nhacungcap);
     res.status(200).json(nhacungcap);
 };
 let getName_nhaCungCap = async (req, res) => {

@@ -2,13 +2,11 @@ import CRUD_donDatHang from "../sevices/CRUD_donDatHang";
 
 let create_donDatHang = async (req, res) => {
     let dondathang = await CRUD_donDatHang.createDonDatHang(req.body);
-    console.log("req.body: ", req.body);
     res.status(200).json(dondathang);
 };
 
 let getAll_donDatHang = async (req, res) => {
     let dondathang = await CRUD_donDatHang.getAllDonDatHang();
-    console.log(dondathang);
     res.status(200).json(dondathang);
 };
 let find_donDatHang = async (req, res) => {
@@ -26,7 +24,6 @@ let update_donDatHang = async (req, res) => {
 };
 let getChiTiet_donDatHang = async (req, res) => {
     let dondathang = await CRUD_donDatHang.getChiTietDDH(req.body);
-    console.log(dondathang);
     res.status(200).json(dondathang);
 };
 module.exports = {

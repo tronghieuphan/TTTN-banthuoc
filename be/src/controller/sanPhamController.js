@@ -2,13 +2,11 @@ import CRUD_sanPham from "../sevices/CRUD_sanPham";
 
 let create_sanPham = async (req, res) => {
     let sanpham = await CRUD_sanPham.createSanPham(req.body);
-    console.log("req.body: ", req.body);
     res.status(200).json(sanpham);
 };
 
 let getAll_sanPham = async (req, res) => {
     let sanpham = await CRUD_sanPham.getAllSanPham();
-    console.log(sanpham);
     res.status(200).json(sanpham);
 };
 let find_sanPham = async (req, res) => {
@@ -45,6 +43,10 @@ let getRandom_sanPhamTrungBay = async (req, res) => {
     let sanpham = await CRUD_sanPham.getRandomSanPhamTrungBay();
     res.status(200).json(sanpham);
 };
+let getchiTiet_SanPham = async (req, res) => {
+    let sanpham = await CRUD_sanPham.getChiTietSanPham(req.body);
+    res.status(200).json(sanpham);
+};
 module.exports = {
     create_sanPham,
     getAll_sanPham,
@@ -55,5 +57,7 @@ module.exports = {
     getNew_sanPham,
     getKhuyenMai_sanPham,
     getRandom_sanPham,
-    getRandom_sanPhamTrungBay
+    getRandom_sanPhamTrungBay,
+    getchiTiet_SanPham
+
 };

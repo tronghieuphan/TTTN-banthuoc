@@ -25,7 +25,7 @@ let getAllKhuyenMai = async () => {
 let createKhuyenMai = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            console.log("data: ", randomId.randomId("KM"));
+            
 
             let khuyenmai = await db.khuyenMai.findOrCreate({
                 where: {
@@ -41,7 +41,7 @@ let createKhuyenMai = async (data) => {
                     Trangthai: data.Trangthai,
                 },
             });
-            console.log(khuyenmai);
+            
             if (khuyenmai[1]) {
                 resolve({ message: "Create Successfully", data: khuyenmai[0] });
             } else {
@@ -116,7 +116,7 @@ let updateKhuyenMai = async (data) => {
                         },
                     }
                 );
-                console.log(">>>", upKm);
+                
                 resolve({ message: "Update KhuyenMai Successful", data: upKm });
             } else {
                 resolve("KhuyenMai not exist");

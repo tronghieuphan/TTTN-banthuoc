@@ -2,11 +2,18 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 import { Tooltip } from "antd";
-function CardProduce(props) {
-    let mang = props.produce;
-    console.log("mang: ", mang);
-    const text = <span>{mang.Tensp}</span>;
+import { useDispatch } from "react-redux";
+import { setDataSP } from "../../../slices/sanphamSlice";
 
+function CardProduct(props) {
+    let moi = props.moi;
+    const text = <span>{moi.Tensp}</span>;
+    const dispatch = useDispatch();
+
+    const handleAddStore = (obj) => {
+        dispatch(setDataSP(obj));
+        localStorage.setItem("SANPHAM", JSON.stringify(obj));
+    };
     return (
         <Card style={{ width: "14rem" }} className="p-3 m-3">
             <div style={{ width: "100%", height: "200px", border: "1px solid black" }}>
@@ -26,25 +33,26 @@ function CardProduce(props) {
                                     textAlign: "left",
                                 }}
                             >
-                                {mang.Tensp}
+                                {moi.Tensp}
                             </div>
                         </Tooltip>
                     </div>
                 </Card.Text>
                 <div style={{ fontSize: "17px", fontStyle: "italic", color: "GrayText" }}>
-                    Giá:<span>{mang.Dongia}</span>
+                    Giá:<span>{moi.Dongia}</span>
                     <br />
-                    <span style={{ fontSize: "13px" }}>{mang.Quycach}</span>
+                    <span style={{ fontSize: "13px" }}>{moi.Quycach}</span>
                 </div>
-                <Link to="/produce-detail">
+                <Link to="/product-details">
                     <div className="text-center">
-                    <Button variant="primary" onClick={[]}>
-                        Mua ngay
-                    </Button></div>
+                        <Button variant="primary" onClick={() => handleAddStore(moi)}>
+                            Mua ngay
+                        </Button>
+                    </div>
                 </Link>
             </Card.Body>
         </Card>
     );
 }
 
-export default CardProduce;
+export default CardProduct;

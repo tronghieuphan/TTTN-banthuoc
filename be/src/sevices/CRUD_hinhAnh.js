@@ -23,7 +23,6 @@ let getAllHinhAnh = async () => {
 let createHinhAnh = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            console.log(">>>", data.Url);
             let hinhanh = await db.hinhAnh.findOrCreate({
                 where: {
                     Url: data.Url,
@@ -33,7 +32,6 @@ let createHinhAnh = async (data) => {
                     Masp: data.Masp,
                 },
             });
-            console.log(hinhanh);
             if (hinhanh[1]) {
                 resolve({ message: "Create Successfully", data: hinhanh[0] });
             } else {
@@ -93,7 +91,6 @@ let updateHinhAnh = async (data) => {
                     id: data.id,
                 },
             });
-            console.log("findHinhAnh: ", findHinhAnh);
             if (findHinhAnh) {
                 let upha = await db.hinhAnh.update(
                     {
@@ -106,7 +103,6 @@ let updateHinhAnh = async (data) => {
                         },
                     }
                 );
-                console.log(">>>", upha);
                 resolve({ message: "Update HinhAnh Successful", data: upha });
             } else {
                 resolve("HinhAnh not exist");

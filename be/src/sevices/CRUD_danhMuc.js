@@ -6,13 +6,13 @@ import randomId from "./randomId";
 let getAllDanhMuc = async () => {
     return new Promise(async (resolve, reject) => {
         try {
-                let listDanhMuc = await db.danhMuc.findAll();
-                let count = await db.danhMuc.count();
-                if (count > 0) {
-                    resolve(listDanhMuc);
-                } else {
-                    resolve("List null");
-                }
+            let listDanhMuc = await db.danhMuc.findAll();
+            let count = await db.danhMuc.count();
+            if (count > 0) {
+                resolve(listDanhMuc);
+            } else {
+                resolve("List null");
+            }
         } catch (e) {
             reject(e);
         }
@@ -23,7 +23,6 @@ let getAllDanhMuc = async () => {
 let createDanhMuc = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            console.log(">>>", data.Tendm);
             let danhmuc = await db.danhMuc.findOrCreate({
                 where: {
                     Tendm: data.Tendm,
@@ -32,7 +31,6 @@ let createDanhMuc = async (data) => {
                     id: randomId.randomId("DM"),
                 },
             });
-            console.log(danhmuc);
             if (danhmuc[1]) {
                 resolve({ message: "Create Successfully", data: danhmuc[0] });
             } else {
@@ -53,7 +51,6 @@ let deleteDanhMuc = async (tendm) => {
                     Tendm: tendm,
                 },
             });
-            console.log("tendm_delete: ", tendm_delete.id);
             let loaisanpham = await db.loaiSanPham.findAll({
                 where: {
                     Madm: tendm_delete.id,
@@ -69,7 +66,6 @@ let deleteDanhMuc = async (tendm) => {
                     resolve("Danhmuc không tồn tại");
                 }
             }
-            
         } catch (e) {
             reject(e);
         }
@@ -84,7 +80,6 @@ let updateDanhMuc = async (data) => {
                     id: data.id,
                 },
             });
-            console.log("findDanhMuc: ", findDanhMuc);
             if (findDanhMuc) {
                 let updm = await db.danhMuc.update(
                     {
@@ -96,7 +91,6 @@ let updateDanhMuc = async (data) => {
                         },
                     }
                 );
-                console.log(">>>", updm);
                 resolve({ message: "Update DanhMuc Successful", data: updm });
             } else {
                 resolve("DanhMuc not exist");

@@ -2,13 +2,11 @@ import CRUD_hinhAnh from "../sevices/CRUD_hinhAnh";
 
 let create_hinhAnh = async (req, res) => {
     let hinhanh = await CRUD_hinhAnh.createHinhAnh(req.body);
-    console.log("req.body: ", req.body);
     res.status(200).json(hinhanh);
 };
 
 let getAll_hinhAnh = async (req, res) => {
     let hinhanh = await CRUD_hinhAnh.getAllHinhAnh();
-    console.log(hinhanh);
     res.status(200).json(hinhanh);
 };
 let getName_hinhAnh = async (req, res) => {

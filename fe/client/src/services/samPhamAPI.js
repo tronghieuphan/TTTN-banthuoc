@@ -16,6 +16,11 @@ const sanPhamAPI = {
     getSanPhamTrungBay: () => {
         return axios.get(`http://localhost:9000/gettrungbay-sanpham`);
     },
+    getSanPhamChiTiet:(id)=>{
+        return axios.post(`http://localhost:9000/getchitiet-sanpham`,id);
+
+    }
+    
 };
 
 export default sanPhamAPI;

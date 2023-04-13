@@ -4,7 +4,7 @@ import "./HomePage.scss";
 import Section from "../../components/Section/Section";
 import { FcLike, FcFlashOn } from "react-icons/fc";
 import Cardcate from "../../components/Card/CardCate/CardCate";
-import CardProduce from "../../components/Card/CardProduct/CartProduct";
+import CardProduct from "../../components/Card/CardProduct/CartProduct";
 import { GiMedicines } from "react-icons/gi";
 import { FaShippingFast } from "react-icons/fa";
 import { MdSecurity } from "react-icons/md";
@@ -14,14 +14,24 @@ import sanPhamAPI from "../../services/samPhamAPI";
 
 function HomePage() {
     const [sptrungbay, setSPTrungBay] = useState([]);
-    console.log('sptrungbay: ', sptrungbay);
     const getSanPhamTrungBay = async () => {
         const data = await sanPhamAPI.getSanPhamTrungBay();
         setSPTrungBay(data.data);
     };
-
+    const [spkhuyemmai, setSPKhuyenMai] = useState([]);
+    const getSanPhamKhuyenMai = async () => {
+        const data = await sanPhamAPI.getSanPhamKhuyenMai();
+        setSPKhuyenMai(data.data);
+    };
+    const [spmoi, setSPMoi] = useState([]);
+    const getSanPhamMoi = async () => {
+        const data = await sanPhamAPI.getSanPhamMoi();
+        setSPMoi(data.data);
+    };
     useEffect(() => {
         getSanPhamTrungBay();
+        getSanPhamKhuyenMai();
+        getSanPhamMoi();
     }, []);
     const info = [
         {
@@ -200,7 +210,7 @@ function HomePage() {
                     </p>
                     <div className="d-flex flex-wrap justify-content-center">
                         {sptrungbay.map((value) => (
-                            <CardProduce produce={value} key={value.id} />
+                            <CardProduct moi={value} key={value.id} />
                         ))}
                     </div>
                 </Section>
@@ -212,8 +222,8 @@ function HomePage() {
                         SẢN PHẨM KHUYẾN MÃI <FcLike />
                     </p>
                     <div className="d-flex flex-wrap justify-content-center">
-                        {produce.map((produce) => (
-                            <CardProduceDiscount produce={produce} />
+                        {spkhuyemmai.map((value) => (
+                            <CardProduceDiscount khuyenmai={value} key={value.id} />
                         ))}
                     </div>
                 </Section>
@@ -224,8 +234,8 @@ function HomePage() {
                         <FcFlashOn /> SẢN PHẨM MỚI <FcFlashOn />
                     </p>
                     <div className="d-flex flex-wrap justify-content-center">
-                        {produce.map((produce) => (
-                            <CardProduce produce={produce} />
+                        {spmoi.map((value) => (
+                            <CardProduct moi={value} key={value.id} />
                         ))}
                     </div>
                 </Section>

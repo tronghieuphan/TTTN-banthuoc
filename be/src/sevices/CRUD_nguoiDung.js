@@ -86,9 +86,7 @@ let createNguoiDung = async (data) => {
 let createNguoiDung_Admin = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            console.log(data);
             let mk = await hashPasswordUser(data.Matkhau);
-            console.log("mk: ", mk);
 
             let nguoidung = await db.nguoiDung.findOrCreate({
                 where: {
@@ -110,7 +108,7 @@ let createNguoiDung_Admin = async (data) => {
                     Loaind: data.Loaind,
                 },
             });
-            console.log(nguoidung);
+
             if (nguoidung[1]) {
                 resolve({ message: "Create Successfull", data: nguoidung[0] });
             } else {
@@ -151,7 +149,7 @@ let updateNguoiDung = async (data) => {
                     Tendangnhap: data.Tendangnhap,
                 },
             });
-            console.log("findNguoiDung: ", findNguoiDung);
+
             if (findNguoiDung) {
                 let upNd = await db.nguoiDung.update(
                     {
@@ -174,7 +172,7 @@ let updateNguoiDung = async (data) => {
                         },
                     }
                 );
-                console.log(">>>", upNd);
+
                 resolve({ message: "Update Nguoidung Successful", data: upNd });
             } else {
                 resolve("Nguoidung not exist");
@@ -258,7 +256,7 @@ let changePassword = (data) => {
                     Tendangnhap: data.tendangnhap,
                 },
             });
-            console.log(">>>", findNguoiDung);
+
             if (findNguoiDung) {
                 let changePa = await db.nguoiDung.update(
                     {
@@ -289,7 +287,7 @@ let hashPasswordUser = (password) => {
     return new Promise(async (resolve, reject) => {
         try {
             let hashPassword = await bcrypt.hash(password, salt);
-            console.log("password: ", hashPassword);
+
             resolve(hashPassword);
         } catch (e) {
             reject(e);

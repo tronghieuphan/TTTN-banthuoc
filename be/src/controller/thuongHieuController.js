@@ -2,13 +2,11 @@ import CRUD_thuongHieu from "../sevices/CRUD_thuongHieu";
 
 let create_thuongHieu = async (req, res) => {
     let thuonghieu = await CRUD_thuongHieu.createThuongHieu(req.body);
-    console.log("req.body: ", req.body);
     res.status(200).json(thuonghieu);
 };
 
 let getAll_thuongHieu = async (req, res) => {
     let thuonghieu = await CRUD_thuongHieu.getAllThuongHieu();
-    console.log(thuonghieu);
     res.status(200).json(thuonghieu);
 };
 let getName_thuongHieu = async (req, res) => {

@@ -2,13 +2,12 @@ import CRUD_danhMuc from "../sevices/CRUD_danhMuc";
 
 let create_danhMuc = async (req, res) => {
     let danhmuc = await CRUD_danhMuc.createDanhMuc(req.body);
-    console.log("req.body: ", req.body);
     res.status(200).json(danhmuc);
 };
 
 let getAll_danhMuc = async (req, res) => {
     let danhmuc = await CRUD_danhMuc.getAllDanhMuc();
-    console.log(danhmuc);
+
     res.status(200).json(danhmuc);
 };
 let getName_danhMuc = async (req, res) => {
