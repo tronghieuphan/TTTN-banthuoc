@@ -3,10 +3,13 @@ import { Button } from "@mui/material";
 import ChangePassword from "./ChangePass";
 import { useState, useEffect } from "react";
 import addressAPI from "../../services/addressAPI";
+import nguoiDungAPI from "../../services/nguoiDungAPI";
+import Swal from "sweetalert2";
 import { Select, Input } from "antd";
 import "./InfoUser.scss";
 function InfoUser() {
     // const [gender, setAge] = useState("");
+    const AccountLS = JSON.parse(localStorage.getItem("ACCOUNT"));
     const [open, setOpen] = useState(true);
     const [city, listCity] = useState([]);
     const [district, listDistrict] = useState([]);
@@ -45,9 +48,23 @@ function InfoUser() {
         getAllDistrict();
         getAllWard();
     }, []);
-    const handleOpenUpdateInfo = () => {
+    const handleUpdatePass = async (obj) => {
+        const data = await nguoiDungAPI.updatePass(obj);
+        if (data.data === "Change Succesfull") {
+            // successDialog();
+
+        }
+    };
+
+    const handleOpenUpdateInfo = async (record) => {
         if (open === true) {
-            setOpen(false);
+            const data = await nguoiDungAPI.update();
+            console.log(data);
+            if (data.data.message === "Update Nguoidung Successful") {
+                Swal.fire({
+                    text: "Cập Nhật Thông Tin Thành Công",
+                });
+            } 
         } else {
             setOpen(true);
         }
@@ -82,7 +99,7 @@ function InfoUser() {
                                 id="outlined-basic"
                                 label="Họ lót"
                                 variant="outlined"
-                                value=""
+                                value={AccountLS.Holot}
                                 disabled={open}
                             />
                         </div>
@@ -94,7 +111,7 @@ function InfoUser() {
                                 label="Tên"
                                 type="text"
                                 variant="outlined"
-                                value=""
+                                value={AccountLS.Ten}
                                 disabled={open}
                             />
                         </div>
@@ -103,16 +120,19 @@ function InfoUser() {
                             <Input
                                 className="m-2 w-100"
                                 id="outlined-basic"
-                                label="Tên"
+                                label="Số Điện Thoại"
                                 type="tel"
                                 variant="outlined"
-                                value=""
+                                value={AccountLS.Sdt}
                                 disabled={open}
                             />
                         </div>
                         <div className="justify-content-center w-49 ">
                             <label className="m-2 w-30">Giới tính:</label>
                             <Select
+                                value={
+                                    AccountLS.Gioitinh ? "Nữ" : "Nam"
+                                }
                                 disabled={open}
                                 className="m-2 w-100"
                                 showSearch
@@ -145,10 +165,10 @@ function InfoUser() {
                             <Input
                                 className="m-2 w-100"
                                 id="outlined-basic"
-                                label="Tên"
+                                label="Ngày Sinh"
                                 type="date"
                                 variant="outlined"
-                                value=""
+                                value={AccountLS.Ngaysinh}
                                 disabled={open}
                             />
                         </div>
@@ -161,13 +181,17 @@ function InfoUser() {
                                 label="Tên"
                                 type="email"
                                 variant="outlined"
-                                value=""
+                                value={AccountLS.Email}
                                 disabled={open}
                             />
                         </div>
                         <div className="justify-content-center w-33 ">
                             <label className="m-2 w-30">Phường/Xã:</label>
+
                             <Select
+                                value={
+                                    AccountLS.Phuong
+                                }
                                 className="m-2 w-100"
                                 disabled={open}
                                 showSearch
@@ -192,6 +216,9 @@ function InfoUser() {
                         <div className="justify-content-center w-33 ">
                             <label className="m-2 w-30">Quận/Huyện:</label>
                             <Select
+                                value={
+                                    AccountLS.Quan || " "
+                                }
                                 className="m-2 w-100"
                                 disabled={open}
                                 showSearch
@@ -216,6 +243,9 @@ function InfoUser() {
                         <div className="justify-content-center w-33 ">
                             <label className="m-2 w-30">Thành phố/Tỉnh:</label>
                             <Select
+                                value={
+                                    AccountLS.Thanhpho
+                                }
                                 className="m-2 w-100"
                                 disabled={open}
                                 showSearch
@@ -245,7 +275,7 @@ function InfoUser() {
                                 label="Tên"
                                 type="text"
                                 variant="outlined"
-                                value=""
+                                value={AccountLS.Tendangnhap}
                                 disabled={open}
                             />
                         </div>
@@ -259,8 +289,10 @@ function InfoUser() {
                         variant="contained"
                     >
                         {open === false ? "Lưu trạng thái" : "Cập nhập"}
-                    </Button>
-                    <ChangePassword />
+                    </Button >
+                    <ChangePassword
+                        handleUpdatePass={handleUpdatePass}
+                    />
                 </div>
             </div>
         </>

@@ -7,6 +7,7 @@ import { Button, Dropdown } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../slices/userSlice";
+import { render } from "react-dom";
 function Header() {
     const { account } = useSelector((state) => state.user);
     const setAccountLS = JSON.parse(localStorage.getItem("ACCOUNT"));
@@ -50,12 +51,13 @@ function Header() {
                                                 Xin chào {setAccountLS.Ten}
                                             </Dropdown.Toggle>
                                             <Dropdown.Menu>
-                                                <Dropdown.Item>
+                                                <Dropdown.Item >
                                                     <Link
-                                                        to="/profile"
+                                                        to="/user-details"
                                                         style={{ textDecoration: "none" }}
                                                     >
                                                         Profile
+                                                        
                                                     </Link>
                                                 </Dropdown.Item>
                                                 <Dropdown.Item>

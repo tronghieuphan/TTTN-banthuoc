@@ -2,12 +2,43 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
+import Swal from "sweetalert2";
 
-function ChangePassword() {
+function ChangePassword(props) {
+
+    const handleUpdatePass = props.handleUpdatePass;
+
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(">>>", e);
+        Swal.fire({
+          title: "BẠN CÓ MUỐN LƯU THÔNG TIN?",
+          confirmButtonText: "Lưu",
+          showCancelButton: true,
+          cancelButtonText: "Hủy",
+          customClass: {
+            title: "fs-5 text-dark",
+            confirmButton: "bg-primary shadow-none",
+            cancelButton: "bg-warning shadow-none",
+          },
+        }).then((result) => {
+          if (result.isConfirmed) {
+            
+            // if () {
+
+            // }
+            // //CREATE
+            // else {
+            
+            // }
+          }
+        });
+      };
 
     return (
         <>
@@ -23,7 +54,7 @@ function ChangePassword() {
                     <Modal.Title>Đổi mật khẩu</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form>
+                    <Form >
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                             <Form.Label>Nhập mật khẩu cũ</Form.Label>
                             <Form.Control type="password" autoFocus />
@@ -42,7 +73,7 @@ function ChangePassword() {
                     <Button variant="secondary" onClick={handleClose}>
                         Đóng
                     </Button>
-                    <Button variant="primary" type="submit" onClick={handleClose}>
+                    <Button variant="primary" type="submit" onClick={handleSubmit}>
                         Lưu
                     </Button>
                 </Modal.Footer>

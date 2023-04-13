@@ -19,6 +19,9 @@ const nguoiDungAPI = {
     login: (obj) => {
         return axios.post(`http://localhost:9000/login-nguoidung`, obj);
     },
+    updatePass: (obj) =>{
+        return axios.put('http://localhost:9000/changepass-nguoidung',obj)
+    }
 };
 
 export default nguoiDungAPI;
