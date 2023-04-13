@@ -330,7 +330,7 @@ function SanphamDetail() {
                                                 placeholder="Chọn thương hiệu "
                                                 optionFilterProp="children"
                                                 // onChange={onChange}
-                                                // onSearch={onSearch}
+                                                // onSearch={onSearch}  
                                                 filterOption={(input, option) =>
                                                     (option?.label ?? "")
                                                         .toLowerCase()
