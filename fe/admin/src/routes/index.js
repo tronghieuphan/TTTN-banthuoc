@@ -11,7 +11,7 @@ import NguoidungList from "../pages/Nguoidung/NguoidungList";
 import NguoidungDetail from "../pages/Nguoidung/NguoidungDetail";
 import KhuyenmaiList from "../pages/Khuyenmai/KhuyenmaiList";
 import LoaisanphamList from "../pages/Loaisanpham/LoaisanphamList";
-
+import KhuyenmaiDetail from "../pages/Khuyenmai/KhuyenmaiDetail";
 import SanphamDetail from "../pages/SanPham/SanphamDetail";
 import DondathangList from "../pages/Dondathang/DondathangList";
 import DonDatHangDetail from "../pages/Dondathang/DondathangDetail";
@@ -57,6 +57,11 @@ const PageWeb = [
         isMainLayout: true
     },
     {
+        path: '/khuyenmai-detail',
+        page: KhuyenmaiDetail,
+        isMainLayout: true
+    },
+    {
         path: '/nguoidung-list',
         page: NguoidungList,
         isMainLayout: true,
@@ -77,15 +82,16 @@ const PageWeb = [
         isMainLayout: true,
     },
     {
-        path: "/hinhanh-list",
-        page: HinhanhList,
-        isMainLayout: true,
-    },
-    {
         path: "/sanpham-detail",
         page: SanphamDetail,
         isMainLayout: true,
     },
+    {
+        path: "/hinhanh-list",
+        page: HinhanhList,
+        isMainLayout: true,
+    },
+   
     {
         path: "/dondathang-list",
         page: DondathangList,

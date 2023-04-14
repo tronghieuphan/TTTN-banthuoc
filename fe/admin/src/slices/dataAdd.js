@@ -7,7 +7,8 @@ export const dataAddSlice = createSlice({
         nguoidung: [],
         hinhanh: [],
         sanpham:[],
-        dondathang:[]
+        dondathang:[],
+        khuyenmai:[]
     },
     reducers: {
         setDataNcc: (state, action) => {
@@ -25,8 +26,11 @@ export const dataAddSlice = createSlice({
         setDataDDH: (state,action) => {
             state.dondathang= action.payload      
         },
+        setDataKM: (state,action) => {
+            state.khuyenmai= action.payload      
+        },
         
     },
 });
-export const { setDataNcc, setDataNd, setDataHa, setDataSP, setDataDDH } = dataAddSlice.actions;
+export const { setDataNcc, setDataNd, setDataHa, setDataSP, setDataDDH,setDataKM } = dataAddSlice.actions;
 export default dataAddSlice.reducer;
