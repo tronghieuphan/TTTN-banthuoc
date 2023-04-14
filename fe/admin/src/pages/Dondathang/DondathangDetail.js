@@ -1,7 +1,5 @@
 import { Button, Table, Tooltip } from "antd";
 import React, { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -17,7 +15,6 @@ function DonDatHangDetail() {
         ...listchitiet.sanpham,
         Tensp: listchitiet.thongtin,
     };
-    console.log("obj: ", obj);
     const getChitiet = async (id) => {
         const data = await dondathangAPI.getChiTietSanPham(id);
         setChiTiet(data.data);

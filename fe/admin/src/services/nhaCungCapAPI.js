@@ -12,7 +12,7 @@ const nhaCungCapAPI = {
         return axios.post(`http://localhost:9000/create-nhacungcap`, obj);
     },
     update: (obj) => {
-        return axios.put(`http://localhost:9000/update`, obj);
+        return axios.put(`http://localhost:9000/update-nhacungcap`, obj);
     },
     delete: (nhacungcap_name) => {
         return axios.delete(`http://localhost:9000/delete-sanpham/${nhacungcap_name}`);

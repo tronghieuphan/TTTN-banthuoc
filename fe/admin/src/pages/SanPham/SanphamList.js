@@ -52,10 +52,7 @@ const handleAddStore = (record) => {
 const getByName = async () => {
     setLoading(true);
     const data = await sanPhamAPI.getByName(keysearch);
-    console.log("keysearch: ", keysearch);
-    console.log("data.data: ", data.data);
     setList(data.data);
-
     setLoading(false);
 };
 const handleChange = (e) => {

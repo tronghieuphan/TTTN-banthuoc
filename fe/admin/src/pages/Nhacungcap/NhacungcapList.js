@@ -72,6 +72,20 @@ function NhacungcapList() {
         {
             title: "Email",
             dataIndex: "Email",
+            render: (Email) => (
+                <Tooltip placement="topLeft" title={Email}>
+                    <div
+                        style={{
+                            overflow: "hidden",
+                            whiteSpace: "nowrap",
+                            textOverflow: "ellipsis",
+                            width: "100px",
+                        }}
+                    >
+                        {Email}
+                    </div>
+                </Tooltip>
+            ),
         },
         {
             title: "Số điện thoại",

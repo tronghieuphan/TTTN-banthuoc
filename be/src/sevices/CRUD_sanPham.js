@@ -115,7 +115,7 @@ let updateSanPham = async (data) => {
                         Quycach: data.Quycach,
                         Congdung: data.Congdung,
                         Giakm: data.Giakm,
-                        Soluongtk: data.Soluong,
+                        Soluongtk: data.Soluongtk,
                         Gianhap: data.Gianhap,
                         Trangthai: data.Trangthai,
                         Ghichu: data.Ghichu,

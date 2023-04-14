@@ -73,7 +73,12 @@ let getChiTietDDH = async (data) => {
                         raw: true,
                         attributes: ["Tensp", "Dongia"],
                     });
-                    const b = { ...a, Masp: e.Masp, Soluong: e.Soluong };
+                    const b = {
+                        ...a,
+                        Masp: e.Masp,
+                        Soluong: e.Soluong,
+                        Thanhtien: e.Soluong * a.Dongia,
+                    };
                     return b;
                 })
             );

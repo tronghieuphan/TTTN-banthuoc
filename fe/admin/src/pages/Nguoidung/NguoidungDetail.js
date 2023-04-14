@@ -286,7 +286,6 @@ function NguoidungDetail() {
                                             />
                                         </Form.Item>
                                     </div>
-
                                     <div className="justify-content-between w-30">
                                         <Form.Item
                                             className="m-1 w-33"

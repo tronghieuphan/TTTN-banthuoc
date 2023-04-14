@@ -12,9 +12,11 @@ function HinhanhDetail(props) {
     const handleUpdate = props.handleUpdate;
 
     const { hinhanh } = useSelector((state) => state.dataAdd);
+    const [url, setUrl] = useState("");
+    const [valueSP, setValueSP] = useState("");
+
     const dispatch = useDispatch();
     const [sanphamList, setSanphamList] = useState([]);
-    //SET GIÁ TRỊ CHO BIẾN
 
     //SET STORE TRUYỀN DỮ LIỆU TRỪ LIST QUA CHO DETAIL
 
@@ -23,20 +25,30 @@ function HinhanhDetail(props) {
         setSanphamList(res.data);
     };
     useEffect(() => {
+        setUrl(hinhanh.Url);
+        setValueSP(hinhanh.Masp);
         getAllSp();
-    }, []);
-    let listSp = [];
-    sanphamList.map((values, index) => listSp.push({ id: values.id, Tensp: values.Tensp }));
+    }, [hinhanh]);
+    //XỬ LÝ NHẬP LIỆU
+    const handleOnChange = (e) => {
+        setUrl(e.target.value);
+    };
     //XỬ LÝ THAY ĐỔI SP
-    const onChange = (value) => {
-        console.log(`selected ${value}`);
+    const onChange = (e) => {
+        setValueSP(e);
     };
     const onSearch = (value) => {
         console.log("search:", value);
     };
     // XỬ LÝ THÊM SỬA
     const handleSubmit = (e) => {
-        console.log(">>>", e);
+        e.preventDefault();
+        let obj = {
+            id: hinhanh.id,
+            Url: url, // biến Tendm phải ghi đúng với phần data.Tenloai bên be
+            Masp: valueSP,
+        };
+        console.log(">>>", obj);
         Swal.fire({
             title: "BẠN CÓ MUỐN LƯU THÔNG TIN?",
             confirmButtonText: "Lưu",
@@ -51,33 +63,82 @@ function HinhanhDetail(props) {
             if (result.isConfirmed) {
                 //UPDATE
                 if (hinhanh.Url) {
-                    handleUpdate(e);
+                    handleUpdate(obj);
                 }
                 //CREATE
                 else {
-                    handleCreate(e);
+                    handleCreate(obj);
+                    handleReset();
                 }
             }
         });
     };
-
-    const deleteStore = () => {
+    //RESET LẠI GIÁ TRỊ VỀ BAN ĐẦU
+    const handleReset = () => {
+        setUrl("");
+        setValueSP("");
         dispatch(setDataHa([]));
     };
     return (
         <>
             <div className="bd-radius bg-content p-4 text-muted fw-bold text-center">
                 <div>
+                    <form onSubmit={handleSubmit} method="post">
+                        <div className="d-flex flex-wrap justify-content-center">
+                            <div className="justify-content-center w-100 ">
+                                <label className="m-1">Đường dẫn:</label>
+                                <Input
+                                    className="m-1"
+                                    id="outlined-basic"
+                                    label="Đường dẫn"
+                                    variant="outlined"
+                                    type="text"
+                                    name="Url"
+                                    value={url || ""}
+                                    onChange={handleOnChange}
+                                />
+                                <label className="m-1 w-100">Chọn sản phẩm:</label>
+                                <Select
+                                    className="m-1 w-100"
+                                    showSearch
+                                    style={{
+                                        width: 200,
+                                    }}
+                                    value={valueSP}
+                                    placeholder="Chọn sản phẩm"
+                                    optionFilterProp="children"
+                                    onSearch={onSearch}
+                                    onChange={onChange}
+                                    filterOption={(input, option) =>
+                                        (option?.label ?? "")
+                                            .toLowerCase()
+                                            .includes(input.toLowerCase())
+                                    }
+                                    options={sanphamList.map((item) => ({
+                                        value: item.id,
+                                        label: item.Tensp,
+                                    }))}
+                                />
+                                <div className="d-flex justify-content-center">
+                                    <Button type="primary" htmlType="submit" className="m-2">
+                                        {hinhanh.id ? "Lưu" : "Thêm"}
+                                    </Button>
+                                    <Button type="primary" onClick={handleReset} className="m-2">
+                                        Hủy
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {/* <div className="bd-radius bg-content p-4 text-muted fw-bold text-center">
+                <div>
                     {hinhanh.id ? (
                         <Form onFinish={handleSubmit}>
                             <div className="d-flex flex-wrap justify-content-between">
-                                <Form.Item
-                                    name="id"
-                                    label="Id"
-                                    className="w-100"
-                                    initialValue={hinhanh.id}
-                                >
-                                    <Input disabled />
+                                <Form.Item name="id" label="Id" className="w-100">
+                                    <Input disabled name="id" />
                                 </Form.Item>
 
                                 <div className="justify-content-cen ter w-100 ">
@@ -85,24 +146,25 @@ function HinhanhDetail(props) {
                                         className=" w-100"
                                         name="Url"
                                         label="Đường dẫn"
-                                        initialValue={hinhanh.Url}
+                                        onChange={onChange}
                                     >
-                                        <Input className=" w-100" type="text" />
+                                        <Input
+                                            className=" w-100"
+                                            type="text"
+                                            name="url"
+                                            onChange={onChange}
+                                        />
                                     </Form.Item>
                                 </div>
                                 <div className="justify-content-center w-100 ">
-                                    <Form.Item
-                                        className=" w-33"
-                                        name="Masp"
-                                        label="Sản phẩm"
-                                        initialValue={hinhanh.Masp}
-                                    >
+                                    <Form.Item className=" w-33" name="Masp" label="Sản phẩm">
                                         <Select
                                             className="w-100"
                                             showSearch
                                             style={{
                                                 width: 160,
                                             }}
+                                            name="sanpham"
                                             placeholder="Chọn sản phẩm"
                                             optionFilterProp="children"
                                             onChange={onChange}
@@ -165,7 +227,7 @@ function HinhanhDetail(props) {
                                             }}
                                             placeholder="Chọn sản phẩm"
                                             optionFilterProp="children"
-                                            onChange={onChange}
+                                            // onChange={onChange}
                                             onSearch={onSearch}
                                             filterOption={(input, option) =>
                                                 (option?.label ?? "")
@@ -199,7 +261,7 @@ function HinhanhDetail(props) {
                         </Form>
                     )}
                 </div>
-            </div>
+            </div> */}
         </>
     );
 }

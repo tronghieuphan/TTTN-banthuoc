@@ -80,20 +80,20 @@ function NhacungcapDetail() {
             throw new Error(err);
         }
     };
-    //Lây API Thành phố
-    const getAllDistrict = async () => {
+    //Lây API Quan
+    const getAllDistrict = async (code) => {
         try {
-            const response = await addressAPI.getAll_District();
-            listDistrict(response.data);
+            const response = await addressAPI.getAll_District(code);
+            listDistrict(response.data.districts);
         } catch (err) {
             throw new Error(err);
         }
     };
     //Lây API Thành phố
-    const getAllWard = async () => {
+    const getAllWard = async (e) => {
         try {
-            const response = await addressAPI.getAll_Ward();
-            listWard(response.data);
+            const response = await addressAPI.getAll_Ward(e);
+            listWard(response.data.wards);
         } catch (err) {
             throw new Error(err);
         }
@@ -101,22 +101,28 @@ function NhacungcapDetail() {
 
     useEffect(() => {
         getAllCity();
-        getAllDistrict();
-        getAllWard();
     }, []);
-    const onChange = (value) => {
-        console.log(`selected ${value}`);
+    const onChange = (e, obj) => {
+        getAllDistrict(obj.id);
+    };
+    const onChangeDistrict = (e, obj) => {
+        getAllWard(obj.id);
     };
     const onSearch = (value) => {
         console.log("search:", value);
     };
+    const handleChange = (value) => {
+        console.log(`selected ${value}`);
+    };
+    //
     // Lấy API Thành Phố
     let arraycity = [];
     let arraydistrict = [];
     let arrayward = [];
-    city.map((values, index) => arraycity.push(values.name));
-    district.map((values, index) => arraydistrict.push(values.name));
-    ward.map((values, index) => arrayward.push(values.name));
+    city.map((values, index) => arraycity.push({ name: values.name, code: values.code }));
+    district.map((values, index) => arraydistrict.push({ name: values.name, code: values.code }));
+    ward.map((values, index) => arrayward.push({ name: values.name, code: values.code }));
+
     return (
         <>
             <motion.div
@@ -190,73 +196,15 @@ function NhacungcapDetail() {
                                             />
                                         </Form.Item>
                                     </div>
-                                    <div className="justify-content-center w-30">
+                                    <div className="justify-content-between w-30">
                                         <Form.Item
-                                            className="m-2 w-33"
-                                            name="Phuong"
-                                            label="Phường/xã"
-                                            initialValue={nhacungcap.Phuong}
-                                        >
-                                            <Select
-                                                className="w-100"
-                                                showSearch
-                                                style={{
-                                                    width: 160,
-                                                }}
-                                                placeholder="Chọn phường, xã"
-                                                optionFilterProp="children"
-                                                onChange={(e) => onChange(e)}
-                                                onSearch={onSearch}
-                                                filterOption={(input, option) =>
-                                                    (option?.label ?? "")
-                                                        .toLowerCase()
-                                                        .includes(input.toLowerCase())
-                                                }
-                                                options={arrayward.map((item) => ({
-                                                    value: item,
-                                                    label: item,
-                                                }))}
-                                            />
-                                        </Form.Item>
-                                    </div>
-                                    <div className="justify-content-center w-30">
-                                        <Form.Item
-                                            className="m-2 w-33"
-                                            name="Quan"
-                                            label="Quan/huyện"
-                                            initialValue={nhacungcap.Quan}
-                                        >
-                                            <Select
-                                                className="w-100"
-                                                showSearch
-                                                style={{
-                                                    width: 160,
-                                                }}
-                                                placeholder="Chọn quận, huyện"
-                                                optionFilterProp="children"
-                                                onChange={onChange}
-                                                onSearch={onSearch}
-                                                filterOption={(input, option) =>
-                                                    (option?.label ?? "")
-                                                        .toLowerCase()
-                                                        .includes(input.toLowerCase())
-                                                }
-                                                options={arraydistrict.map((item) => ({
-                                                    value: item,
-                                                    label: item,
-                                                }))}
-                                            />
-                                        </Form.Item>
-                                    </div>
-                                    <div className="justify-content-center w-30">
-                                        <Form.Item
-                                            className="m-2 w-33"
+                                            className="m-1 w-33"
                                             name="Thanhpho"
                                             label="Thành phố/tỉnh"
                                             initialValue={nhacungcap.Thanhpho}
                                         >
                                             <Select
-                                                className="w-100"
+                                                className="m-1 w-100"
                                                 showSearch
                                                 style={{
                                                     width: 160,
@@ -271,8 +219,68 @@ function NhacungcapDetail() {
                                                         .includes(input.toLowerCase())
                                                 }
                                                 options={arraycity.map((item) => ({
-                                                    value: item,
-                                                    label: item,
+                                                    value: item.name,
+                                                    label: item.name,
+                                                    id: item.code,
+                                                }))}
+                                            />
+                                        </Form.Item>
+                                    </div>
+                                    <div className="justify-content-between w-30">
+                                        <Form.Item
+                                            className="m-1 w-33"
+                                            name="Quan"
+                                            label="Quận/huyện"
+                                            initialValue={nhacungcap.Quan}
+                                        >
+                                            <Select
+                                                className="m-1 w-100"
+                                                showSearch
+                                                style={{
+                                                    width: 160,
+                                                }}
+                                                placeholder="Chọn quận, huyện"
+                                                optionFilterProp="children"
+                                                onChange={onChangeDistrict}
+                                                onSearch={onSearch}
+                                                filterOption={(input, option) =>
+                                                    (option?.label ?? "")
+                                                        .toLowerCase()
+                                                        .includes(input.toLowerCase())
+                                                }
+                                                options={arraydistrict.map((item) => ({
+                                                    value: item.name,
+                                                    label: item.name,
+                                                    id: item.code,
+                                                }))}
+                                            />
+                                        </Form.Item>
+                                    </div>
+                                    <div className="justify-content-between w-30">
+                                        <Form.Item
+                                            className="m-1 w-33"
+                                            name="Phuong"
+                                            label="Phường/xã"
+                                            initialValue={nhacungcap.Phuong}
+                                        >
+                                            <Select
+                                                className="m-1 w-100"
+                                                showSearch
+                                                fieldNames="phuong"
+                                                style={{
+                                                    width: 160,
+                                                }}
+                                                placeholder="Chọn phường, xã"
+                                                optionFilterProp="children"
+                                                onSearch={onSearch}
+                                                filterOption={(input, option) =>
+                                                    (option?.label ?? "")
+                                                        .toLowerCase()
+                                                        .includes(input.toLowerCase())
+                                                }
+                                                options={arrayward.map((item) => ({
+                                                    value: item.name,
+                                                    label: item.name,
                                                 }))}
                                             />
                                         </Form.Item>

@@ -35,7 +35,7 @@ function DondathangList() {
     }, []);
     const handleAddStore=(record)=>{
         dispatch(setDataDDH(record))
-
+        localStorage.setItem("DONDATHANG",JSON.stringify(record))
     }
     const columns = [
         {

@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
 import { successDialog, deleteSuccess, exist } from "../../components/Dialog/Dialog";
 import { setDataHa } from "../../slices/dataAdd";
-    function HinhanhList() {
+function HinhanhList() {
     const [listHa, setList] = useState([]);
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
@@ -29,7 +29,7 @@ import { setDataHa } from "../../slices/dataAdd";
 
     const handleAddStore = (record) => {
         dispatch(setDataHa(record));
-        getAllHa()
+        getAllHa();
     };
 
     // dellete
@@ -64,6 +64,7 @@ import { setDataHa } from "../../slices/dataAdd";
             title: "ID",
             dataIndex: "id",
             align: "center",
+           
         },
         {
             title: "Đường dẫn",

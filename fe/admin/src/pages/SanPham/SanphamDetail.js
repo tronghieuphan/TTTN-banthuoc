@@ -256,8 +256,8 @@ function SanphamDetail() {
                                     {/* Mã loại sp  */}
                                     <div className="mt-3 justify-content-between w-30">
                                         <Form.Item
-                                            className="my-4 w-33"
-                                            name="maloai"
+                                            className="my-2 w-33"
+                                            name="Maloai"
                                             label="Loại sản phẩm"
                                             initialValue={sanpham.Maloai}
                                         >
@@ -287,7 +287,7 @@ function SanphamDetail() {
                                     <div className="justify-content-between w-30">
                                         <Form.Item
                                             className="my-4 w-33"
-                                            name="maxx"
+                                            name="Maxx"
                                             label="Xuất xứ"
                                             initialValue={sanpham.Maxx}
                                         >
@@ -317,7 +317,7 @@ function SanphamDetail() {
                                     <div className="justify-content-between w-30">
                                         <Form.Item
                                             className="my-4 w-33"
-                                            name="maxx"
+                                            name="Math"
                                             label="Thương hiệu"
                                             initialValue={sanpham.Math}
                                         >
@@ -347,7 +347,7 @@ function SanphamDetail() {
                                     <div className="justify-content-between w-30">
                                         <Form.Item
                                             className="my-4 w-33"
-                                            name="mancc"
+                                            name="Mancc"
                                             label="Nhà cung cấp"
                                             initialValue={sanpham.Mancc}
                                         >
