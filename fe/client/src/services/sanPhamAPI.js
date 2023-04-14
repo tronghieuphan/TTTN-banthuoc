@@ -4,6 +4,9 @@ const sanPhamAPI = {
     getAll: () => {
         return axios.get(`http://localhost:9000/getall-sanpham`);
     },
+    getByName: (sanpham_name) => {
+        return axios.get(`http://localhost:9000/find-sanphambyname?datafind=${sanpham_name}`);
+    },
     getSanPhamKhuyenMai: () => {
         return axios.get(`http://localhost:9000/getkhuyenmai-sanpham`);
     },
