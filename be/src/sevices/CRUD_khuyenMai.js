@@ -74,9 +74,11 @@ let deleteKhuyenMai = async (tenkm) => {
             });
             if (khuyenmaidonhang.lenght > 0) {
                 resolve("Have DonDatHang belongs KhuyenMai");
-            } else if (khuyenmainguoidung.length > 0) {
+            } 
+            else if (khuyenmainguoidung.length > 0) {
                 resolve("Have NguoiDung belongs KhuyenMai");
-            } else {
+            } 
+            else {
                 if (tenkm_delete) {
                     await tenkm_delete.destroy();
                     resolve("Delete Successful");
@@ -96,7 +98,7 @@ let updateKhuyenMai = async (data) => {
         try {
             let findKhuyenMai = await db.khuyenMai.findOne({
                 where: {
-                    id: data.Id,
+                    id: data.id,
                 },
             });
             if (findKhuyenMai) {

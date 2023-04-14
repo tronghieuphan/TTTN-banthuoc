@@ -13,7 +13,6 @@ const rootReducer = {
     xxdm:xxdmSlice,
     dataAdd:dataAdd,
     thdm:thdmSlice,
-    //hadm:hadmSlice,
     lspdm:lspdmSlice,
 };
 
