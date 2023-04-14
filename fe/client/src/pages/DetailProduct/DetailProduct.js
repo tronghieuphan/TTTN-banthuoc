@@ -4,7 +4,7 @@ import InfoProduct from "./InfoProduct";
 import SliderDetail from "./SliderDetail";
 import { FcFlashOn } from "react-icons/fc";
 import { useSelector } from "react-redux";
-import sanPhamAPI from "../../services/samPhamAPI";
+import sanPhamAPI from "../../services/sanPhamAPI";
 function DetailProduct() {
     // const { thongtinsanpham } = useSelector((state) => state.sanpham);
     const thongtinsanpham = JSON.parse(localStorage.getItem("SANPHAM"));

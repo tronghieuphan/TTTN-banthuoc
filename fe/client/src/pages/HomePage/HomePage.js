@@ -10,7 +10,7 @@ import { FaShippingFast } from "react-icons/fa";
 import { MdSecurity } from "react-icons/md";
 import { useEffect, useState } from "react";
 import CardProduceDiscount from "../../components/Card/CardProduct/CardProductDiscount";
-import sanPhamAPI from "../../services/samPhamAPI";
+import sanPhamAPI from "../../services/sanPhamAPI";
 
 function HomePage() {
     const [sptrungbay, setSPTrungBay] = useState([]);

@@ -5,13 +5,34 @@ import Card from "./Card";
 import { Button, Dropdown } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect} from "react";
 import { logout } from "../../slices/userSlice";
+import sanPhamAPI from "../../services/sanPhamAPI";
 function Header() {
     const { account } = useSelector((state) => state.user);
     const setAccountLS = JSON.parse(localStorage.getItem("ACCOUNT"));
     console.log(">>>", setAccountLS);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const [listSp, setList] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [keysearch, setValueSearch] = useState("");
+
+    const getAllSp = async () => {
+        try {
+            setLoading(true);
+            const response = await sanPhamAPI.getAll();
+            setList(response.data);
+            setLoading(false);
+        } catch (err) {
+            throw new Error(err);
+        }
+    };
+
+    useEffect(() => {
+        getAllSp();
+    }, []);
 
     const handleLogout = () => {
         dispatch(logout());
@@ -33,7 +54,7 @@ function Header() {
                         </Link>
                     </div>
                     <div className="col-md-4 text-right">
-                        <SearchInput />
+                        <SearchInput placeholder="Tìm kiếm..." data = {listSp}/>
                     </div>
                     <div className="col-md-5 text-right">
                         <div className="row align-items-center">
