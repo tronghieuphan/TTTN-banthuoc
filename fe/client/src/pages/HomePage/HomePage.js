@@ -11,6 +11,7 @@ import { MdSecurity } from "react-icons/md";
 import { useEffect, useState } from "react";
 import CardProduceDiscount from "../../components/Card/CardProduct/CardProductDiscount";
 import sanPhamAPI from "../../services/samPhamAPI";
+import "../../components/Card/CardProduct/style.scss";
 
 function HomePage() {
     const [sptrungbay, setSPTrungBay] = useState([]);
@@ -194,7 +195,7 @@ function HomePage() {
                 </div>
             </div>
             <Section>
-                <p>
+                <p style={{ fontSize: "25px" }}>
                     <FcLike /> LOẠI SẢN PHẨM NỔI BẬT <FcLike />
                 </p>
                 <div className="d-flex flex-wrap justify-content-center">
@@ -203,21 +204,33 @@ function HomePage() {
                     ))}
                 </div>
             </Section>
-            <div className="section_1">
-                <Section>
-                    <p className="text-center">
-                        <FcFlashOn /> SẢN PHẨM NỔI BẬT <FcFlashOn />
-                    </p>
-                    <div className="d-flex flex-wrap justify-content-center">
-                        {sptrungbay.map((value) => (
-                            <CardProduct moi={value} key={value.id} />
-                        ))}
-                    </div>
-                </Section>
+            <div className="section_1 d-flex justify-content-center">
+                <div >
+                    <Section>
+                        <p className="text-center" style={{ fontSize: "25px",color:"#fff" }}>
+                            <FcFlashOn /> SẢN PHẨM NỔI BẬT <FcFlashOn />
+                        </p>
+                        <div className="d-flex flex-wrap justify-content-center">
+                            {sptrungbay.map((value) => (
+                                <CardProduct moi={value} key={value.id} />
+                            ))}
+                        </div>
+                    </Section>
+                </div>
             </div>
             <div className="section_5">
                 <Section>
-                    <p>
+                    <p
+                        style={{
+                            fontSize: "25px",
+                            backgroundColor: "#E7AA3F",
+                            borderRadius: "20px",
+                            color: "#fff",
+                            padding: "10px",
+                            width: "max-content",
+                            boxShadow:"rgba(0, 0, 0, 0.24) 0px 3px 8px"
+                        }}
+                    >
                         <FcLike />
                         SẢN PHẨM KHUYẾN MÃI <FcLike />
                     </p>
@@ -230,7 +243,7 @@ function HomePage() {
             </div>
             <div className="section_2">
                 <Section>
-                    <p className="text-center">
+                    <p className="text-center" style={{ fontSize: "25px" }}>
                         <FcFlashOn /> SẢN PHẨM MỚI <FcFlashOn />
                     </p>
                     <div className="d-flex flex-wrap justify-content-center">
@@ -240,7 +253,7 @@ function HomePage() {
                     </div>
                 </Section>
             </div>
-            <div className="section_3">
+            {/* <div className="section_3">
                 <Section>
                     <p>
                         <FcLike />
@@ -252,7 +265,7 @@ function HomePage() {
                         ))}
                     </div>
                 </Section>
-            </div>
+            </div> */}
             <div className="row w-100 justify-content-center section_4">
                 <div className="col-3">
                     <div className="d-flex">

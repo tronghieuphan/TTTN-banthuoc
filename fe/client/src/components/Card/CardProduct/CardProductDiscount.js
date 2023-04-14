@@ -1,57 +1,46 @@
 import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 import { Tooltip } from "antd";
+import { useDispatch } from "react-redux";
+import { setDataSP } from "../../../slices/sanphamSlice";
 function CardProduceDiscount(props) {
     let mang = props.khuyenmai;
     console.log("mangkhuyenmai: ", mang);
     const text = <span>{mang.Tensp}</span>;
-
+    const dispatch = useDispatch();
+    const handleAddStore = (obj) => {
+        dispatch(setDataSP(obj));
+        localStorage.setItem("SANPHAM", JSON.stringify(obj));
+    };
     return (
-        <Card style={{ width: "16rem" }} className="p-3 m-3">
-            <div style={{ width: "100%", height: "200px", border: "1px solid black" }}>
-                <Card.Img variant="top" className="w-100 " />
-            </div>
-            <Card.Body>
-                <Card.Text>
-                    <div>
-                        <Tooltip placement="top" title={text}>
-                            <div
-                                style={{
-                                    overflow: "hidden",
-                                    width: "100%",
-                                    height: "60px",
-                                    fontSize: "20px",
-                                    textAlign: "left",
-                                }}
-                            >
-                                {mang.Tensp}
-                            </div>
-                        </Tooltip>
-                    </div>
-                </Card.Text>
-                <div className="fs-6 fst-italic">Giá khuyến mãi:</div>
-                <p
-                    className="text-center m-2"
-                    style={{ backgroundColor: "rgb(255, 118, 118)", color: "yellow" }}
-                >
-                    {mang.Giakm}
-                </p>
-                <p
-                    style={{ fontSize: "15px", fontStyle: "italic", color: "GrayText" }}
-                    className="text-decoration-line-through text-left"
-                >
-                    Giá gốc: {mang.Dongia}
-                </p>
-                <p style={{ fontSize: "13px", padding: "auto" }}>{mang.Quycach}</p>
+        <Link to="/product-details" style={{ textDecoration: "none",color:"#050E29" }}>
+            <div style={{ width: "13rem" }} className="m-3 bordercard">
+                <div style={{ width: "100%", height: "200px", border: "1px solid black" }}>
+                    <img variant="top" className="w-100 " />
+                </div>
 
-                <Link to="/produce-detail">
-                    <Button variant="primary" className="d-block m-auto mt-2">
+                <div>
+                    <Tooltip placement="top" title={text}>
+                        <div className="title">{mang.Tensp}</div>
+                    </Tooltip>
+                </div>
+
+                <div className="price1">
+                    <span>
+                        {mang.Giakm.toLocaleString("it-IT", { style: "currency", currency: "VND" })}
+                    </span>
+                </div>
+                <div className="quycach">{mang.Quycach}</div>
+                <div className="discount">
+                    {mang.Dongia.toLocaleString("it-IT", { style: "currency", currency: "VND" })}
+                </div>
+                <div className="text-center">
+                    <Button variant="primary" onClick={() => handleAddStore(mang)}>
                         Mua ngay
                     </Button>
-                </Link>
-            </Card.Body>
-        </Card>
+                </div>
+            </div>
+        </Link>
     );
 }
 

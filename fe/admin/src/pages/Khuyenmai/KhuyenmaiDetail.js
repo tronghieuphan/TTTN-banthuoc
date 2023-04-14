@@ -8,15 +8,11 @@ import { exist, successDialog } from "../../components/Dialog/Dialog";
 import { Link } from "react-router-dom";
 import { setDataKM } from "../../slices/dataAdd";
 
-
 function KhuyenmaiDetail() {
-
-
     const { khuyenmai } = useSelector((state) => state.dataAdd);
     const dispatch = useDispatch();
 
-
-    console.log(khuyenmai.Trangthai)
+    console.log(khuyenmai.Trangthai);
     //them
     const handleCreate = async (obj) => {
         const data = await khuyenMaiAPI.create(obj);
@@ -29,7 +25,7 @@ function KhuyenmaiDetail() {
     };
     //SỬA
     const handleUpdate = async (obj) => {
-        console.log(obj)
+        console.log(obj);
         const data = await khuyenMaiAPI.update(obj);
         console.log("data.data.message: ", data.data.message);
         if (data.data.message === "Update KhuyenMai Successful") {
@@ -38,7 +34,7 @@ function KhuyenmaiDetail() {
     };
     // XỬ LÝ THÊM SỬA
     const handleSubmit = (e) => {
-        console.log(e)
+        console.log(e);
         Swal.fire({
             title: "BẠN CÓ MUỐN LƯU THÔNG TIN?",
             confirmButtonText: "Lưu",
@@ -87,9 +83,7 @@ function KhuyenmaiDetail() {
                 exit={{ opacity: 0, transition: { duration: 0.8 } }}
             >
                 <Link to="/khuyenmai-list" className="m-4">
-                    <Button onClick={deleteStore}>
-                        Quay lại
-                    </Button>
+                    <Button onClick={deleteStore}>Quay lại</Button>
                 </Link>
                 <div className="m-4 ">
                     <div className="bd-radius bg-content p-4 text-muted fw-bold text-center">
@@ -138,13 +132,9 @@ function KhuyenmaiDetail() {
                                             label="Phần trăm khuyến mãi"
                                             initialValue={khuyenmai.Phantram}
                                         >
-                                            <Input
-                                                className=" w-100"
-                                                type="text"
-                                            />
+                                            <Input className=" w-100" type="text" />
                                         </Form.Item>
                                     </div>
-
 
                                     {/* date xử lý date bd date kt */}
                                     <div className=" mt-4 justify-content-between w-30 ">
@@ -177,10 +167,7 @@ function KhuyenmaiDetail() {
                                             label="Điều khoản"
                                             initialValue={khuyenmai.Dieukhoan}
                                         >
-                                            <Input
-                                                className=" w-100"
-                                                type="text"
-                                            />
+                                            <Input className=" w-100" type="text" />
                                         </Form.Item>
                                     </div>
                                     {/* khuyen mai trang thai */}
@@ -192,7 +179,6 @@ function KhuyenmaiDetail() {
                                             initialValue={
                                                 khuyenmai.Trangthai === true ? "True" : "False"
                                             }
-
                                         >
                                             <Select
                                                 className="m-1 w-100"

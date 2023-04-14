@@ -1,7 +1,68 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { Form, Input, Select, Radio, Space } from "antd";
+import { useState, useEffect } from "react";
+import addressAPI from "../../services/addressAPI";
 
 function CartShopping() {
+    const account = JSON.parse(localStorage.getItem("ACCOUNT"));
+    const [city, listCity] = useState([]);
+    const [district, listDistrict] = useState([]);
+    const [ward, listWard] = useState([]);
+    //Lây API Thành phố
+    const getAllCity = async () => {
+        try {
+            const response = await addressAPI.getAll_Province();
+            listCity(response.data);
+        } catch (err) {
+            throw new Error(err);
+        }
+    };
+    //Lây API Quan
+    const getAllDistrict = async (code) => {
+        try {
+            const response = await addressAPI.getAll_District(code);
+            listDistrict(response.data.districts);
+        } catch (err) {
+            throw new Error(err);
+        }
+    };
+    //Lây API Thành phố
+    const getAllWard = async (e) => {
+        try {
+            const response = await addressAPI.getAll_Ward(e);
+            listWard(response.data.wards);
+        } catch (err) {
+            throw new Error(err);
+        }
+    };
+
+    useEffect(() => {
+        getAllCity();
+    }, []);
+    const onChange = (e, obj) => {
+        getAllDistrict(obj.id);
+    };
+    const onChangeDistrict = (e, obj) => {
+        getAllWard(obj.id);
+    };
+    const onSearch = (value) => {
+        console.log("search:", value);
+    };
+
+    // Lấy API Thành Phố
+    let arraycity = [];
+    let arraydistrict = [];
+    let arrayward = [];
+    city.map((values, index) => arraycity.push({ name: values.name, code: values.code }));
+    district.map((values, index) => arraydistrict.push({ name: values.name, code: values.code }));
+    ward.map((values, index) => arrayward.push({ name: values.name, code: values.code }));
+    //Radio
+    const [value, setValue] = useState(1);
+    const handleChange = (e) => {
+        console.log("radio checked", e.target.value);
+        setValue(e.target.value);
+    };
     const productList = [
         {
             url: "12222",
@@ -146,10 +207,124 @@ function CartShopping() {
                                     })}
                                 </tbody>
                             </table>
+                            <div className="card my-3">
+                                <div
+                                    className="card-header text-white border-0"
+                                    style={{ backgroundColor: "#0F62F9" }}
+                                >
+                                    <h5 className="font-weight-semi-bold m-0">
+                                        THÔNG TIN ĐẶT HÀNG
+                                    </h5>
+                                </div>
+                                <div className="card-body">
+                                    <Form onFinish={() => {}}>
+                                        {!account ? (
+                                            <>
+                                                <Form.Item label="Tên khách hàng">
+                                                    <Input />
+                                                </Form.Item>
+                                                <Form.Item label="Số điện thoại">
+                                                    <Input />
+                                                </Form.Item>
+                                                <Form.Item
+                                                    className="w-30"
+                                                    name="Thanhpho"
+                                                    label="Thành phố/tỉnh"
+                                                >
+                                                    <Select
+                                                        className="w-100"
+                                                        showSearch
+                                                        style={{
+                                                            width: 160,
+                                                        }}
+                                                        placeholder="Chọn thành phố, tỉnh"
+                                                        optionFilterProp="children"
+                                                        onChange={onChange}
+                                                        onSearch={onSearch}
+                                                        filterOption={(input, option) =>
+                                                            (option?.label ?? "")
+                                                                .toLowerCase()
+                                                                .includes(input.toLowerCase())
+                                                        }
+                                                        options={arraycity.map((item) => ({
+                                                            value: item.name,
+                                                            label: item.name,
+                                                            id: item.code,
+                                                        }))}
+                                                    />
+                                                </Form.Item>
+                                                <Form.Item
+                                                    className="w-33"
+                                                    name="Quan"
+                                                    label="Quận/huyện"
+                                                >
+                                                    <Select
+                                                        className="w-100"
+                                                        showSearch
+                                                        style={{
+                                                            width: 400,
+                                                        }}
+                                                        placeholder="Chọn quận, huyện"
+                                                        optionFilterProp="children"
+                                                        onChange={onChangeDistrict}
+                                                        onSearch={onSearch}
+                                                        filterOption={(input, option) =>
+                                                            (option?.label ?? "")
+                                                                .toLowerCase()
+                                                                .includes(input.toLowerCase())
+                                                        }
+                                                        options={arraydistrict.map((item) => ({
+                                                            value: item.name,
+                                                            label: item.name,
+                                                            id: item.code,
+                                                        }))}
+                                                    />
+                                                </Form.Item>
+                                                <Form.Item
+                                                    className="w-33"
+                                                    name="Phuong"
+                                                    label="Phường/xã"
+                                                >
+                                                    <Select
+                                                        className="m-1 w-100"
+                                                        showSearch
+                                                        style={{
+                                                            width: 160,
+                                                        }}
+                                                        placeholder="Chọn phường, xã"
+                                                        optionFilterProp="children"
+                                                        onSearch={onSearch}
+                                                        filterOption={(input, option) =>
+                                                            (option?.label ?? "")
+                                                                .toLowerCase()
+                                                                .includes(input.toLowerCase())
+                                                        }
+                                                        options={arrayward.map((item) => ({
+                                                            value: item.name,
+                                                            label: item.name,
+                                                        }))}
+                                                    />
+                                                </Form.Item>
+                                            </>
+                                        ) : (
+                                            ""
+                                        )}
+                                        <Form.Item label="Số nhà">
+                                            <Input />
+                                        </Form.Item>
+                                        <Form.Item label="Ghi chú">
+                                            <Input />
+                                        </Form.Item>
+                                    </Form>
+                                </div>
+                            </div>
                         </div>
                         <div className="col-lg-4">
                             <div className="card mb-5">
-                                <div className="card-header text-white border-0" style={{ backgroundColor: "#0F62F9" }}>
+                                <div
+                                    className="card-header text-white border-0"
+                                    style={{ backgroundColor: "#0F62F9" }}
+                                >
                                     <h5 className="font-weight-semi-bold m-0">Mã Khuyến Mãi</h5>
                                 </div>
                                 <div className="card-body">
@@ -172,6 +347,35 @@ function CartShopping() {
                                             </div>
                                         );
                                     })}
+                                </div>
+                            </div>
+                            <div className="card mb-5">
+                                <div
+                                    className="card-header text-white border-0"
+                                    style={{ backgroundColor: "#0F62F9" }}
+                                >
+                                    <h5 className="font-weight-semi-bold m-0">
+                                        Phương thức thanh toán
+                                    </h5>
+                                </div>
+                                <div className="card-body">
+                                    <Radio.Group onChange={handleChange} value={value}>
+                                        <Space direction="vertical">
+                                            <Radio value={0}>Thanh toán bằng tiền mặt</Radio>
+                                            <Radio value={1}>Thanh toán bằng chuyển khoản</Radio>
+                                        </Space>
+                                    </Radio.Group>
+                                    <p
+                                        style={{
+                                            fontStyle: "italic",
+                                            color: "#B2B2B2",
+                                            fontSize: "12px",
+                                            marginTop: "3%",
+                                        }}
+                                    >
+                                        Các phương thức thanh toán được áp dụng khi nhận hàng thành
+                                        công (*)
+                                    </p>
                                 </div>
                             </div>
                             <div className="card border-secondary mb-5 mt-5">
@@ -211,7 +415,6 @@ function CartShopping() {
                     </div>
                 </form>
             </div>
-         
         </>
     );
 }

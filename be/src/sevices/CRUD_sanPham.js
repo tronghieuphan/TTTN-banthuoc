@@ -212,7 +212,7 @@ let getNewSanPham = () => {
     return new Promise(async (resolve, reject) => {
         try {
             let sanpham = await db.sanPham.findAll({
-                limit: 10,
+                limit: 12,
                 order: [["createdAt", "DESC"]],
             });
             resolve(sanpham);
@@ -225,7 +225,7 @@ let getSanPhamKhuyenMai = () => {
     return new Promise(async (resolve, reject) => {
         try {
             let sanpham = await db.sanPham.findAll({
-                limit: 4,
+                limit: 5,
                 where: { Giakm: { [Op.not]: null } },
                 order: [[Sequelize.literal("RAND()")]],
             });
@@ -240,9 +240,9 @@ let getRandomSanPham = (maloai) => {
         try {
             let sanpham = await db.sanPham.findAll({
                 order: [[Sequelize.literal("RAND()")]],
-                limit: 6,
+                limit: 5,
                 where: {
-                    Maloai: maloai.maloai,
+                    Maloai: maloai.Maloai,
                 },
             });
             resolve(sanpham);
@@ -256,7 +256,7 @@ let getRandomSanPhamTrungBay = () => {
         try {
             let sanpham = await db.sanPham.findAll({
                 order: [[Sequelize.literal("RAND()")]],
-                limit: 10,
+                limit: 12,
             });
             resolve(sanpham);
         } catch (e) {

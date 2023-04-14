@@ -3,11 +3,18 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { TbNotes } from "react-icons/tb";
+import { useNavigate } from "react-router-dom";
+
 function CheckOrder() {
     const [show, setShow] = useState(false);
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const navigate = useNavigate();
+    const handleClose = () => {
+        setShow(false);
+        navigate("/check");
+    };
+    const handleShow = () => {
+        setShow(true);
+    };
 
     return (
         <>

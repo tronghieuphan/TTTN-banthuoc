@@ -155,6 +155,104 @@ let getLoaiSanPhamByDanhMuc = (data) => {
         }
     });
 };
+let getLSP_CSCN = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let loaiSanPham = await db.loaiSanPham.findAll({
+                where: {
+                    Madm: "DM2YPWT7",
+                },
+                raw: true,
+                nest: true,
+            });
+            if (loaiSanPham) {
+                resolve(loaiSanPham);
+            } else {
+                resolve("Not Found");
+            }
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+let getLSP_DMP = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let loaiSanPham = await db.loaiSanPham.findAll({
+                where: {
+                    Madm: "DMMM91J3",
+                },
+                raw: true,
+                nest: true,
+            });
+            if (loaiSanPham) {
+                resolve(loaiSanPham);
+            } else {
+                resolve("Not Found");
+            }
+        } catch (e) {
+            reject(e);
+        }
+    });
+};let getLSP_TPCN = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let loaiSanPham = await db.loaiSanPham.findAll({
+                where: {
+                    Madm: "DMGPFH8Y",
+                },
+                raw: true,
+                nest: true,
+            });
+            if (loaiSanPham) {
+                resolve(loaiSanPham);
+            } else {
+                resolve("Not Found");
+            }
+        } catch (e) {
+            reject(e);
+        }
+    });
+};let getLSP_T = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let loaiSanPham = await db.loaiSanPham.findAll({
+                where: {
+                    Madm: "DMN8GYQW",
+                },
+                raw: true,
+                nest: true,
+            });
+            if (loaiSanPham) {
+                resolve(loaiSanPham);
+            } else {
+                resolve("Not Found");
+            }
+        } catch (e) {
+            reject(e);
+        }
+    });
+};let getLSP_TBIT = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let loaiSanPham = await db.loaiSanPham.findAll({
+                where: {
+                    Madm: "DMXQ8WDX",
+                },
+                raw: true,
+                nest: true,
+            });
+            if (loaiSanPham) {
+                resolve(loaiSanPham);
+            } else {
+                resolve("Not Found");
+            }
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
 
 module.exports = {
     createLoaiSanPham,
@@ -163,4 +261,9 @@ module.exports = {
     updateLoaiSanPham,
     getByNameLoaiSanPham,
     getLoaiSanPhamByDanhMuc,
+    getLSP_T,
+    getLSP_CSCN,
+    getLSP_TBIT,
+    getLSP_TPCN,
+    getLSP_DMP
 };

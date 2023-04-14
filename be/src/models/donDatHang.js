@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
             Tongtien: DataTypes.INTEGER,
             Pttt: DataTypes.STRING(20),
             Sdt: DataTypes.STRING(12),
+            Sonha:DataTypes.STRING(50),
             Phuong: DataTypes.STRING(20),
             Quan: DataTypes.STRING(20),
             Thanhpho: DataTypes.STRING(20),

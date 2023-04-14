@@ -40,8 +40,12 @@ function Header() {
                             <div className="col">
                                 <CheckOrder />
                             </div>
+
                             <div className="col">
-                                <Card />
+                                {" "}
+                                <Link to="/shopping" style={{textDecoration:"none"}}>
+                                    <Card />
+                                </Link>
                             </div>
                             {setAccountLS ? (
                                 <div className="col">
