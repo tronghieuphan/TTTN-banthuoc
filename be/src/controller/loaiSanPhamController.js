@@ -47,6 +47,10 @@ let getLSP_DMP = async (req, res) => {
     let loaisanpham = await CRUD_loaiSanPham.getLSP_DMP();
     res.status(200).json(loaisanpham);
 };
+let getLoaiSP_NoiBat = async (req, res) => {
+    let loaisanpham = await CRUD_loaiSanPham.getLoaiSPNoiBat();
+    res.status(200).json(loaisanpham);
+};
 
 module.exports = {
     create_loaiSanPham,
@@ -59,5 +63,6 @@ module.exports = {
     getLSP_DMP,
     getLSP_T,
     getLSP_TBIT,
-    getLSP_TPCN
+    getLSP_TPCN,
+    getLoaiSP_NoiBat
 };

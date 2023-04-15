@@ -6,32 +6,7 @@ function Check() {
     const handleShow = () => {
         setShow(!show);
     };
-    const productList = [
-        {
-            url: "12222",
-            product_name: "hkh",
-        },
-        {
-            url: "12222",
-            product_name: "hkh",
-        },
-        {
-            url: "12222",
-            product_name: "hkh",
-        },
-        {
-            url: "12222",
-            product_name: "hkh",
-        },
-        {
-            url: "12222",
-            product_name: "hkh",
-        },
-        {
-            url: "12222",
-            product_name: "hkh",
-        },
-    ];
+    const danhsachDDH = JSON.parse(localStorage.getItem("DONDATHANG"));
     const dataSource = [
         {
             key: "1",
@@ -78,28 +53,32 @@ function Check() {
                             <Table dataSource={dataSource} columns={columns} />;
                         </div>
                     )}
-                    <div className="col">
-                        <div
-                            style={{ width: "10rem" }}
-                            className="m-3 bordercard"
-                            onClick={handleShow}
-                        >
-                            <img
-                                variant="top"
-                                src="https://i.imgur.com/u87HruQ.png"
-                                className="w-100"
-                            />
-
-                            <div>
-                                <div className="title">Mã đơn đặt hàng</div>
+                    {danhsachDDH.map((values) => (
+                        <div className="col" key={values.id}>
+                            <div
+                                style={{ width: "10rem" }}
+                                className="m-3 bordercard"
+                                onClick={handleShow}
+                            >
+                                <img
+                                    variant="top"
+                                    src="https://i.imgur.com/u87HruQ.png"
+                                    className="w-100"
+                                />
+                                <div>
+                                    <div className="title">{values.id}</div>
+                                </div>
+                                <div className="price1">
+                                    <span>{values.Tongtien}</span>
+                                </div>
+                                {values.Trangthai === 0 ? (
+                                    <div className="state d-block mx-auto">Chờ xác nhận</div>
+                                ) : (
+                                    <div className="state1 d-block mx-auto">Đã xác nhận</div>
+                                )}
                             </div>
-
-                            <div className="price1">
-                                <span>150.000</span>
-                            </div>
-                            <div className="state d-block mx-auto">Trạng thái</div>
                         </div>
-                    </div>
+                    ))}
                 </div>
             </div>
         </>

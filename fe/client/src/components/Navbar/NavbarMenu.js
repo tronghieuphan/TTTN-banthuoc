@@ -10,7 +10,6 @@ import loaiSanPhamAPI from "../../services/loaisanphamAPI";
 
 function NavbarMenu() {
     const [tpcn, setTPCN] = useState([]);
-    console.log("tpcn: ", tpcn);
     const [dmp, setDMP] = useState([]);
     const [t, setT] = useState([]);
     const [ttbyt, setTBYT] = useState([]);

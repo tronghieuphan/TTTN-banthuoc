@@ -4,10 +4,10 @@ import { Tooltip } from "antd";
 import { useDispatch } from "react-redux";
 import { setDataSP } from "../../../slices/sanphamSlice";
 import "./style.scss";
+import ButtonBuy from "../../Button/Button";
 
 function CardProduct(props) {
     let moi = props.moi;
-    console.log("moi: ", moi);
     const text = <span>{moi.Tensp}</span>;
     const dispatch = useDispatch();
     const handleAddStore = (obj) => {
@@ -36,9 +36,7 @@ function CardProduct(props) {
                 </div>
                 <div className="quycach">{moi.Quycach}</div>
                 <div className="text-center">
-                    <Button variant="primary" onClick={() => handleAddStore(moi)}>
-                        Mua ngay
-                    </Button>
+                    <ButtonBuy />
                 </div>
             </div>
         </Link>

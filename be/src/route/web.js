@@ -61,6 +61,8 @@ let initWebRotes = (app) => {
     router.get("/get-loaisanphamt", loaiSanPhamController.getLSP_T);
     router.get("/get-loaisanphamcscn", loaiSanPhamController.getLSP_CSCN);
     router.get("/get-loaisanphamtbit", loaiSanPhamController.getLSP_TBIT);
+    router.get("/get-loaisanphamnoibat", loaiSanPhamController.getLoaiSP_NoiBat);
+
 
     //CRUD___khuyenMai
     router.post("/create-khuyenMai", khuyenMaiController.create_khuyenMai);

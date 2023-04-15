@@ -194,7 +194,8 @@ let getLSP_DMP = () => {
             reject(e);
         }
     });
-};let getLSP_TPCN = () => {
+};
+let getLSP_TPCN = () => {
     return new Promise(async (resolve, reject) => {
         try {
             let loaiSanPham = await db.loaiSanPham.findAll({
@@ -213,7 +214,8 @@ let getLSP_DMP = () => {
             reject(e);
         }
     });
-};let getLSP_T = () => {
+};
+let getLSP_T = () => {
     return new Promise(async (resolve, reject) => {
         try {
             let loaiSanPham = await db.loaiSanPham.findAll({
@@ -232,7 +234,8 @@ let getLSP_DMP = () => {
             reject(e);
         }
     });
-};let getLSP_TBIT = () => {
+};
+let getLSP_TBIT = () => {
     return new Promise(async (resolve, reject) => {
         try {
             let loaiSanPham = await db.loaiSanPham.findAll({
@@ -253,7 +256,20 @@ let getLSP_DMP = () => {
     });
 };
 
-
+let getLoaiSPNoiBat = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let loai = await db.loaiSanPham.findAll({
+                include: [{ model: db.sanPham, attributes: ["id"] }],
+                nest: true,
+                limit:10
+            });
+            resolve(loai);
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
 module.exports = {
     createLoaiSanPham,
     getAllLoaiSanPham,
@@ -265,5 +281,6 @@ module.exports = {
     getLSP_CSCN,
     getLSP_TBIT,
     getLSP_TPCN,
-    getLSP_DMP
+    getLSP_DMP,
+    getLoaiSPNoiBat,
 };

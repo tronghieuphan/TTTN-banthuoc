@@ -12,10 +12,12 @@ module.exports = {
             Tenloai: {
                 type: Sequelize.STRING(50),
             },
+            Hinhanh: {
+                type: Sequelize.TEXT,
+            },
             Madm: {
                 type: Sequelize.STRING(8),
             },
-
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE,

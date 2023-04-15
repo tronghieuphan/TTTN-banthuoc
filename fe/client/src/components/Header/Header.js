@@ -11,7 +11,6 @@ import sanPhamAPI from "../../services/sanPhamAPI";
 function Header() {
     const { account } = useSelector((state) => state.user);
     const setAccountLS = JSON.parse(localStorage.getItem("ACCOUNT"));
-    console.log(">>>", setAccountLS);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 

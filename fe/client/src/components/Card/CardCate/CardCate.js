@@ -1,14 +1,20 @@
-import Card from "react-bootstrap/Card";
+import "./CardCate.scss";
+import { Link } from "react-router-dom";
 function CardCate(props) {
+  
     const mang = props.cartcategory;
     return (
-        
-        <Card style={{ width: "12rem" }} className="m-3">
-            <Card.Img variant="top" className="p-3" src={mang.img}/>
-            <Card.Body>
-                <Card.Title className="text-center">{mang.title}</Card.Title>
-            </Card.Body>
-        </Card>
+        <Link style={{ textDecoration: "none", color: "black" }}>
+            <div style={{ width: "14rem" }} className="m-3 bordercate">
+                <img variant="top" className="m-3" width={40} height={40} src={mang.Hinhanh} />
+                <div style={{paddingBottom:"10px"}}>
+                    <div className="text-center">{mang.Tenloai}</div>
+                    <div className="text-center" style={{ color: "#67768D", fontSize:"13px" }}>
+                        {mang.sanPhams.length} sản phẩm
+                    </div>
+                </div>
+            </div>
+        </Link>
     );
 }
 

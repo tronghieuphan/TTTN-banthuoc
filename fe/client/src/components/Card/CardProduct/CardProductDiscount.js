@@ -1,11 +1,10 @@
-import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import { Tooltip } from "antd";
 import { useDispatch } from "react-redux";
 import { setDataSP } from "../../../slices/sanphamSlice";
+import ButtonBuy from "../../Button/Button"
 function CardProduceDiscount(props) {
     let mang = props.khuyenmai;
-    console.log("mangkhuyenmai: ", mang);
     const text = <span>{mang.Tensp}</span>;
     const dispatch = useDispatch();
     const handleAddStore = (obj) => {
@@ -13,7 +12,7 @@ function CardProduceDiscount(props) {
         localStorage.setItem("SANPHAM", JSON.stringify(obj));
     };
     return (
-        <Link to="/product-details" style={{ textDecoration: "none",color:"#050E29" }}>
+        <Link to="/product-details" style={{ textDecoration: "none",color:"#050E29" }} onClick={() => handleAddStore(mang)}>
             <div style={{ width: "13rem" }} className="m-3 bordercard">
                 <div style={{ width: "100%", height: "200px", border: "1px solid black" }}>
                     <img variant="top" className="w-100 " />
@@ -35,9 +34,7 @@ function CardProduceDiscount(props) {
                     {mang.Dongia.toLocaleString("it-IT", { style: "currency", currency: "VND" })}
                 </div>
                 <div className="text-center">
-                    <Button variant="primary" onClick={() => handleAddStore(mang)}>
-                        Mua ngay
-                    </Button>
+                   <ButtonBuy />
                 </div>
             </div>
         </Link>

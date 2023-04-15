@@ -145,7 +145,9 @@ let findSanPhamByName = (data) => {
         try {
             let name = await db.sanPham.findAll({
                 where: {
-                    Tensp: data.datafind,
+                    Tensp: {
+                        [Op.substring]: data.datafind,
+                    },
                 },
                 raw: true,
             });

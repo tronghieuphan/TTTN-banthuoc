@@ -1,4 +1,4 @@
-import CardProduce from "../../components/Card/CardProduct/CartProduct";
+import CardProduct from "../../components/Card/CardProduct/CartProduct";
 
 
 function ListCard() {
@@ -13,26 +13,8 @@ function ListCard() {
            
             <h2 className="m-3">SẢN PHẨM LOẠI</h2>
             <div className="d-flex flex-wrap justify-content-center ">
-                <CardProduce produce={produce} />
-                <CardProduce produce={produce} />
-                <CardProduce produce={produce} />
-                <CardProduce produce={produce} />
-                <CardProduce produce={produce} />
-                <CardProduce produce={produce} />
-                <CardProduce produce={produce} />
-                <CardProduce produce={produce} />
-                <CardProduce produce={produce} />
-                <CardProduce produce={produce} />
-                <CardProduce produce={produce} />
-                <CardProduce produce={produce} />
-                <CardProduce produce={produce} />
-                <CardProduce produce={produce} />
-                <CardProduce produce={produce} />
-                <CardProduce produce={produce} />
-                <CardProduce produce={produce} />
-                <CardProduce produce={produce} />
-                <CardProduce produce={produce} />
-                <CardProduce produce={produce} />
+                <CardProduct moi={produce} />
+                
             </div>
 
         </>

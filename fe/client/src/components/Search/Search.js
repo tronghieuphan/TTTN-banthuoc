@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import sanPhamAPI from "../../services/sanPhamAPI";
-import "./Search.css";
+import "./Search.scss";
 import { Link } from "react-router-dom";
 import { setDataSP } from "../../slices/sanphamSlice";
 
@@ -13,7 +13,7 @@ function SearchInput({ placeholder, data, props }) {
       return value.Tensp.toLowerCase().includes(searchWord.toLowerCase());
     });
 
-    if (searchWord == "") {
+    if (searchWord === "") {
         setFilteredData([])
     } else {
         setFilteredData(newFilter);

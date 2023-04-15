@@ -19,6 +19,10 @@ const loaiSanPhamAPI = {
     getLoaiByDMP: () => {
         return axios.get(`http://localhost:9000/get-loaisanphamdmp`);
     },
+    getLoai: () => {
+        return axios.get(`http://localhost:9000/get-loaisanphamnoibat`);
+    },
+
 };
 
 export default loaiSanPhamAPI;
