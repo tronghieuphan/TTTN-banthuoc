@@ -161,6 +161,28 @@ let findSanPhamByName = (data) => {
         }
     });
 };
+
+//Tìm theo loại sản phẩm
+let getByMaLoai = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let maloai = await db.sanPham.findAll({
+                where: {
+                    Maloai: data.datafind,
+                },
+                raw: true,
+            });
+            if (maloai) {
+                resolve(maloai);
+            } else {
+                resolve("Not Found");
+            }
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
 //Tìm theo sản phẩm
 let findSanPham = (data) => {
     return new Promise(async (resolve, reject) => {
@@ -323,4 +345,5 @@ module.exports = {
     getRandomSanPham,
     getRandomSanPhamTrungBay,
     getChiTietSanPham,
+    getByMaLoai
 };

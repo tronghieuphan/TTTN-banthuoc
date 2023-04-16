@@ -42,7 +42,7 @@ const PageWeb = [
 
     },
     {
-        path: "/list-card",
+        path: "/list-cart",
         page: ListCard,
         isHomePageLayout: true
 

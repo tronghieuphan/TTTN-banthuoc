@@ -56,7 +56,6 @@ function SearchInput({ placeholder, data, props }) {
           <div className="dataResult">
             {filteredData.slice(0, 30).map((value, key) => {
               return (
-                //bỏ vào tag <a>? onClick={() => HandleAddStore(moi)}
                 <a className="dataItem" href="#" target="#" >
                   <p>{value.Tensp} </p>
                 </a>

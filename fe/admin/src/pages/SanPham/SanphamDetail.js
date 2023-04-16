@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import { exist, successDialog } from "../../components/Dialog/Dialog";
 import thuonghieuAPI from "../../services/thuonghieuAPI";
 import xuatXuAPI from "../../services/xuatXuAPI";
-import loaiSanPhamAPI from "../../services/loaiSanPham";
+import loaiSanPhamAPI from "../../services/loaiSanPhamAPI";
 import nhaCungCapAPI from "../../services/nhaCungCapAPI";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
