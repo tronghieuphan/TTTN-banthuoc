@@ -7,6 +7,9 @@ const donDatHangAPI = {
     getChiTiet: (id) => {
         return axios.post(`http://localhost:9000/getchitiet-dondathang`,id);
     },
+    create:(obj)=>{
+        return axios.post(`http://localhost:9000/create-dondathang`,obj);
+    }
 };
 
 export default donDatHangAPI;

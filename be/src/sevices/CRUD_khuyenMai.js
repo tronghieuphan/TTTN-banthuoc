@@ -142,6 +142,24 @@ let getByNameKhuyenMai = (data) => {
         }
     });
 };
+let getByIDKhuyenMai = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let khuyenMaiByName = await db.khuyenMai.findOne({
+                where: {
+                    id: data.id,
+                },
+            });
+            if (khuyenMaiByName) {
+                resolve(khuyenMaiByName);
+            } else {
+                resolve("Not Found");
+            }
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
 
 module.exports = {
     createKhuyenMai,
@@ -149,4 +167,5 @@ module.exports = {
     deleteKhuyenMai,
     updateKhuyenMai,
     getByNameKhuyenMai,
+    getByIDKhuyenMai,
 };

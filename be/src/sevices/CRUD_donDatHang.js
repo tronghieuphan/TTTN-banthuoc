@@ -43,12 +43,13 @@ let createDonDatHang = async (data) => {
                 listSp.map(async (a) => {
                     await db.chiTietDonDatHang.create({
                         Maddh: Maddh,
-                        Masp: a.Masp,
+                        Masp: a.id,
                         Soluong: a.Soluong,
                         Thanhtien: a.Thanhtien,
                     });
                 });
-            resolve({ message: "Create Successfully" });
+
+            resolve({ message: "Create Successfully", data: donhang });
         } catch (e) {
             reject(e);
         }

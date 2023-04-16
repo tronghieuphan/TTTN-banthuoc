@@ -68,6 +68,7 @@ let initWebRotes = (app) => {
     router.post("/create-khuyenMai", khuyenMaiController.create_khuyenMai);
     router.get("/getall-khuyenMai", khuyenMaiController.getAll_khuyenMai);
     router.get("/getbyName-khuyenMai", khuyenMaiController.getName_khuyenMai);
+    router.post("/getbyId-khuyenMai", khuyenMaiController.getID_khuyenMai);
     router.delete("/delete-khuyenMai/:tenkm", khuyenMaiController.delete_khuyenMai);
     router.put("/update-khuyenMai", khuyenMaiController.update_khuyenMai);
 

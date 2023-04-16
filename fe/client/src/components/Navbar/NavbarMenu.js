@@ -2,10 +2,9 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Dropdown, message, Space } from "antd";
-import { json, Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Nav.scss";
 import { useState, useEffect } from "react";
-import danhMucAPI from "../../services/danhMucAPI";
 import loaiSanPhamAPI from "../../services/loaisanphamAPI";
 
 function NavbarMenu() {
@@ -15,10 +14,6 @@ function NavbarMenu() {
     const [ttbyt, setTBYT] = useState([]);
     const [cscn, setCSCN] = useState([]);
     const navigate = useNavigate();
-
-    // const navigateSPCungLoai = () => {
-    //     navigate('/list-cart')
-    // }
 
     const getLoaiSP = async () => {
         const data = await loaiSanPhamAPI.getLoaiByCSCN();
@@ -46,9 +41,8 @@ function NavbarMenu() {
     ttbyt.map((value) => arraytbit.push({ key: value.id, label: value.Tenloai }));
     cscn.map((value) => arraycscn.push({ key: value.id, label: value.Tenloai }));
     const onClick = ({ key }) => {
-        message.info(`Click on item ${key}`);
         localStorage.setItem("MALOAI", JSON.stringify(key));
-        navigate("/list-cart")
+        navigate("/list-cart");
     };
     return (
         <Navbar collapseOnSelect expand="lg" style={{ backgroundColor: "#0644B5" }}>
