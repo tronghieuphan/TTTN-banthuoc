@@ -8,7 +8,7 @@ import { setDataLSP } from "../../slices/loaisanphamdanhmucSlice";
 import LoaisanphamDetail from "./LoaisanphamDetail";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
-import loaiSanPhamAPI from "../../services/loaiSanPham";
+import loaiSanPhamAPI from "../../services/loaiSanPhamAPI";
 import { SearchOutlined } from "@ant-design/icons";
 import { successDialog, deleteSuccess, exist } from "../../components/Dialog/Dialog";
 
