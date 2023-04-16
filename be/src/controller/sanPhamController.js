@@ -47,6 +47,11 @@ let getchiTiet_SanPham = async (req, res) => {
     let sanpham = await CRUD_sanPham.getChiTietSanPham(req.body);
     res.status(200).json(sanpham);
 };
+let getsanpham_cungloai = async (req, res) => {
+    let sanpham = await CRUD_sanPham.getByMaLoai(req.query);
+    res.status(200).json(sanpham);
+}
+
 module.exports = {
     create_sanPham,
     getAll_sanPham,
@@ -58,6 +63,6 @@ module.exports = {
     getKhuyenMai_sanPham,
     getRandom_sanPham,
     getRandom_sanPhamTrungBay,
-    getchiTiet_SanPham
-
+    getchiTiet_SanPham,
+    getsanpham_cungloai
 };

@@ -11,6 +11,8 @@ import { MdSecurity } from "react-icons/md";
 import { useEffect, useState } from "react";
 import CardProduceDiscount from "../../components/Card/CardProduct/CardProductDiscount";
 import sanPhamAPI from "../../services/sanPhamAPI";
+import "../../components/Card/CardProduct/style.scss";
+import loaiSanPhamAPI from "../../services/loaisanphamAPI";
 
 function HomePage() {
     const [sptrungbay, setSPTrungBay] = useState([]);
@@ -28,125 +30,40 @@ function HomePage() {
         const data = await sanPhamAPI.getSanPhamMoi();
         setSPMoi(data.data);
     };
+    const [loai, setLoaiSP] = useState([]);
+ 
+    const getLoai = async () => {
+        const data = await loaiSanPhamAPI.getLoai();
+        setLoaiSP(data.data);
+    };
     useEffect(() => {
         getSanPhamTrungBay();
         getSanPhamKhuyenMai();
         getSanPhamMoi();
+        getLoai();
     }, []);
     const info = [
         {
+            key:"1",
             picture: "https://i.imgur.com/ZMBeY33.png",
             title: "CHỤP TOA THUỐC",
             des: "đơn giản, nhanh chóng",
         },
         {
+            key:"2",
             picture: "https://i.imgur.com/uGfJwuB.png",
             title: "NHẬP THÔNG TIN LIÊN LẠC",
             des: "để được tư vấn đặt hàng",
         },
         {
+            key:"3",
             picture: "https://i.imgur.com/jogLdHG.png",
             title: "NHẬN BÁO GIÁ TỪ BÁC SĨ",
             des: "kèm theo tư vấn miễn phí",
         },
     ];
 
-    const cartcategory = [
-        {
-            img: "https://i.imgur.com/6WXGjlq.png",
-            title: "Mỹ phẩm ",
-        },
-        {
-            img: "https://i.imgur.com/6WXGjlq.png",
-            title: "Thiết bị ",
-        },
-        {
-            img: "https://i.imgur.com/6WXGjlq.png",
-            title: "Phụ nữ ",
-        },
-        {
-            img: "https://i.imgur.com/6WXGjlq.png",
-            title: "Trẻ em  ",
-        },
-        {
-            img: "https://i.imgur.com/6WXGjlq.png",
-            title: "Sắc tố  ",
-        },
-        {
-            img: "https://i.imgur.com/6WXGjlq.png",
-            title: "Da",
-        },
-    ];
-
-    const produce = [
-        {
-            img: "https://i.imgur.com/6WXGjlq.png",
-            name: "Mỹ phẩm ",
-        },
-        {
-            img: "https://i.imgur.com/6WXGjlq.png",
-            title: "Thiết bị ",
-        },
-        {
-            img: "https://i.imgur.com/6WXGjlq.png",
-            title: "Phụ nữ ",
-        },
-        {
-            img: "https://i.imgur.com/6WXGjlq.png",
-            title: "Trẻ em  ",
-        },
-        {
-            img: "https://i.imgur.com/6WXGjlq.png",
-            title: "Sắc tố  ",
-        },
-        {
-            img: "https://i.imgur.com/6WXGjlq.png",
-            title: "Da",
-        },
-        {
-            img: "https://i.imgur.com/6WXGjlq.png",
-            name: "Mỹ phẩm ",
-        },
-        {
-            img: "https://i.imgur.com/6WXGjlq.png",
-            title: "Thiết bị ",
-        },
-        {
-            img: "https://i.imgur.com/6WXGjlq.png",
-            title: "Phụ nữ ",
-        },
-        {
-            img: "https://i.imgur.com/6WXGjlq.png",
-            title: "Trẻ em  ",
-        },
-        {
-            img: "https://i.imgur.com/6WXGjlq.png",
-            title: "Sắc tố  ",
-        },
-        {
-            img: "https://i.imgur.com/6WXGjlq.png",
-            title: "Da",
-        },
-    ];
-
-    const brand = [
-        {
-            img: "https://i.imgur.com/JyMRaFj.png",
-        },
-        {
-            img: "https://i.imgur.com/JyMRaFj.png",
-        },
-        {
-            img: "https://i.imgur.com/JyMRaFj.png",
-        },
-        {
-            img: "https://i.imgur.com/JyMRaFj.png",
-        },
-        {
-            img: "https://i.imgur.com/JyMRaFj.png",
-        },
-    ];
-
+    
     return (
         <>
             <div className="row w-100 h-50 my-3">
@@ -171,8 +88,8 @@ function HomePage() {
                 <div className="bg">
                     <p className="fw-bold text-center fs-3 p-4">MUA THUỐC TẠI CỬA HÀNG</p>
                     <div className="row justify-content-center w-100 pb-5">
-                        {info.map((infor, index) => (
-                            <div className="col-md-3" key={index}>
+                        {info.map((infor) => (
+                            <div className="col-md-3" key={infor.key}>
                                 <div className="text-center">
                                     <div className="w-25 d-block m-auto">
                                         <img src={infor.picture} alt="" className="w-100" />
@@ -194,30 +111,42 @@ function HomePage() {
                 </div>
             </div>
             <Section>
-                <p>
+                <p style={{ fontSize: "25px" }}>
                     <FcLike /> LOẠI SẢN PHẨM NỔI BẬT <FcLike />
                 </p>
                 <div className="d-flex flex-wrap justify-content-center">
-                    {cartcategory.map((cartcategory) => (
-                        <Cardcate cartcategory={cartcategory} />
+                    {loai.map((cartcategory,i) => (
+                        <Cardcate cartcategory={cartcategory} key={cartcategory.id}/>
                     ))}
                 </div>
             </Section>
-            <div className="section_1">
-                <Section>
-                    <p className="text-center">
-                        <FcFlashOn /> SẢN PHẨM NỔI BẬT <FcFlashOn />
-                    </p>
-                    <div className="d-flex flex-wrap justify-content-center">
-                        {sptrungbay.map((value) => (
-                            <CardProduct moi={value} key={value.id} />
-                        ))}
-                    </div>
-                </Section>
+            <div className="section_1 d-flex justify-content-center">
+                <div>
+                    <Section>
+                        <p className="text-center" style={{ fontSize: "25px", color: "#fff" }}>
+                            <FcFlashOn /> SẢN PHẨM NỔI BẬT <FcFlashOn />
+                        </p>
+                        <div className="d-flex flex-wrap justify-content-center">
+                            {sptrungbay.map((value) => (
+                                <CardProduct moi={value} key={value.id} />
+                            ))}
+                        </div>
+                    </Section>
+                </div>
             </div>
             <div className="section_5">
                 <Section>
-                    <p>
+                    <p
+                        style={{
+                            fontSize: "25px",
+                            backgroundColor: "#E7AA3F",
+                            borderRadius: "20px",
+                            color: "#fff",
+                            padding: "10px",
+                            width: "max-content",
+                            boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+                        }}
+                    >
                         <FcLike />
                         SẢN PHẨM KHUYẾN MÃI <FcLike />
                     </p>
@@ -230,7 +159,7 @@ function HomePage() {
             </div>
             <div className="section_2">
                 <Section>
-                    <p className="text-center">
+                    <p className="text-center" style={{ fontSize: "25px" }}>
                         <FcFlashOn /> SẢN PHẨM MỚI <FcFlashOn />
                     </p>
                     <div className="d-flex flex-wrap justify-content-center">
@@ -240,7 +169,7 @@ function HomePage() {
                     </div>
                 </Section>
             </div>
-            <div className="section_3">
+            {/* <div className="section_3">
                 <Section>
                     <p>
                         <FcLike />
@@ -252,7 +181,7 @@ function HomePage() {
                         ))}
                     </div>
                 </Section>
-            </div>
+            </div> */}
             <div className="row w-100 justify-content-center section_4">
                 <div className="col-3">
                     <div className="d-flex">

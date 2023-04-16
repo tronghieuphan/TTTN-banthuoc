@@ -56,6 +56,13 @@ let initWebRotes = (app) => {
     router.delete("/delete-loaisanpham/:tenloai", loaiSanPhamController.delete_loaiSanPham);
     router.put("/update-loaisanpham", loaiSanPhamController.update_loaiSanPham);
     router.get("/get-loaisanphambydanhmuc", loaiSanPhamController.get_loaiSanPhamByDanhMuc);
+    router.get("/get-loaisanphamtpcn", loaiSanPhamController.getLSP_TPCN);
+    router.get("/get-loaisanphamdmp", loaiSanPhamController.getLSP_DMP);
+    router.get("/get-loaisanphamt", loaiSanPhamController.getLSP_T);
+    router.get("/get-loaisanphamcscn", loaiSanPhamController.getLSP_CSCN);
+    router.get("/get-loaisanphamtbit", loaiSanPhamController.getLSP_TBIT);
+    router.get("/get-loaisanphamnoibat", loaiSanPhamController.getLoaiSP_NoiBat);
+
 
     //CRUD___khuyenMai
     router.post("/create-khuyenMai", khuyenMaiController.create_khuyenMai);
@@ -91,6 +98,7 @@ let initWebRotes = (app) => {
     router.post("/getrandom-sanpham", sanPhamController.getRandom_sanPham);
     router.get("/gettrungbay-sanpham", sanPhamController.getRandom_sanPhamTrungBay);
     router.post("/getchitiet-sanpham", sanPhamController.getchiTiet_SanPham);
+    router.get("/getsanpham-cungloai", sanPhamController.getsanpham_cungloai);
 
     //CRUD___donDatHang
     router.post("/create-dondathang", donDatHangController.create_donDatHang);

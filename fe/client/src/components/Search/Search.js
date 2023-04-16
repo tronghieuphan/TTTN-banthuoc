@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import sanPhamAPI from "../../services/sanPhamAPI";
-import "./Search.css";
+import "./Search.scss";
 import { Link } from "react-router-dom";
 import { setDataSP } from "../../slices/sanphamSlice";
 
@@ -13,7 +13,7 @@ function SearchInput({ placeholder, data, props }) {
       return value.Tensp.toLowerCase().includes(searchWord.toLowerCase());
     });
 
-    if (searchWord == "") {
+    if (searchWord === "") {
         setFilteredData([])
     } else {
         setFilteredData(newFilter);
@@ -56,7 +56,6 @@ function SearchInput({ placeholder, data, props }) {
           <div className="dataResult">
             {filteredData.slice(0, 30).map((value, key) => {
               return (
-                //bỏ vào tag <a>? onClick={() => HandleAddStore(moi)}
                 <a className="dataItem" href="#" target="#" >
                   <p>{value.Tensp} </p>
                 </a>

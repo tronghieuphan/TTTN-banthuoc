@@ -25,7 +25,7 @@ function InfoProduct(props) {
                 </p>
                 <h3>{thongtin.Tensp}</h3>
                 <hr />
-                <h4>{thongtin.Dongia}</h4>
+                <h4>Giá: {thongtin.Dongia?.toLocaleString("it-IT", { style: "currency", currency: "VND" })}</h4>
                 <p>
                     <span className="fw-bold">Đơn vị bán: </span>{" "}
                     <Button variant="outlined">{thongtin.Donviban}</Button>

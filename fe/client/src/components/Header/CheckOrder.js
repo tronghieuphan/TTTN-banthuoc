@@ -1,18 +1,36 @@
-import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+import React, { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
+import { Button as Btn } from "react-bootstrap";
 import { TbNotes } from "react-icons/tb";
+import { useNavigate } from "react-router-dom";
+import { Form, Button, Input } from "antd";
+import donDatHangAPI from "../../services/donDatHang";
+
 function CheckOrder() {
     const [show, setShow] = useState(false);
+    const navigate = useNavigate();
+    const [check, setCheck] = useState([]);
+    const handleFind = async (obj) => {
+        const data = await donDatHangAPI.getAllSdt(obj);
+        setCheck(data.data);
+    };
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
+    const handleCheck = (e) => {
+        localStorage.setItem("DONDATHANG", JSON.stringify(check));
+        handleFind(e.Sdt);
+        setShow(false);
+        navigate("/check");
+    };
+    const handleShow = () => {
+        setShow(true);
+    };
+    const handleClose = () => {
+        setShow(false);
+    };
     return (
         <>
             <div className="d-flex justify-content-center ">
-                <Button variant="primary" onClick={handleShow} className="col-11">
+                <Btn variant="primary" onClick={handleShow} className="col-11">
                     <div className="d-flex align-items-center">
                         <div className="col-7 fw-bold">
                             Tra cứu
@@ -23,28 +41,27 @@ function CheckOrder() {
                             <TbNotes size={40} />
                         </div>
                     </div>
-                </Button>
+                </Btn>
 
                 <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Kiểm tra đơn hàng</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Form>
-                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                                <Form.Label>Vui lòng nhập số điện thoại</Form.Label>
-                                <Form.Control type="tel" placeholder="0123456789" autoFocus />
-                            </Form.Group>
+                        <Form onFinish={handleCheck}>
+                            <Form.Item label="Vui lòng nhập số điện thoại" name="Sdt">
+                                <Input />
+                            </Form.Item>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={handleClose}>
+                                    Đóng
+                                </Button>
+                                <Button htmlType="submit" variant="primary">
+                                    Kiểm tra
+                                </Button>
+                            </Modal.Footer>
                         </Form>
                     </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
-                            Đóng
-                        </Button>
-                        <Button variant="primary" onClick={handleClose}>
-                            Kiểm tra
-                        </Button>
-                    </Modal.Footer>
                 </Modal>
             </div>
         </>

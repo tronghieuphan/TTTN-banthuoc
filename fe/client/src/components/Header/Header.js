@@ -11,7 +11,6 @@ import sanPhamAPI from "../../services/sanPhamAPI";
 function Header() {
     const { account } = useSelector((state) => state.user);
     const setAccountLS = JSON.parse(localStorage.getItem("ACCOUNT"));
-    console.log(">>>", setAccountLS);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -61,8 +60,12 @@ function Header() {
                             <div className="col">
                                 <CheckOrder />
                             </div>
+
                             <div className="col">
-                                <Card />
+                                {" "}
+                                <Link to="/shopping" style={{textDecoration:"none"}}>
+                                    <Card />
+                                </Link>
                             </div>
                             {setAccountLS ? (
                                 <div className="col">

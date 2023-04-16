@@ -8,21 +8,29 @@ import sanPhamAPI from "../../services/sanPhamAPI";
 function DetailProduct() {
     // const { thongtinsanpham } = useSelector((state) => state.sanpham);
     const thongtinsanpham = JSON.parse(localStorage.getItem("SANPHAM"));
-    console.log("thongtinsanpham: ", thongtinsanpham);
 
     const [chitiet, setChiTiet] = useState({});
+    const [splienquan, setSanPhamLienQuan] = useState([]);
 
     let obj = {
         id: thongtinsanpham.id,
     };
-    console.log("obj: ", obj);
+    let objloai = {
+        Maloai: thongtinsanpham.Maloai,
+    };
+
     const getChiTiet = async (obj) => {
         const data = await sanPhamAPI.getSanPhamChiTiet(obj);
         setChiTiet(data.data);
     };
+    const getSanPhamLienQuan = async (obj) => {
+        const data = await sanPhamAPI.getSanPhamLienQuan(obj);
+        setSanPhamLienQuan(data.data);
+    };
 
     useEffect(() => {
         getChiTiet(obj);
+        getSanPhamLienQuan(objloai);
     }, []);
 
     return (
@@ -43,16 +51,22 @@ function DetailProduct() {
                         </div>
                     </div>
                 </div>
-                {/* 
+
                 <p className="text-left m-3 fw-bold fs-3">
                     <FcFlashOn /> SẢN PHẨM LIÊN QUAN <FcFlashOn />
                 </p>
-                <div className="d-flex flex-wrap justify-content-center">
-                    {produce.map((produce) => (
-                        <CardProduce produce={produce} />
-                    ))}
-                </div> */}
+                <div
+                    className="d-flex flex-wrap justify-content-center p-3"
+                    style={{ backgroundColor: "#E5EEFF", borderRadius:"20px"}}
+                >
+                    {splienquan.map((values) => {
+                        return <CardProduct moi={values} key={values.id} />;
+                    })}
+                </div>
             </div>
+            <br />
+            <br />
+            <br />
         </>
     );
 }

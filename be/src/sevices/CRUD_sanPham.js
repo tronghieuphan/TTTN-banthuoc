@@ -145,7 +145,9 @@ let findSanPhamByName = (data) => {
         try {
             let name = await db.sanPham.findAll({
                 where: {
-                    Tensp: data.datafind,
+                    Tensp: {
+                        [Op.substring]: data.datafind,
+                    },
                 },
                 raw: true,
             });
@@ -159,6 +161,28 @@ let findSanPhamByName = (data) => {
         }
     });
 };
+
+//Tìm theo loại sản phẩm
+let getByMaLoai = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let maloai = await db.sanPham.findAll({
+                where: {
+                    Maloai: data.datafind,
+                },
+                raw: true,
+            });
+            if (maloai) {
+                resolve(maloai);
+            } else {
+                resolve("Not Found");
+            }
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
 //Tìm theo sản phẩm
 let findSanPham = (data) => {
     return new Promise(async (resolve, reject) => {
@@ -212,7 +236,7 @@ let getNewSanPham = () => {
     return new Promise(async (resolve, reject) => {
         try {
             let sanpham = await db.sanPham.findAll({
-                limit: 10,
+                limit: 12,
                 order: [["createdAt", "DESC"]],
             });
             resolve(sanpham);
@@ -225,7 +249,7 @@ let getSanPhamKhuyenMai = () => {
     return new Promise(async (resolve, reject) => {
         try {
             let sanpham = await db.sanPham.findAll({
-                limit: 4,
+                limit: 5,
                 where: { Giakm: { [Op.not]: null } },
                 order: [[Sequelize.literal("RAND()")]],
             });
@@ -240,9 +264,9 @@ let getRandomSanPham = (maloai) => {
         try {
             let sanpham = await db.sanPham.findAll({
                 order: [[Sequelize.literal("RAND()")]],
-                limit: 6,
+                limit: 5,
                 where: {
-                    Maloai: maloai.maloai,
+                    Maloai: maloai.Maloai,
                 },
             });
             resolve(sanpham);
@@ -256,7 +280,7 @@ let getRandomSanPhamTrungBay = () => {
         try {
             let sanpham = await db.sanPham.findAll({
                 order: [[Sequelize.literal("RAND()")]],
-                limit: 10,
+                limit: 12,
             });
             resolve(sanpham);
         } catch (e) {
@@ -319,4 +343,5 @@ module.exports = {
     getRandomSanPham,
     getRandomSanPhamTrungBay,
     getChiTietSanPham,
+    getByMaLoai
 };

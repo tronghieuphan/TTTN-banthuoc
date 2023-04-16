@@ -27,6 +27,30 @@ let update_loaiSanPham = async (req, res) => {
     let loaisanpham = await CRUD_loaiSanPham.updateLoaiSanPham(req.body);
     res.status(200).json(loaisanpham);
 };
+let getLSP_CSCN = async (req, res) => {
+    let loaisanpham = await CRUD_loaiSanPham.getLSP_CSCN();
+    res.status(200).json(loaisanpham);
+};
+let getLSP_T = async (req, res) => {
+    let loaisanpham = await CRUD_loaiSanPham.getLSP_T();
+    res.status(200).json(loaisanpham);
+};
+let getLSP_TBIT = async (req, res) => {
+    let loaisanpham = await CRUD_loaiSanPham.getLSP_TBIT();
+    res.status(200).json(loaisanpham);
+};
+let getLSP_TPCN = async (req, res) => {
+    let loaisanpham = await CRUD_loaiSanPham.getLSP_TPCN();
+    res.status(200).json(loaisanpham);
+};
+let getLSP_DMP = async (req, res) => {
+    let loaisanpham = await CRUD_loaiSanPham.getLSP_DMP();
+    res.status(200).json(loaisanpham);
+};
+let getLoaiSP_NoiBat = async (req, res) => {
+    let loaisanpham = await CRUD_loaiSanPham.getLoaiSPNoiBat();
+    res.status(200).json(loaisanpham);
+};
 
 module.exports = {
     create_loaiSanPham,
@@ -35,4 +59,10 @@ module.exports = {
     update_loaiSanPham,
     getName_loaiSanPham,
     get_loaiSanPhamByDanhMuc,
+    getLSP_CSCN,
+    getLSP_DMP,
+    getLSP_T,
+    getLSP_TBIT,
+    getLSP_TPCN,
+    getLoaiSP_NoiBat
 };

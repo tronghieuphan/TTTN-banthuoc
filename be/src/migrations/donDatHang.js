@@ -36,6 +36,10 @@ module.exports = {
                 type: Sequelize.STRING(20),
                 allowNull: false,
             },
+            Sonha:{
+                type:Sequelize.STRING(50),
+                allowNull:false
+            },
             Ghichu: {
                 type: Sequelize.TEXT,
             },

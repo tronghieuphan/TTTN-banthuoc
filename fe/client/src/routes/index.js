@@ -5,6 +5,7 @@ import DetailProduct from "../pages/DetailProduct/DetailProduct";
 import RegisterPage from "../pages/FormLogin/Register";
 import CartShopping from "../pages/CardShopping/CardShopping";
 import ListCard from "../pages/ShowListCard/ListCart";
+import Check from "../pages/CheckOrder/Check";
 
 const PageWeb = [
     {
@@ -41,8 +42,15 @@ const PageWeb = [
 
     },
     {
-        path: "/list-card",
+        path: "/list-cart",
         page: ListCard,
+        isHomePageLayout: true
+
+    }
+    ,
+    {
+        path: "/check",
+        page: Check,
         isHomePageLayout: true
 
     }
