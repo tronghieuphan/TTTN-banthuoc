@@ -115,7 +115,7 @@ function HomePage() {
                     <FcLike /> LOẠI SẢN PHẨM NỔI BẬT <FcLike />
                 </p>
                 <div className="d-flex flex-wrap justify-content-center">
-                    {loai.map((cartcategory,i) => (
+                    {loai.map((cartcategory) => (
                         <Cardcate cartcategory={cartcategory} key={cartcategory.id}/>
                     ))}
                 </div>

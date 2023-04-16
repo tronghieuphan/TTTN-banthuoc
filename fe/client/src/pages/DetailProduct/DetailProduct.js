@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import sanPhamAPI from "../../services/sanPhamAPI";
 function DetailProduct() {
     // const { thongtinsanpham } = useSelector((state) => state.sanpham);
+
     const thongtinsanpham = JSON.parse(localStorage.getItem("SANPHAM"));
 
     const [chitiet, setChiTiet] = useState({});
@@ -30,9 +31,10 @@ function DetailProduct() {
 
     useEffect(() => {
         getChiTiet(obj);
+    }, [thongtinsanpham]);
+    useEffect(() => {
         getSanPhamLienQuan(objloai);
     }, []);
-
     return (
         <>
             <div className="container-fluid w-100">
@@ -57,7 +59,7 @@ function DetailProduct() {
                 </p>
                 <div
                     className="d-flex flex-wrap justify-content-center p-3"
-                    style={{ backgroundColor: "#E5EEFF", borderRadius:"20px"}}
+                    style={{ backgroundColor: "#E5EEFF", borderRadius: "20px" }}
                 >
                     {splienquan.map((values) => {
                         return <CardProduct moi={values} key={values.id} />;

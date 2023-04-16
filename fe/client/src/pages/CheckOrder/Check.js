@@ -1,45 +1,55 @@
 import "./Check.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Table } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import donDatHangAPI from "../../services/donDatHang";
 function Check() {
+    const navigate = useNavigate();
     const [show, setShow] = useState(false);
-    const handleShow = () => {
+    const handleShow = (key) => {
+        let id = {
+            id: key,
+        };
+        handleLoadDDH(id);
         setShow(!show);
     };
-    const danhsachDDH = JSON.parse(localStorage.getItem("DONDATHANG"));
-    const dataSource = [
-        {
-            key: "1",
-            name: "Mike",
-            age: 32,
-            address: "10 Downing Street",
-        },
-        {
-            key: "2",
-            name: "John",
-            age: 42,
-            address: "10 Downing Street",
-        },
-    ];
+    const [danhsach, setDanhsach] = useState([]);
+    const [chitiet, setChiTiet] = useState([]);
+    const { dondathang } = useSelector((state) => state.dondathang);
+    const handleLoadDDH = async (obj) => {
+        const data = await donDatHangAPI.getChiTiet(obj);
+        setChiTiet(data.data);
+    };
+    useEffect(() => {
+        setDanhsach(dondathang);
+    }, [dondathang]);
 
+    useEffect(() => {
+        if (dondathang === null) {
+            navigate("/");
+        }
+    }, []);
     const columns = [
         {
-            title: "Name",
-            dataIndex: "name",
-            key: "name",
+            title: "Tên sản phẩm",
+            dataIndex: "Tensp",
         },
         {
-            title: "Age",
-            dataIndex: "age",
-            key: "age",
+            title: "Đơn giá",
+            dataIndex: "Dongia",
         },
         {
-            title: "Address",
-            dataIndex: "address",
-            key: "address",
+            title: "Số lượng",
+            dataIndex: "Soluong",
+        },
+        ,
+        {
+            title: "Thành tiền",
+            dataIndex: "Thanhtien",
         },
     ];
-
+   
     return (
         <>
             <div className="container-fluid pt-2">
@@ -50,35 +60,44 @@ function Check() {
                         </div>
                     ) : (
                         <div className="col-md-6 text-center d-block my-auto ">
-                            <Table dataSource={dataSource} columns={columns} />;
+                            <Table dataSource={chitiet} columns={columns} />
+                            <div></div>
                         </div>
-                    )}
-                    {danhsachDDH.map((values) => (
-                        <div className="col" key={values.id}>
-                            <div
-                                style={{ width: "10rem" }}
-                                className="m-3 bordercard"
-                                onClick={handleShow}
-                            >
-                                <img
-                                    variant="top"
-                                    src="https://i.imgur.com/u87HruQ.png"
-                                    className="w-100"
-                                />
-                                <div>
-                                    <div className="title">{values.id}</div>
+                    )}{" "}
+                    <div className="col d-flex">
+                        {danhsach?.map((values) => {
+                            return (
+                                <div key={values.id}>
+                                    <div
+                                        style={{ width: "10rem" }}
+                                        className="m-3 bordercard"
+                                        onClick={() => handleShow(values.id)}
+                                    >
+                                        <img
+                                            variant="top"
+                                            src="https://i.imgur.com/u87HruQ.png"
+                                            className="w-100"
+                                        />
+                                        <div>
+                                            <div className="title">{values.id}</div>
+                                        </div>
+                                        <div className="price1">
+                                            <span>{values.Tongtien}</span>
+                                        </div>
+                                        {values.Trangthai === 0 ? (
+                                            <div className="state d-block mx-auto">
+                                                Chờ xác nhận
+                                            </div>
+                                        ) : (
+                                            <div className="state1 d-block mx-auto">
+                                                Đã xác nhận
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
-                                <div className="price1">
-                                    <span>{values.Tongtien}</span>
-                                </div>
-                                {values.Trangthai === 0 ? (
-                                    <div className="state d-block mx-auto">Chờ xác nhận</div>
-                                ) : (
-                                    <div className="state1 d-block mx-auto">Đã xác nhận</div>
-                                )}
-                            </div>
-                        </div>
-                    ))}
+                            );
+                        })}{" "}
+                    </div>
                 </div>
             </div>
         </>

@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userSlice from '../slices/userSlice';
 import sanphamSlice from '../slices/sanphamSlice';
+import dondathangSlice from '../slices/dondathangSlice';
 
 
 const rootReducer = {
     user:userSlice,
-    sanpham:sanphamSlice
+    sanpham:sanphamSlice,
+    dondathang:dondathangSlice
    
 };
 

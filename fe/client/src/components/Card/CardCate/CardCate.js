@@ -4,7 +4,7 @@ function CardCate(props) {
   
     const mang = props.cartcategory;
     return (
-        <Link style={{ textDecoration: "none", color: "black" }}>
+        <div style={{ textDecoration: "none", color: "black" }} onClick={()=>console.log(mang.id)}>
             <div style={{ width: "14rem" }} className="m-3 bordercate">
                 <img variant="top" className="m-3" width={40} height={40} src={mang.Hinhanh} />
                 <div style={{paddingBottom:"10px"}}>
@@ -14,7 +14,7 @@ function CardCate(props) {
                     </div>
                 </div>
             </div>
-        </Link>
+        </div>
     );
 }
 

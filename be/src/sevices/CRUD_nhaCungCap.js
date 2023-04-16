@@ -23,7 +23,6 @@ let getAllNhaCungCap = async () => {
 let createNhaCungCap = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            
             let nhacungcap = await db.nhaCungCap.findOrCreate({
                 where: {
                     Tenncc: data.Tenncc,
@@ -37,7 +36,7 @@ let createNhaCungCap = async (data) => {
                     Thanhpho: data.Thanhpho,
                 },
             });
-            
+
             if (nhacungcap[1]) {
                 resolve({ message: "Create Successfully", data: nhacungcap[0] });
             } else {
@@ -58,7 +57,7 @@ let deleteNhaCungCap = async (tenncc) => {
                     Tenncc: tenncc,
                 },
             });
-            
+
             let sanpham = await db.sanPham.findAll({
                 where: {
                     Mancc: tenncc_delete.id,
@@ -83,13 +82,12 @@ let deleteNhaCungCap = async (tenncc) => {
 let updateNhaCungCap = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-           
             let findNhaCungCap = await db.nhaCungCap.findOne({
                 where: {
                     id: data.id,
                 },
             });
-            
+
             if (findNhaCungCap) {
                 let upncc = await db.nhaCungCap.update(
                     {
@@ -106,7 +104,7 @@ let updateNhaCungCap = async (data) => {
                         },
                     }
                 );
-                
+
                 resolve({ message: "Update NhaCungCap Successful", data: upncc });
             } else {
                 resolve("NhaCungCap not exist");

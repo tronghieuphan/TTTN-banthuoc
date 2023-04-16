@@ -1,11 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMinus, faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
-import { Form, Input, Select, Radio, Space } from "antd";
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { Form, Input, Select, Radio, Space, Table, Button, Popconfirm, Tooltip } from "antd";
 import { useState, useEffect } from "react";
 import addressAPI from "../../services/addressAPI";
+import "./style.scss";
+import nguoiDungAPI from "../../services/nguoiDungAPI";
 
 function CartShopping() {
-    const account = JSON.parse(localStorage.getItem("ACCOUNT"));
     const [city, listCity] = useState([]);
     const [district, listDistrict] = useState([]);
     const [ward, listWard] = useState([]);
@@ -63,59 +64,103 @@ function CartShopping() {
         console.log("radio checked", e.target.value);
         setValue(e.target.value);
     };
-    const productList = [
+    const acc = JSON.parse(localStorage.getItem("ACCOUNT"));
+    const [donhang, setDonHang] = useState([]);
+    const handleCard = () => {
+        let account = JSON.parse(localStorage.getItem("ACCOUNT"));
+        let list = JSON.parse(localStorage.getItem("LISTSP"));
+        let p = [];
+        list.map((item, key) => {
+            if (account?.id === item.Mand) {
+                p.push(item);
+            }
+        });
+        setDonHang(p);
+    };
+    const [khuyenmai, setKM] = useState([]);
+
+    let obj = {
+        Tendangnhap: acc?.Tendangnhap,
+    };
+
+    useEffect(() => {
+        handleCard();
+        getKM(obj);
+    }, []);
+
+    useEffect (()=>{
+
+    },)
+    const getKM = async (obj) => {
+        const data = await nguoiDungAPI.nguoidungkhuyenmai(obj);
+        setKM(data.data);
+    };
+
+    const handleDelete = async (record) => {
+        let a = donhang.filter((item) => {
+            return item.id !== record.id;
+        });
+        localStorage.setItem("LISTSP", JSON.stringify(a));
+        handleCard();
+    };
+    const columns = [
         {
-            url: "12222",
-            product_name: "hkh",
+            title: "Tên sản phẩm",
+            dataIndex: "Tensp",
+            render: (Tensp) => (
+                <Tooltip placement="topLeft" title={Tensp}>
+                    <div
+                        style={{
+                            overflow: "hidden",
+                            whiteSpace: "nowrap",
+                            textOverflow: "ellipsis",
+                            width: "300px",
+                        }}
+                    >
+                        {Tensp}
+                    </div>
+                </Tooltip>
+            ),
         },
         {
-            url: "12222",
-            product_name: "hkh",
+            title: "Đơn giá",
+            dataIndex: "Dongia",
+            align: "center",
+            width: "100px",
         },
         {
-            url: "12222",
-            product_name: "hkh",
+            title: "Số lượng",
+            dataIndex: "Soluong",
+            align: "center",
+            width: "100px",
         },
         {
-            url: "12222",
-            product_name: "hkh",
+            title: "Thành tiền",
+            dataIndex: "Thanhtien",
+            align: "center",
+            width: "150px",
         },
         {
-            url: "12222",
-            product_name: "hkh",
-        },
-        {
-            url: "12222",
-            product_name: "hkh",
+            title: "Xóa",
+            dataIndex: "",
+            align: "center",
+            width: "100px",
+            render: (record) => (
+                <Popconfirm title="Bạn có muốn xóa?" onConfirm={() => handleDelete(record)}>
+                    <Button className="bg-light">
+                        <FontAwesomeIcon icon={faTrashAlt} className="text-dark" />
+                    </Button>
+                </Popconfirm>
+            ),
         },
     ];
 
-    const discountList = [
-        {
-            discount_id: "12222",
-            discount_title: "hkh",
-        },
-        {
-            discount_id: "12222",
-            discount_title: "hkh",
-        },
-        {
-            discount_id: "12222",
-            discount_title: "hkh",
-        },
-        {
-            discount_id: "12222",
-            discount_title: "hkh",
-        },
-        {
-            discount_id: "12222",
-            discount_title: "hkh",
-        },
-        {
-            discount_id: "12222",
-            discount_title: "hkh",
-        },
-    ];
+    //THONG TIN GIO HANG:
+    // const [tongtien, setTongTien] = useState(0);
+    // donhang.map((value, index) => {
+    //     tongtien = tongtien + value.Thanhtien;
+    //     console.log(tongtien);
+    // });
 
     return (
         <>
@@ -123,90 +168,7 @@ function CartShopping() {
                 <form action="" method="">
                     <div className="row px-xl-5">
                         <div className="col-lg-8 table-responsive mb-5">
-                            <table className="table table-bordered text-center mb-0">
-                                <thead
-                                    className="text-white"
-                                    style={{ backgroundColor: "#0F62F9" }}
-                                >
-                                    <tr>
-                                        <th>Tên sản phẩm</th>
-                                        <th>Đơn giá</th>
-                                        <th>Số lượng</th>
-                                        <th>Thành tiền</th>
-                                        <th>Xóa</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="align-middle">
-                                    {productList.map((product, index) => {
-                                        return (
-                                            <tr key={index}>
-                                                <td style={{ textAlign: "left" }}>
-                                                    <div className="d-flex">
-                                                        <img
-                                                            src={product.url}
-                                                            alt=""
-                                                            style={{
-                                                                width: "50px",
-                                                                marginRight: "15px",
-                                                            }}
-                                                        />
-                                                        <p>{product.product_name}</p>
-                                                    </div>
-                                                </td>
-                                                <td className="align-middle">123</td>
-                                                <td className="align-middle">
-                                                    <div
-                                                        className="input-group quantity mx-auto"
-                                                        style={{ width: "100px" }}
-                                                    >
-                                                        <div className="input-group-btn">
-                                                            <button
-                                                                type="button"
-                                                                className="btn btn-sm btn-primary btn-minus"
-                                                            >
-                                                                <FontAwesomeIcon
-                                                                    icon={faMinus}
-                                                                    className="text-white"
-                                                                />
-                                                            </button>
-                                                        </div>
-                                                        <input
-                                                            type="text"
-                                                            readOnly
-                                                            className="form-control form-control-sm bg-white border-0 text-center"
-                                                            name="txt-quantity"
-                                                            value={product.quantity}
-                                                        />
-                                                        <div className="input-group-btn">
-                                                            <button
-                                                                type="button"
-                                                                className="btn btn-sm btn-primary btn-plus"
-                                                            >
-                                                                <FontAwesomeIcon
-                                                                    icon={faPlus}
-                                                                    className="text-white"
-                                                                />
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td className="align-middle">123</td>
-                                                <td className="align-middle">
-                                                    <button
-                                                        type="button"
-                                                        className="btn btn-sm btn-primary btn-delete"
-                                                    >
-                                                        <FontAwesomeIcon
-                                                            icon={faTimes}
-                                                            className="text-white"
-                                                        />
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        );
-                                    })}
-                                </tbody>
-                            </table>
+                            <Table dataSource={donhang} columns={columns} pagination={false} />
                             <div className="card my-3">
                                 <div
                                     className="card-header text-white border-0"
@@ -218,7 +180,7 @@ function CartShopping() {
                                 </div>
                                 <div className="card-body">
                                     <Form onFinish={() => {}}>
-                                        {!account ? (
+                                        {!acc ? (
                                             <>
                                                 <Form.Item label="Tên khách hàng">
                                                     <Input />
@@ -328,25 +290,13 @@ function CartShopping() {
                                     <h5 className="font-weight-semi-bold m-0">Mã Khuyến Mãi</h5>
                                 </div>
                                 <div className="card-body">
-                                    {discountList.map((discount, index) => {
-                                        return (
-                                            <div
-                                                className="form-check mb-3"
-                                                key={discount.discount_id}
-                                            >
-                                                <input
-                                                    className="form-check-input"
-                                                    type="radio"
-                                                    value="111"
-                                                    id="123"
-                                                    name="rdo-discount"
-                                                />
-                                                <label className="form-check-label" htmlFor="hhh">
-                                                    {discount.title}
-                                                </label>
-                                            </div>
-                                        );
-                                    })}
+                                    <Radio.Group onChange={handleChange} value={value}>
+                                        <Space direction="vertical">
+                                            {khuyenmai.map((values) => (
+                                                <Radio value={values.id}>{values.Tenkm}</Radio>
+                                            ))}
+                                        </Space>
+                                    </Radio.Group>
                                 </div>
                             </div>
                             <div className="card mb-5">

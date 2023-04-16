@@ -5,7 +5,8 @@ import Card from "./Card";
 import { Button, Dropdown } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
+import { Badge } from "antd";
 import { logout } from "../../slices/userSlice";
 import sanPhamAPI from "../../services/sanPhamAPI";
 function Header() {
@@ -29,15 +30,17 @@ function Header() {
         }
     };
 
+    
     useEffect(() => {
         getAllSp();
+       
     }, []);
-
     const handleLogout = () => {
         dispatch(logout());
         localStorage.removeItem("ACCOUNT");
         navigate("/");
     };
+
     return (
         <>
             <div className="container-fluid">
@@ -53,7 +56,7 @@ function Header() {
                         </Link>
                     </div>
                     <div className="col-md-4 text-right">
-                        <SearchInput placeholder="Tìm kiếm..." data = {listSp}/>
+                        <SearchInput placeholder="Tìm kiếm..." data={listSp} />
                     </div>
                     <div className="col-md-5 text-right">
                         <div className="row align-items-center">
@@ -63,8 +66,8 @@ function Header() {
 
                             <div className="col">
                                 {" "}
-                                <Link to="/shopping" style={{textDecoration:"none"}}>
-                                    <Card />
+                                <Link to="/shopping" style={{ textDecoration: "none" }}>
+                                    <Card/>
                                 </Link>
                             </div>
                             {setAccountLS ? (

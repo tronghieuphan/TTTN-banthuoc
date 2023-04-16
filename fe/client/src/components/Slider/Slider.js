@@ -5,13 +5,13 @@ import { Container, Carousel, Image } from "react-bootstrap";
 function Slider() {
     const customers = [
         {
-            link: "https://i.imgur.com/925KFMA.png",
+            link: "https://i.imgur.com/pYueUC4.png",
         },
         {
-            link: "https://i.imgur.com/lHBUTSz.png",
+            link: "https://i.imgur.com/G2wwVQV.png",
         },
         {
-            link: "https://i.imgur.com/haGvDwU.png",
+            link: "https://i.imgur.com/5VPJ4Th.png",
         },
     ];
     return (

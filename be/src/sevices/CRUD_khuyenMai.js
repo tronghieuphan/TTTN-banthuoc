@@ -25,8 +25,6 @@ let getAllKhuyenMai = async () => {
 let createKhuyenMai = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            
-
             let khuyenmai = await db.khuyenMai.findOrCreate({
                 where: {
                     Tenkm: data.Tenkm,
@@ -41,7 +39,7 @@ let createKhuyenMai = async (data) => {
                     Trangthai: data.Trangthai,
                 },
             });
-            
+
             if (khuyenmai[1]) {
                 resolve({ message: "Create Successfully", data: khuyenmai[0] });
             } else {
@@ -74,11 +72,9 @@ let deleteKhuyenMai = async (tenkm) => {
             });
             if (khuyenmaidonhang.lenght > 0) {
                 resolve("Have DonDatHang belongs KhuyenMai");
-            } 
-            else if (khuyenmainguoidung.length > 0) {
+            } else if (khuyenmainguoidung.length > 0) {
                 resolve("Have NguoiDung belongs KhuyenMai");
-            } 
-            else {
+            } else {
                 if (tenkm_delete) {
                     await tenkm_delete.destroy();
                     resolve("Delete Successful");
@@ -86,7 +82,6 @@ let deleteKhuyenMai = async (tenkm) => {
                     resolve("KhuyenMai not exist");
                 }
             }
-            
         } catch (e) {
             reject(e);
         }
@@ -118,7 +113,7 @@ let updateKhuyenMai = async (data) => {
                         },
                     }
                 );
-                
+
                 resolve({ message: "Update KhuyenMai Successful", data: upKm });
             } else {
                 resolve("KhuyenMai not exist");

@@ -227,6 +227,8 @@ let getSanPhamKhuyenMai = () => {
     return new Promise(async (resolve, reject) => {
         try {
             let sanpham = await db.sanPham.findAll({
+                include: { model: db.hinhAnh },
+                nest: true,
                 limit: 5,
                 where: { Giakm: { [Op.not]: null } },
                 order: [[Sequelize.literal("RAND()")]],
@@ -257,7 +259,7 @@ let getRandomSanPhamTrungBay = () => {
     return new Promise(async (resolve, reject) => {
         try {
             let sanpham = await db.sanPham.findAll({
-                order: [[Sequelize.literal("RAND()")]],
+                // order: [[Sequelize.literal("RAND()")]],
                 limit: 12,
             });
             resolve(sanpham);
