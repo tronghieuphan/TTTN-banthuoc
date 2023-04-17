@@ -11,7 +11,6 @@ function CardProduct(props) {
     const text = <span>{moi.Tensp}</span>;
     const dispatch = useDispatch();
     const handleAddStore = (obj) => {
-        // dispatch(setDataSP(obj));
         localStorage.setItem("SANPHAM", JSON.stringify(obj));
     };
     useEffect(() => {
@@ -24,8 +23,14 @@ function CardProduct(props) {
             onClick={() => handleAddStore(moi)}
         >
             <div style={{ width: "12rem" }} className="m-3 bordercard">
-                <div style={{ width: "100%", height: "150px", border: "1px solid black" }}>
-                    <img variant="top" className="w-100 " />
+                <div style={{ width: "100%", height: "200px" }}>
+                    <img
+                        variant="top"
+                        className="w-100"
+                        style={{ height: "inherit" }}
+                        src={moi?.hinhAnhs[0]?.Url}
+                        alt={moi?.hinhAnhs[0]?.Url}
+                    />
                 </div>
                 <div>
                     <Tooltip placement="top" title={text}>

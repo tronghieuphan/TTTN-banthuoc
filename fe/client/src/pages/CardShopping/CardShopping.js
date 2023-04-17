@@ -150,8 +150,15 @@ function CartShopping() {
             ),
         },
         {
-            title: "Đơn giá",
+            title: "Giá gốc",
             dataIndex: "Dongia",
+            align: "center",
+            width: "100px",
+        },
+        ,
+        {
+            title: "Giá ưu đãi",
+            dataIndex: "Giakm",
             align: "center",
             width: "100px",
         },
@@ -165,7 +172,7 @@ function CartShopping() {
             title: "Thành tiền",
             dataIndex: "Thanhtien",
             align: "center",
-            width: "150px",
+            width: "100px",
         },
         {
             title: "Xóa",
@@ -184,12 +191,8 @@ function CartShopping() {
 
     const handleSubmit = async (e) => {
         let today = new Date();
-        let date = today.getDate() + "-" + (today.getMonth() + 1) + "-" + today.getFullYear();
-        let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        let dateTime = date ;
-        // + " " + time;
         let obj = {
-            Ngaydathang: dateTime,
+            Ngaydathang: today,
             Tongtien: tongtien,
             Pttt: chitietthanhtoan,
             Sdt: acc.Sdt,

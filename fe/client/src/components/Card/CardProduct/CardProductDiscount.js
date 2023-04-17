@@ -8,7 +8,6 @@ function CardProduceDiscount(props) {
     const dispatch = useDispatch();
     const handleAddStore = (obj) => {
         console.log(obj);
-        // dispatch(setDataSP(obj));
         localStorage.setItem("SANPHAM", JSON.stringify(obj));
     };
 
@@ -19,10 +18,12 @@ function CardProduceDiscount(props) {
             onClick={() => handleAddStore(mang)}
         >
             <div style={{ width: "13rem" }} className="m-3 bordercard">
-                <div style={{ width: "100%", height: "200px", border: "1px solid black" }}>
+                <div style={{ width: "100%", height: "inherit" }}>
                     <img
                         variant="top"
-                        className="w-100 "            
+                        className="w-100"
+                        src={mang?.hinhAnhs[0]?.Url}
+                        alt={mang?.hinhAnhs[0]?.Url}
                     />
                 </div>
 

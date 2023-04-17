@@ -1,14 +1,9 @@
 import CardProduct from "../../components/Card/CardProduct/CartProduct";
 import sanPhamAPI from "../../services/sanPhamAPI";
 import "../../components/Card/CardProduct/style.scss";
-import loaiSanPhamAPI from "../../services/loaisanphamAPI";
-import { GiMedicines } from "react-icons/gi";
-import { FaShippingFast } from "react-icons/fa";
-import { MdSecurity } from "react-icons/md";
 import { useEffect, useState } from "react";
 import Section from "../../components/Section/Section";
-import { FcLike, FcFlashOn } from "react-icons/fc";
-import { Image } from "react-bootstrap";
+import { FcFlashOn } from "react-icons/fc";
 import "./ListCart.scss";
 
 function ListCard() {

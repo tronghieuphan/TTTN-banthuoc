@@ -32,6 +32,7 @@ let createDonDatHang = async (data) => {
                 Trangthai: 0,
                 Sdt: data.Sdt,
                 Phuong: data.Phuong,
+                Sonha: data.Sonha,
                 Quan: data.Quan,
                 Thanhpho: data.Thanhpho,
                 Ghichu: data.Ghichu,
@@ -72,13 +73,20 @@ let getChiTietDDH = async (data) => {
                             id: e.Masp,
                         },
                         raw: true,
-                        attributes: ["Tensp", "Dongia"],
+                        attributes: ["Tensp", "Dongia", "Giakm"],
                     });
+                    let km = 0;
+                    if (a.Giakm === null) {
+                        km = a.Dongia;
+                    } else {
+                        km = a.Giakm;
+                    }
+                    console.log(km);
                     const b = {
                         ...a,
                         Masp: e.Masp,
                         Soluong: e.Soluong,
-                        Thanhtien: e.Soluong * a.Dongia,
+                        Thanhtien: e.Soluong * km,
                     };
                     return b;
                 })

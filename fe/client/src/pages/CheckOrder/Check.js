@@ -1,9 +1,10 @@
 import "./Check.scss";
 import { useEffect, useState } from "react";
-import { Table } from "antd";
-import { useDispatch, useSelector } from "react-redux";
+import { Table, Badge } from "antd";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import donDatHangAPI from "../../services/donDatHang";
+import khuyenMaiAPI from "../../services/khuyenMaiAPI";
 function Check() {
     const navigate = useNavigate();
     const [show, setShow] = useState(false);
@@ -21,6 +22,7 @@ function Check() {
         const data = await donDatHangAPI.getChiTiet(obj);
         setChiTiet(data.data);
     };
+
     useEffect(() => {
         setDanhsach(dondathang);
     }, [dondathang]);
@@ -49,54 +51,56 @@ function Check() {
             dataIndex: "Thanhtien",
         },
     ];
-   
+
     return (
         <>
             <div className="container-fluid pt-2">
                 <div className="row">
                     {!show ? (
-                        <div className="col-md-5 d-flex justify-content-center">
+                        <div className="col-md-6 d-flex justify-content-center">
                             <img src="https://i.imgur.com/MtA2fdc.png" width={400} alt="" />
                         </div>
                     ) : (
                         <div className="col-md-6 text-center d-block my-auto ">
-                            <Table dataSource={chitiet} columns={columns} />
+                            <Table dataSource={chitiet} columns={columns} pagination={false} />
                             <div></div>
                         </div>
                     )}{" "}
-                    <div className="col d-flex">
+                    <div className="col d-flex flex-wrap">
                         {danhsach?.map((values) => {
                             return (
-                                <div key={values.id}>
-                                    <div
-                                        style={{ width: "10rem" }}
-                                        className="m-3 bordercard"
-                                        onClick={() => handleShow(values.id)}
-                                    >
-                                        <img
-                                            variant="top"
-                                            src="https://i.imgur.com/u87HruQ.png"
-                                            className="w-100"
-                                        />
-                                        <div>
-                                            <div className="title">{values.id}</div>
-                                        </div>
-                                        <div className="price1">
-                                            <span>{values.Tongtien}</span>
-                                        </div>
-                                        {values.Trangthai === 0 ? (
-                                            <div className="state d-block mx-auto">
-                                                Chờ xác nhận
+                                <div key={values.id} className="m-3">
+                                    <Badge.Ribbon text={values.Makm}>
+                                        <div
+                                            style={{ width: "10rem" }}
+                                            className=" bordercard"
+                                            onClick={() => handleShow(values.id)}
+                                        >
+                                            <img
+                                                variant="top"
+                                                src="https://i.imgur.com/u87HruQ.png"
+                                                className="w-100"
+                                            />
+                                            <div>
+                                                <div className="title">{values.id}</div>
                                             </div>
-                                        ) : (
-                                            <div className="state1 d-block mx-auto">
-                                                Đã xác nhận
+                                            <div className="price1">
+                                                <span>{values.Tongtien}</span>
                                             </div>
-                                        )}
-                                    </div>
+                                            {values.Trangthai === 0 ? (
+                                                <div className="state d-block mx-auto">
+                                                    Chờ xác nhận
+                                                </div>
+                                            ) : (
+                                                <div className="state1 d-block mx-auto">
+                                                    Đã xác nhận
+                                                </div>
+                                            )}
+                                        </div>
+                                    </Badge.Ribbon>
                                 </div>
                             );
-                        })}{" "}
+                        })}
                     </div>
                 </div>
             </div>

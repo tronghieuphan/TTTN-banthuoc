@@ -6,16 +6,18 @@ import { useEffect, useState } from "react";
 // import { setDataListSP } from "../../slices/dondathangSlice";
 function InfoProduct(props) {
     let thongtin = props.thongtinsanpham;
+    console.log("thongtin: ", thongtin);
     const [quatity, setQuatity] = useState(0);
-    let account=JSON.parse(localStorage.getItem("ACCOUNT"));
+    let account = JSON.parse(localStorage.getItem("ACCOUNT"));
 
     let obj = {
-        Mand:account.id,
+        Mand: account.id,
         id: thongtin.id,
         Tensp: thongtin.Tensp,
+        Giakm: thongtin.Giakm,
         Dongia: thongtin.Dongia,
         Soluong: quatity,
-        Thanhtien: thongtin.Dongia * quatity,
+        Thanhtien: (thongtin.Giakm !== null ? thongtin.Giakm : thongtin.Dongia) * quatity,
     };
     let handleIncrease = () => {
         if (quatity < 5) {
@@ -38,7 +40,6 @@ function InfoProduct(props) {
         }
         localStorage.setItem("LISTSP", JSON.stringify(a));
     };
-
     return (
         <>
             <div className="w-100">
@@ -47,13 +48,38 @@ function InfoProduct(props) {
                 </p>
                 <h3>{thongtin.Tensp}</h3>
                 <hr />
-                <h4>
-                    Giá:{" "}
-                    {thongtin.Dongia?.toLocaleString("it-IT", {
-                        style: "currency",
-                        currency: "VND",
-                    })}
-                </h4>
+                {thongtin.Giakm === null ? (
+                    <h4>
+                        Giá:{" "}
+                        {thongtin.Dongia?.toLocaleString("it-IT", {
+                            style: "currency",
+                            currency: "VND",
+                        })}
+                    </h4>
+                ) : (
+                    <h4 className="d-flex">
+                        Giá:{" "}
+                        <div
+                            style={{
+                                textDecoration: "line-through",
+                                fontSize: "14px",
+                                margin: "10px 0px",
+                                color: "silver",
+                            }}
+                        >
+                            {thongtin.Dongia?.toLocaleString("it-IT", {
+                                style: "currency",
+                                currency: "VND",
+                            })}
+                        </div>
+                        <div style={{ fontWeight: "bold", color: "#0F62F9" }}>
+                            {thongtin.Giakm?.toLocaleString("it-IT", {
+                                style: "currency",
+                                currency: "VND",
+                            })}
+                        </div>
+                    </h4>
+                )}
                 <p>
                     <span className="fw-bold">Đơn vị bán: </span>{" "}
                     <Button variant="outlined">{thongtin.Donviban}</Button>

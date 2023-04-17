@@ -57,7 +57,7 @@ let deleteKhuyenMai = async (tenkm) => {
         try {
             let tenkm_delete = await db.khuyenMai.findOne({
                 where: {
-                    Tenkm: tenkm,
+                    id: tenkm,
                 },
             });
             let khuyenmainguoidung = await db.chiTietKhuyenMai.findAll({
@@ -65,6 +65,7 @@ let deleteKhuyenMai = async (tenkm) => {
                     Makm: tenkm_delete.id,
                 },
             });
+
             let khuyenmaidonhang = await db.donDatHang.findAll({
                 where: {
                     Makm: tenkm_delete.id,
@@ -91,12 +92,14 @@ let deleteKhuyenMai = async (tenkm) => {
 let updateKhuyenMai = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let findKhuyenMai = await db.khuyenMai.findOne({
+            let find = await db.donDatHang.findAll({
                 where: {
-                    id: data.id,
+                    Makm: data.id,
                 },
             });
-            if (findKhuyenMai) {
+            if (find.length > 0) {
+                resolve({ message: "KhuyenMai Belongs DonDatHang" });
+            } else {
                 let upKm = await db.khuyenMai.update(
                     {
                         Tenkm: data.Tenkm,
@@ -113,10 +116,7 @@ let updateKhuyenMai = async (data) => {
                         },
                     }
                 );
-
                 resolve({ message: "Update KhuyenMai Successful", data: upKm });
-            } else {
-                resolve("KhuyenMai not exist");
             }
         } catch (e) {
             reject(e);

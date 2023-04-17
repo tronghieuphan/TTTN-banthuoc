@@ -170,7 +170,8 @@ let getByMaLoai = (data) => {
                 where: {
                     Maloai: data.datafind,
                 },
-                raw: true,
+                include: { model: db.hinhAnh },
+                nest: true,
             });
             if (maloai) {
                 resolve(maloai);
@@ -236,6 +237,8 @@ let getNewSanPham = () => {
     return new Promise(async (resolve, reject) => {
         try {
             let sanpham = await db.sanPham.findAll({
+                include: { model: db.hinhAnh },
+                nest: true,
                 limit: 12,
                 order: [["createdAt", "DESC"]],
             });
@@ -266,6 +269,8 @@ let getRandomSanPham = (maloai) => {
         try {
             let sanpham = await db.sanPham.findAll({
                 order: [[Sequelize.literal("RAND()")]],
+                include: { model: db.hinhAnh },
+                nest: true,
                 limit: 5,
                 where: {
                     Maloai: maloai.Maloai,
@@ -281,7 +286,9 @@ let getRandomSanPhamTrungBay = () => {
     return new Promise(async (resolve, reject) => {
         try {
             let sanpham = await db.sanPham.findAll({
-                // order: [[Sequelize.literal("RAND()")]],
+                include: { model: db.hinhAnh },
+                nest: true,
+                order: [[Sequelize.literal("RAND()")]],
                 limit: 12,
             });
             resolve(sanpham);
@@ -321,6 +328,7 @@ let getChiTietSanPham = (data) => {
                 Dongia: sanpham.Dongia,
                 Donviban: sanpham.Donviban,
                 Tendm: danhmuc.danhMuc.Tendm,
+                Giakm: sanpham.Giakm,
                 Loai: sanpham.loaiSanPham.Tenloai,
                 Tenxx: sanpham.xuatXu.Tenxx,
                 Quycach: sanpham.Quycach,

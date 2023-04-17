@@ -19,8 +19,8 @@ function CheckOrder() {
 
     const handleCheck = (e) => {
         handleFind(e.Sdt);
-        setShow(false);
         navigate("/check");
+        setShow(false);
     };
     const handleShow = () => {
         setShow(true);

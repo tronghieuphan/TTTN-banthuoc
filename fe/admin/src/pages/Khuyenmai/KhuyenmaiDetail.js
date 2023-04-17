@@ -10,9 +10,9 @@ import { setDataKM } from "../../slices/dataAdd";
 
 function KhuyenmaiDetail() {
     const { khuyenmai } = useSelector((state) => state.dataAdd);
+    console.log("khuyenmai: ", khuyenmai);
     const dispatch = useDispatch();
 
-    console.log(khuyenmai.Trangthai);
     //them
     const handleCreate = async (obj) => {
         const data = await khuyenMaiAPI.create(obj);
@@ -28,7 +28,13 @@ function KhuyenmaiDetail() {
         console.log(obj);
         const data = await khuyenMaiAPI.update(obj);
         console.log("data.data.message: ", data.data.message);
-        if (data.data.message === "Update KhuyenMai Successful") {
+        if (data.data.message === "KhuyenMai Belongs DonDatHang") {
+            Swal.fire({
+                icon: "error",
+                title: "Lỗi",
+                text: "Mã khuyến mãi này đang được áp dụng ",
+            });
+        } else if (data.data.message === "Update KhuyenMai Successful") {
             successDialog();
         }
     };
@@ -89,11 +95,11 @@ function KhuyenmaiDetail() {
                     <div className="bd-radius bg-content p-4 text-muted fw-bold text-center">
                         <div>
                             <div className="d-flex justify-content-between">
-                                <p className="fs-3 w-75">THÔNG TIN CHI TIẾT KHUYẾN MÃI</p>
+                                <p className="fs-3">THÔNG TIN CHI TIẾT KHUYẾN MÃI</p>
                             </div>
                             <hr className="w-100 " />
-                            <Form onFinish={handleSubmit}>
-                                {khuyenmai.Tenkm ? (
+                            <Form onFinish={handleSubmit} layout="vertical">
+                                {khuyenmai.id ? (
                                     <Form.Item name="id" label="Id:" initialValue={khuyenmai.id}>
                                         <Input disabled />
                                     </Form.Item>
@@ -137,21 +143,21 @@ function KhuyenmaiDetail() {
                                     </div>
 
                                     {/* date xử lý date bd date kt */}
-                                    <div className=" mt-4 justify-content-between w-30 ">
+                                    <div className=" justify-content-between w-30 ">
                                         <Form.Item
                                             name="Ngaybd"
                                             label="Ngày bắt đầu"
-                                            className="m-1 w-33"
+                                            className=" w-33"
                                             initialValue={khuyenmai.Ngaybd}
                                         >
                                             <Input className="m-1 w-100" type="date" />
                                         </Form.Item>
                                     </div>
-                                    <div className=" mt-4 justify-content-between w-30 ">
+                                    <div className=" justify-content-between w-30 ">
                                         <Form.Item
                                             name="Ngaykt"
                                             label="Ngày kết thúc"
-                                            className="m-1 w-33"
+                                            className=" w-33"
                                             initialValue={khuyenmai.Ngaykt}
                                         >
                                             <Input className="m-1 w-100" type="date" />
@@ -160,7 +166,7 @@ function KhuyenmaiDetail() {
 
                                     {/* kết */}
 
-                                    <div className=" mt-4 justify-content-between w-30 ">
+                                    <div className=" justify-content-between w-30 ">
                                         <Form.Item
                                             className=" w-33"
                                             name="Dieukhoan"
@@ -173,11 +179,11 @@ function KhuyenmaiDetail() {
                                     {/* khuyen mai trang thai */}
                                     <div className="justify-content-between w-30 ">
                                         <Form.Item
-                                            className="m-1 w-33"
+                                            className=" w-33"
                                             name="Trangthai"
                                             label="Trạng thái"
                                             initialValue={
-                                                khuyenmai.Trangthai === true ? "True" : "False"
+                                                khuyenmai.Trangthai === true ? "Mở" : "Tắt"
                                             }
                                         >
                                             <Select
@@ -189,11 +195,11 @@ function KhuyenmaiDetail() {
                                                 options={[
                                                     {
                                                         value: "1",
-                                                        label: "True",
+                                                        label: "Mở",
                                                     },
                                                     {
                                                         value: "0",
-                                                        label: "False",
+                                                        label: "Tắt",
                                                     },
                                                 ]}
                                             />
