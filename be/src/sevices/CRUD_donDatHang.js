@@ -57,6 +57,7 @@ let createDonDatHang = async (data) => {
     });
 };
 
+//
 let getChiTietDDH = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -134,9 +135,11 @@ let findDonDatHang = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
             let donDatHangById = await db.donDatHang.findAll({
+                include: [{ model: db.khuyenMai, attributes: ["Phantram"] }],
                 where: {
                     [Op.or]: [{ id: data.datafind }, { Sdt: data.datafind }],
                 },
+                nest: true,
                 raw: true,
             });
             if (donDatHangById) {

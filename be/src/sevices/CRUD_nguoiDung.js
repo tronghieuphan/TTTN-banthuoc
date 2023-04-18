@@ -239,7 +239,7 @@ let findNguoiDung = (data) => {
         try {
             let nguoiDungById = await db.nguoiDung.findAll({
                 where: {
-                    [Op.or]: [{ Tendangnhap: data.datafind }, { Sdt: data.datafind }],
+                    [Op.or]: [{ Tendangnhap: data.datafind }, { Sdt: data.datafind },{ Ten: data.datafind }],
                 },
                 raw: true,
             });

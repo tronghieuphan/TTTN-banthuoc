@@ -14,7 +14,6 @@ function Header() {
     const setAccountLS = JSON.parse(localStorage.getItem("ACCOUNT"));
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
     const [listSp, setList] = useState([]);
     const [loading, setLoading] = useState(false);
     const [keysearch, setValueSearch] = useState("");
@@ -30,10 +29,8 @@ function Header() {
         }
     };
 
-    
     useEffect(() => {
         getAllSp();
-       
     }, []);
     const handleLogout = () => {
         dispatch(logout());
@@ -67,7 +64,7 @@ function Header() {
                             <div className="col">
                                 {" "}
                                 <Link to="/shopping" style={{ textDecoration: "none" }}>
-                                    <Card/>
+                                    <Card />
                                 </Link>
                             </div>
                             {setAccountLS ? (

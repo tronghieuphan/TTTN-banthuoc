@@ -11,8 +11,8 @@ function InfoProduct(props) {
     let account = JSON.parse(localStorage.getItem("ACCOUNT"));
 
     let obj = {
-        Mand: account.id,
-        id: thongtin.id,
+        Mand: account?.id,
+        id: thongtin?.id,
         Tensp: thongtin.Tensp,
         Giakm: thongtin.Giakm,
         Dongia: thongtin.Dongia,

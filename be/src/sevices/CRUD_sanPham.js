@@ -68,12 +68,12 @@ let createSanPham = async (data) => {
 };
 
 //Xóa sản phẩm
-let deleteSanPham = async (tensp) => {
+let deleteSanPham = async (id) => {
     return new Promise(async (resolve, reject) => {
         try {
             let tensp_delete = await db.sanPham.findOne({
                 where: {
-                    Tensp: tensp,
+                    id: id,
                 },
             });
             let hinhanh = await db.hinhAnh.findAll({

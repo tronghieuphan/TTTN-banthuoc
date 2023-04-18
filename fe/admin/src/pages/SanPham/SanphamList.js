@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
 import { setDataSP } from "../../slices/dataAdd";
 import Swal from "sweetalert2";
-import {deleteSuccess} from "../../components/Dialog/Dialog";
+import { deleteSuccess } from "../../components/Dialog/Dialog";
 function SanphamList() {
     const [listSp, setList] = useState([]);
     const dispatch = useDispatch();
@@ -30,34 +30,34 @@ function SanphamList() {
         getAllSp();
     }, []);
     console.log("listsp: ", listSp);
-     //XỬ LÝ DELETE
-  const handleDelete = async (record) => {
-    console.log(record);
-    const data = await sanPhamAPI.delete(record.Tensp);
-    console.log(data);
-    if (data.data === "Have Product Belongs Hinh ảnh") {
-        Swal.fire({
-            icon: "error",
-            text: "Sản phẩm chứa hình ảnh vui lòng kiểm tra lại!",
-        });
-    } else {
-        deleteSuccess();
-        getAllSp();
-    }
-};
-const handleAddStore = (record) => {
-    console.log(record);
-    dispatch(setDataSP(record));
-};
-const getByName = async () => {
-    setLoading(true);
-    const data = await sanPhamAPI.getByName(keysearch);
-    setList(data.data);
-    setLoading(false);
-};
-const handleChange = (e) => {
-    setValueSearch(e.target.value);
-};
+    //XỬ LÝ DELETE
+    const handleDelete = async (record) => {
+        console.log(record);
+        const data = await sanPhamAPI.delete(record.id);
+        console.log(data);
+        if (data.data === "Have Product Belongs Hinh ảnh") {
+            Swal.fire({
+                icon: "error",
+                text: "Sản phẩm chứa hình ảnh vui lòng kiểm tra lại!",
+            });
+        } else {
+            deleteSuccess();
+            getAllSp();
+        }
+    };
+    const handleAddStore = (record) => {
+        console.log(record);
+        dispatch(setDataSP(record));
+    };
+    const getByName = async () => {
+        setLoading(true);
+        const data = await sanPhamAPI.getByName(keysearch);
+        setList(data.data);
+        setLoading(false);
+    };
+    const handleChange = (e) => {
+        setValueSearch(e.target.value);
+    };
 
     const columns = [
         {
@@ -74,15 +74,15 @@ const handleChange = (e) => {
                 <Tooltip placement="topLeft" title={Tensp}>
                     <div
                         style={{
-                            overflow:"hidden",
+                            overflow: "hidden",
                             whiteSpace: "nowrap",
                             textOverflow: "ellipsis",
-                            width:"100px"
+                            width: "200px",
                         }}
                     >
                         {Tensp}
                     </div>
-                 </Tooltip>
+                </Tooltip>
             ),
         },
         {
@@ -96,19 +96,27 @@ const handleChange = (e) => {
         {
             title: "Dạng bào chế",
             dataIndex: "Dangbaoche",
+            render: (Dangbaoche) => (
+                <div
+                    style={{
+                        width: "120px",
+                    }}
+                >
+                    {Dangbaoche}
+                </div>
+            ),
         },
         {
             title: "Quy cách",
             dataIndex: "Quycach",
             render: (Quycach) => (
-                    <div
-                        style={{
-                    
-                            width:"120px"
-                        }}
-                    >
-                        {Quycach}
-                    </div>
+                <div
+                    style={{
+                        width: "120px",
+                    }}
+                >
+                    {Quycach}
+                </div>
             ),
         },
         {
@@ -118,15 +126,15 @@ const handleChange = (e) => {
                 <Tooltip placement="topLeft" title={Congdung}>
                     <div
                         style={{
-                            overflow:"hidden",
+                            overflow: "hidden",
                             whiteSpace: "nowrap",
                             textOverflow: "ellipsis",
-                            width:"150px"
+                            width: "150px",
                         }}
                     >
                         {Congdung}
                     </div>
-                 </Tooltip>
+                </Tooltip>
             ),
         },
         {
@@ -173,13 +181,11 @@ const handleChange = (e) => {
             render: (record) => (
                 <Link to="/sanpham-detail">
                     <Button className="bg-light" onClick={() => handleAddStore(record)}>
-                    <FontAwesomeIcon icon={faEdit} className="text-dark" />
-                </Button>
+                        <FontAwesomeIcon icon={faEdit} className="text-dark" />
+                    </Button>
                 </Link>
-                
             ),
         },
-        
     ];
     return (
         <>
@@ -188,7 +194,6 @@ const handleChange = (e) => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0, transition: { duration: 0.8 } }}
             >
-                
                 <div className="m-4 ">
                     <div className="bd-radius bg-content p-4 text-muted fw-bold">
                         <div className="d-flex justify-content-between">
@@ -224,9 +229,7 @@ const handleChange = (e) => {
                             loading={loading}
                             scroll={{ x: true }}
                         />
-                        
                     </div>
-                    
                 </div>
             </motion.div>
         </>

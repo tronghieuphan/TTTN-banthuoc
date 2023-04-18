@@ -18,6 +18,7 @@ function Check() {
     const [danhsach, setDanhsach] = useState([]);
     const [chitiet, setChiTiet] = useState([]);
     const { dondathang } = useSelector((state) => state.dondathang);
+    console.log("dondathang: ", dondathang);
     const handleLoadDDH = async (obj) => {
         const data = await donDatHangAPI.getChiTiet(obj);
         setChiTiet(data.data);
@@ -70,7 +71,7 @@ function Check() {
                         {danhsach?.map((values) => {
                             return (
                                 <div key={values.id} className="m-3">
-                                    <Badge.Ribbon text={values.Makm}>
+                                    <Badge.Ribbon text={"Giảm " + values.khuyenMai.Phantram + "%"}>
                                         <div
                                             style={{ width: "10rem" }}
                                             className=" bordercard"
