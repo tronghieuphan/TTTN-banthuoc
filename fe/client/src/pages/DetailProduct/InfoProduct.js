@@ -1,15 +1,16 @@
 import { Button } from "@mui/material";
-import { Link } from "react-router-dom";
 import { Input } from "antd";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 // import { useSelector, useDispatch } from "react-redux";
 // import { setDataListSP } from "../../slices/dondathangSlice";
 function InfoProduct(props) {
     let thongtin = props.thongtinsanpham;
-    console.log("thongtin: ", thongtin);
     const [quatity, setQuatity] = useState(0);
     let account = JSON.parse(localStorage.getItem("ACCOUNT"));
-
+    const thongtinsp = JSON.parse(localStorage.getItem("SANPHAM"));
+    const navigate = useNavigate();
     let obj = {
         Mand: account?.id,
         id: thongtin?.id,
@@ -31,21 +32,43 @@ function InfoProduct(props) {
     };
     let a = [];
     const handAddSp = async (obj) => {
-        a = JSON.parse(localStorage.getItem("LISTSP")) || [];
-        let p = a.find((item) => item.id == obj.id);
-        if (p) {
-            p.Soluong += obj.Soluong;
+        if (account?.id) {
+            a = JSON.parse(localStorage.getItem("LISTSP")) || [];
+            let p = a.find((item) => item.id == obj.id);
+            if (p) {
+                if (p.Soluong + obj.Soluong >= 5) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Bạn chỉ được đặt tối đa 5 sản phẩm",
+                    });
+                    p.Soluong = 5;
+                } else {
+                    p.Soluong += obj.Soluong;
+                }
+            } else {
+                a.push(obj);
+            }
+            localStorage.setItem("LISTSP", JSON.stringify(a));
         } else {
-            a.push(obj);
+            Swal.fire({
+                title: "Bạn hãy đăng nhập để được mua hàng nào ?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Tôi đồng ý",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate("/login");
+                }
+            });
         }
-        localStorage.setItem("LISTSP", JSON.stringify(a));
     };
+
     return (
         <>
             <div className="w-100">
-                <p className="fw-bold">
-                    Thương hiệu: <Link>{thongtin.Tenth}</Link>
-                </p>
+                <p className="fw-bold">Thương hiệu: {thongtin.Tenth}</p>
                 <h3>{thongtin.Tensp}</h3>
                 <hr />
                 {thongtin.Giakm === null ? (
@@ -90,7 +113,7 @@ function InfoProduct(props) {
                 </p>
                 <p>
                     <span className="fw-bold">Loại sản phẩm: </span>
-                    <span>{thongtin.Tenloai}</span>
+                    <span>{thongtin.Loai}</span>
                 </p>
                 <p>
                     <span className="fw-bold"> Quy cách: </span>
@@ -131,14 +154,20 @@ function InfoProduct(props) {
                         </div>
                     </form>
                 </div>
-                <Button
-                    type="submit"
-                    className="w-50 p-2 mt-4 fs-5 fw-bold"
-                    variant="contained"
-                    onClick={() => handAddSp(obj)}
-                >
-                    Chọn mua
-                </Button>
+                {thongtinsp.Soluongtk === 0 ? (
+                    <Button className="w-50 p-2 mt-4 fs-5 fw-bold" variant="contained">
+                        Hết hàng
+                    </Button>
+                ) : (
+                    <Button
+                        type="submit"
+                        className="w-50 p-2 mt-4 fs-5 fw-bold"
+                        variant="contained"
+                        onClick={() => handAddSp(obj)}
+                    >
+                        Chọn mua
+                    </Button>
+                )}
             </div>
         </>
     );

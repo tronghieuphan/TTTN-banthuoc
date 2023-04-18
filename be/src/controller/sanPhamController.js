@@ -64,5 +64,5 @@ module.exports = {
     getRandom_sanPham,
     getRandom_sanPhamTrungBay,
     getchiTiet_SanPham,
-    getsanpham_cungloai
+    getsanpham_cungloai,
 };

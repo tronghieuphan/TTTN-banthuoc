@@ -8,6 +8,7 @@ import { useEffect } from "react";
 
 function CardProduct(props) {
     let moi = props.moi;
+
     const text = <span>{moi.Tensp}</span>;
     const dispatch = useDispatch();
     const handleAddStore = (obj) => {

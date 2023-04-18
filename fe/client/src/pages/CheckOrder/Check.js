@@ -43,6 +43,10 @@ function Check() {
             dataIndex: "Dongia",
         },
         {
+            title: "Giá ưu đãi",
+            dataIndex: "Giakm",
+        },
+        {
             title: "Số lượng",
             dataIndex: "Soluong",
         },
@@ -71,7 +75,7 @@ function Check() {
                         {danhsach?.map((values) => {
                             return (
                                 <div key={values.id} className="m-3">
-                                    <Badge.Ribbon text={"Giảm " + values.khuyenMai.Phantram + "%"}>
+                                    <Badge.Ribbon text={"Giảm " + (values.khuyenMai.Phantram===null?0:(values.khuyenMai.Phantram)) + "%"}>
                                         <div
                                             style={{ width: "10rem" }}
                                             className=" bordercard"

@@ -341,6 +341,7 @@ let getChiTietSanPham = (data) => {
         }
     });
 };
+
 module.exports = {
     createSanPham,
     getAllSanPham,
@@ -354,4 +355,5 @@ module.exports = {
     getRandomSanPhamTrungBay,
     getChiTietSanPham,
     getByMaLoai,
+    
 };

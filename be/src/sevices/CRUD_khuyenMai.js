@@ -41,6 +41,14 @@ let createKhuyenMai = async (data) => {
             });
 
             if (khuyenmai[1]) {
+                let nguoidung = await db.nguoiDung.findAll();
+                nguoidung &&
+                    nguoidung.map(async (a) => {
+                        await db.chiTietKhuyenMai.create({
+                            Makm: khuyenmai[0].id,
+                            Mand: a.id,
+                        });
+                    });
                 resolve({ message: "Create Successfully", data: khuyenmai[0] });
             } else {
                 resolve({ message: "KhuyenMai Exist" });

@@ -48,6 +48,21 @@ let createDonDatHang = async (data) => {
                         Soluong: a.Soluong,
                         Thanhtien: a.Thanhtien,
                     });
+                    let find = await db.sanPham.findOne({
+                        where: {
+                            id: a.id,
+                        },
+                    });
+                    await db.sanPham.update(
+                        {
+                            Soluongtk: find.Soluongtk - a.Soluong,
+                        },
+                        {
+                            where: {
+                                id: a.id,
+                            },
+                        }
+                    );
                 });
 
             resolve({ message: "Create Successfully", data: donhang });

@@ -15,6 +15,14 @@ function SliderDetail() {
         })
     );
 
-    return <ImageGallery items={hinh} showBullets={false} showNav={false}  autoPlay={true}/>;
+    return (
+        <ImageGallery
+            items={hinh}
+            showBullets={false}
+            showNav={false}
+            autoPlay={true}
+            showPlayButton={false}
+        />
+    );
 }
 export default SliderDetail;

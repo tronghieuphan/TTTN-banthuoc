@@ -7,7 +7,6 @@ function CardProduceDiscount(props) {
     const text = <span>{mang.Tensp}</span>;
     const dispatch = useDispatch();
     const handleAddStore = (obj) => {
-        console.log(obj);
         localStorage.setItem("SANPHAM", JSON.stringify(obj));
     };
 

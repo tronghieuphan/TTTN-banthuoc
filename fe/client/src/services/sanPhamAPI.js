@@ -25,6 +25,7 @@ const sanPhamAPI = {
     getByMaLoai: (sanpham_maloai) => {
         return axios.get(`http://localhost:9000/getsanpham-cungloai?datafind=${sanpham_maloai}`);
     },
+   
 };
 
 export default sanPhamAPI;

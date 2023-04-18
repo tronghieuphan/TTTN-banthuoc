@@ -58,7 +58,7 @@ function Header() {
                     <div className="col-md-5 text-right">
                         <div className="row align-items-center">
                             <div className="col">
-                                <CheckOrder />
+                                {setAccountLS?.id?(<CheckOrder />):""}
                             </div>
 
                             <div className="col">
