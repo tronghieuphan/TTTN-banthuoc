@@ -4,8 +4,9 @@ import LoginPage from "../pages/FormLogin/LoginPage";
 import DetailProduct from "../pages/DetailProduct/DetailProduct";
 import RegisterPage from "../pages/FormLogin/Register";
 import CartShopping from "../pages/CardShopping/CardShopping";
-import ListCard from "../pages/ShowListCard/ListCart";
+import ListCard from "../pages/ShowListCard/ListCard";
 import Check from "../pages/CheckOrder/Check";
+import ListSearch from "../pages/ShowListCard/ListSearch";
 
 const PageWeb = [
     {
@@ -42,8 +43,16 @@ const PageWeb = [
 
     },
     {
-        path: "/list-cart",
+        path: "/list-card",
         page: ListCard,
+        isHomePageLayout: true
+
+    }
+    ,
+
+    {
+        path: "/list-search",
+        page: ListSearch,
         isHomePageLayout: true
 
     }

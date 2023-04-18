@@ -6,7 +6,7 @@ function CardCate(props) {
     const navigate = useNavigate();
     const getKey = (key) => {
         localStorage.setItem("MALOAI", JSON.stringify(key));
-        navigate("/list-cart")
+        navigate("/list-card")
     }
 
     return (

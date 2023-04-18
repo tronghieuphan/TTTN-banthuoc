@@ -17,7 +17,7 @@ function NavbarMenu() {
     const navigate = useNavigate();
 
     // const navigateSPCungLoai = () => {
-    //     navigate('/list-cart')
+    //     navigate('/list-card')
     // }
 
     const getLoaiSP = async () => {
@@ -48,7 +48,7 @@ function NavbarMenu() {
     const onClick = ({ key }) => {
         message.info(`Click on item ${key}`);
         localStorage.setItem("MALOAI", JSON.stringify(key));
-        navigate("/list-cart")
+        navigate("/list-card")
     };
     return (
         <Navbar collapseOnSelect expand="lg" style={{ backgroundColor: "#0644B5" }}>

@@ -183,6 +183,27 @@ let getByMaLoai = (data) => {
     });
 };
 
+//Tìm theo id sản phẩm
+let getByID = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let id = await db.sanPham.findAll({
+                where: {
+                    id: data.datafind,
+                },
+                raw: true,
+            });
+            if (id) {
+                resolve(id);
+            } else {
+                resolve("Not Found");
+            }
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
 //Tìm theo sản phẩm
 let findSanPham = (data) => {
     return new Promise(async (resolve, reject) => {
@@ -343,5 +364,6 @@ module.exports = {
     getRandomSanPham,
     getRandomSanPhamTrungBay,
     getChiTietSanPham,
-    getByMaLoai
+    getByMaLoai,
+    getByID,
 };

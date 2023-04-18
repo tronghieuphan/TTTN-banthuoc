@@ -6,69 +6,81 @@ import { FcFlashOn } from "react-icons/fc";
 import { useSelector } from "react-redux";
 import sanPhamAPI from "../../services/sanPhamAPI";
 function DetailProduct() {
-    // const { thongtinsanpham } = useSelector((state) => state.sanpham);
-    const thongtinsanpham = JSON.parse(localStorage.getItem("SANPHAM"));
+  // const { thongtinsanpham } = useSelector((state) => state.sanpham);
+  const thongtinsanpham = JSON.parse(localStorage.getItem("SANPHAM"));
 
-    const [chitiet, setChiTiet] = useState({});
-    const [splienquan, setSanPhamLienQuan] = useState([]);
+  const keysearch = JSON.parse(localStorage.getItem("IDSANPHAM"));
 
-    let obj = {
-        id: thongtinsanpham.id,
-    };
-    let objloai = {
-        Maloai: thongtinsanpham.Maloai,
-    };
+  const [chitiet, setChiTiet] = useState({});
+  const [splienquan, setSanPhamLienQuan] = useState([]);
 
-    const getChiTiet = async (obj) => {
-        const data = await sanPhamAPI.getSanPhamChiTiet(obj);
-        setChiTiet(data.data);
-    };
-    const getSanPhamLienQuan = async (obj) => {
-        const data = await sanPhamAPI.getSanPhamLienQuan(obj);
-        setSanPhamLienQuan(data.data);
-    };
+  let obj = {
+    id: thongtinsanpham.id,
+  };
+  let objloai = {
+    Maloai: thongtinsanpham.Maloai,
+  };
 
-    useEffect(() => {
-        getChiTiet(obj);
-        getSanPhamLienQuan(objloai);
-    }, []);
+  const getChiTiet = async (obj) => {
+    const data = await sanPhamAPI.getSanPhamChiTiet(obj);
+    setChiTiet(data.data);
+  };
+  const getSanPhamLienQuan = async (obj) => {
+    const data = await sanPhamAPI.getSanPhamLienQuan(obj);
+    setSanPhamLienQuan(data.data);
+  };
 
-    return (
-        <>
-            <div className="container-fluid w-100">
-                <div className="row mx-5">
-                    <div className="col-md-5 ml-5">
-                        <div className=" mt-5 ">
-                            <SliderDetail />
-                            <div className="row w-100">
-                                <div></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-md-7 ml-5">
-                        <div className=" mt-5 ">
-                            <InfoProduct thongtinsanpham={chitiet} />
-                        </div>
-                    </div>
-                </div>
+  const [spsearch, setSPSearch] = useState({});
+  console.log(spsearch);
+  const getSPByID = async (a) => {
+    const data = await sanPhamAPI.getByID(a);
+    setChiTiet(data.data);
+  };
 
-                <p className="text-left m-3 fw-bold fs-3">
-                    <FcFlashOn /> SẢN PHẨM LIÊN QUAN <FcFlashOn />
-                </p>
-                <div
-                    className="d-flex flex-wrap justify-content-center p-3"
-                    style={{ backgroundColor: "#E5EEFF", borderRadius:"20px"}}
-                >
-                    {splienquan.map((values) => {
-                        return <CardProduct moi={values} key={values.id} />;
-                    })}
-                </div>
+  useEffect(() => {
+    getChiTiet(obj);
+    getSanPhamLienQuan(objloai);
+    getSPByID(keysearch);
+  }, []);
+
+  console.log()
+
+  return (
+    <>
+      <div className="container-fluid w-100">
+        <div className="row mx-5">
+          <div className="col-md-5 ml-5">
+            <div className=" mt-5 ">
+              <SliderDetail />
+              <div className="row w-100">
+                <div></div>
+              </div>
             </div>
-            <br />
-            <br />
-            <br />
-        </>
-    );
+          </div>
+          <div className="col-md-7 ml-5">
+            <div className=" mt-5 ">
+              <InfoProduct thongtinsanpham={chitiet} />
+            </div>
+          </div>
+        </div>
+
+        <p className="text-left m-3 fw-bold fs-3">
+          <FcFlashOn /> SẢN PHẨM LIÊN QUAN <FcFlashOn />
+        </p>
+        <div
+          className="d-flex flex-wrap justify-content-center p-3"
+          style={{ backgroundColor: "#E5EEFF", borderRadius: "20px" }}
+        >
+          {splienquan.map((values) => {
+            return <CardProduct moi={values} key={values.id} />;
+          })}
+        </div>
+      </div>
+      <br />
+      <br />
+      <br />
+    </>
+  );
 }
 
 export default DetailProduct;

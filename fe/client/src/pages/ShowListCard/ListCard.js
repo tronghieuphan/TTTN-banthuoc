@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import Section from "../../components/Section/Section";
 import { FcLike, FcFlashOn } from "react-icons/fc";
 import { Image } from "react-bootstrap";
-import "./ListCart.scss";
+import "./ListCard.scss";
 
 function ListCard() {
 
