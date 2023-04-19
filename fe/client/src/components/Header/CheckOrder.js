@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import { Button as Btn } from "react-bootstrap";
 import { TbNotes } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 import { Form, Button, Input } from "antd";
 import donDatHangAPI from "../../services/donDatHang";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setDataDDH } from "../../slices/dondathangSlice";
 function CheckOrder() {
     const [show, setShow] = useState(false);

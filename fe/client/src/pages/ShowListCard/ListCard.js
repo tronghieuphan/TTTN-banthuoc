@@ -3,8 +3,7 @@ import sanPhamAPI from "../../services/sanPhamAPI";
 import "../../components/Card/CardProduct/style.scss";
 import { useEffect, useState } from "react";
 import Section from "../../components/Section/Section";
-import { FcLike, FcFlashOn } from "react-icons/fc";
-import { Image } from "react-bootstrap";
+import { FcFlashOn } from "react-icons/fc";
 import "./ListCard.scss";
 
 function ListCard() {

@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import PageWeb from "./routes";
 import HomePageLayout from "./layouts/HomePageLayout/index";
 import LoginRegisterLayout from "./layouts/LoginRegisterLayout/index";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 function App() {
     return (

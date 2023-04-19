@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import nguoiDungAPI from "../../services/nguoiDungAPI";
 import { login } from "../../slices/userSlice";
 import { Form, Input, Button } from "antd";
-import { useState } from "react";
 import { toast } from "react-toastify";
 function LoginPage() {
     const dispatch = useDispatch();

@@ -12,58 +12,48 @@ const PageWeb = [
     {
         path: "/",
         page: HomePage,
-        isHomePageLayout: true
+        isHomePageLayout: true,
     },
     {
         path: "/login",
         page: LoginPage,
-        isLoginRegisterLayout: true
+        isLoginRegisterLayout: true,
     },
     {
         path: "/register",
         page: RegisterPage,
-        isLoginRegisterLayout: true
+        isLoginRegisterLayout: true,
     },
     {
         path: "/shopping",
         page: CartShopping,
-        isHomePageLayout: true
-
+        isHomePageLayout: true,
     },
     {
         path: "/product-details",
         page: DetailProduct,
-        isHomePageLayout: true
-
+        isHomePageLayout: true,
     },
     {
         path: "/user-details",
         page: DetailUser,
-        isHomePageLayout: true
-
+        isHomePageLayout: true,
     },
     {
         path: "/list-card",
         page: ListCard,
-        isHomePageLayout: true
-
-    }
-    ,
-
+        isHomePageLayout: true,
+    },
     {
         path: "/list-search",
         page: ListSearch,
-        isHomePageLayout: true
-
-    }
-    ,
+        isHomePageLayout: true,
+    },
     {
         path: "/check",
         page: Check,
-        isHomePageLayout: true
-
-    }
+        isHomePageLayout: true,
+    },
 ];
-
 
 export default PageWeb;

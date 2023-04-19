@@ -34,7 +34,7 @@ function InfoProduct(props) {
     const handAddSp = async (obj) => {
         if (account?.id) {
             a = JSON.parse(localStorage.getItem("LISTSP")) || [];
-            let p = a.find((item) => item.id == obj.id);
+            let p = a.find((item) => item.id === obj.id);
             if (p) {
                 if (p.Soluong + obj.Soluong >= 5) {
                     Swal.fire({

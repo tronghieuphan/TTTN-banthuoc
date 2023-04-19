@@ -4,7 +4,6 @@ import { Table, Badge } from "antd";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import donDatHangAPI from "../../services/donDatHang";
-import khuyenMaiAPI from "../../services/khuyenMaiAPI";
 function Check() {
     const navigate = useNavigate();
     const [show, setShow] = useState(false);
@@ -70,7 +69,7 @@ function Check() {
                             <Table dataSource={chitiet} columns={columns} pagination={false} />
                             <div></div>
                         </div>
-                    )}{" "}
+                    )}
                     <div className="col d-flex flex-wrap">
                         {danhsach?.map((values) => {
                             return (
@@ -85,6 +84,7 @@ function Check() {
                                                 variant="top"
                                                 src="https://i.imgur.com/u87HruQ.png"
                                                 className="w-100"
+                                                alt=""
                                             />
                                             <div>
                                                 <div className="title">{values.id}</div>

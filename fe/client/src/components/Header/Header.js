@@ -4,34 +4,31 @@ import CheckOrder from "./CheckOrder";
 import Card from "./Card";
 import { Button, Dropdown } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
-import { Badge } from "antd";
+import { useDispatch } from "react-redux";
+// import { useState, useEffect } from "react";
 import { logout } from "../../slices/userSlice";
-import sanPhamAPI from "../../services/sanPhamAPI";
+// import sanPhamAPI from "../../services/sanPhamAPI";
 function Header() {
-    const { account } = useSelector((state) => state.user);
+    // const { account } = useSelector((state) => state.user);
     const setAccountLS = JSON.parse(localStorage.getItem("ACCOUNT"));
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [listSp, setList] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [keysearch, setValueSearch] = useState("");
 
-    const getAllSp = async () => {
-        try {
-            setLoading(true);
-            const response = await sanPhamAPI.getAll();
-            setList(response.data);
-            setLoading(false);
-        } catch (err) {
-            throw new Error(err);
-        }
-    };
 
-    useEffect(() => {
-        getAllSp();
-    }, []);
+    // const getAllSp = async () => {
+    //     try {
+    //         setLoading(true);
+    //         const response = await sanPhamAPI.getAll();
+    //         setList(response.data);
+    //         setLoading(false);
+    //     } catch (err) {
+    //         throw new Error(err);
+    //     }
+    // };
+
+    // useEffect(() => {
+    //     getAllSp();
+    // }, []);
     const handleLogout = () => {
         dispatch(logout());
         localStorage.removeItem("ACCOUNT");
@@ -53,7 +50,7 @@ function Header() {
                         </Link>
                     </div>
                     <div className="col-md-4 text-right">
-                        <SearchInput placeholder="Tìm kiếm..." data={listSp} />
+                        <SearchInput placeholder="Tìm kiếm..."/>
                     </div>
                     <div className="col-md-5 text-right">
                         <div className="row align-items-center">
@@ -62,7 +59,6 @@ function Header() {
                             </div>
 
                             <div className="col">
-                                {" "}
                                 <Link to={setAccountLS?.id?("/shopping"):("/login")} style={{ textDecoration: "none" }}>
                                     <Card />
                                 </Link>

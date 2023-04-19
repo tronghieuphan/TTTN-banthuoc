@@ -102,7 +102,6 @@ let getChiTietDDH = async (data) => {
                     } else {
                         km = a.Giakm;
                     }
-                    console.log(km);
                     const b = {
                         ...a,
                         Masp: e.Masp,

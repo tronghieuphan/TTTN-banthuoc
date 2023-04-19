@@ -1,7 +1,6 @@
 import Button from "react-bootstrap/Button";
 import { BsCartDashFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import { Badge } from "antd";
 // import { useEffect } from "react";
 function Card() {
     // let list = JSON.parse(localStorage.getItem("LISTSP"));

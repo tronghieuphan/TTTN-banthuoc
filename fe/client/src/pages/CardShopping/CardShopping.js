@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt, faTruckDroplet } from "@fortawesome/free-solid-svg-icons";
+import { faTrashAlt} from "@fortawesome/free-solid-svg-icons";
 import { Form, Input, Select, Radio, Space, Table, Button, Popconfirm, Tooltip } from "antd";
 import { useState, useEffect } from "react";
 import addressAPI from "../../services/addressAPI";
@@ -88,7 +88,7 @@ function CartShopping() {
         let account = JSON.parse(localStorage.getItem("ACCOUNT"));
         let list = JSON.parse(localStorage.getItem("LISTSP"));
         let p = [];
-        list.map((item, key) => {
+        list.map((item,key) => {
             if (account?.id === item.Mand) {
                 p.push(item);
             }
@@ -118,10 +118,12 @@ function CartShopping() {
     useEffect(() => {
         handleCard();
         getKM(obj);
+        // eslint-disable-next-line
     }, []);
 
     useEffect(() => {
         getKMID(objkm);
+        // eslint-disable-next-line
     }, [makhuyenmai]);
 
     //Xóa sản phẩm
@@ -219,8 +221,6 @@ function CartShopping() {
         } else {
             toast.success("Đặt hàng thành công ");
             await donDatHangAPI.create(obj);
-            let account = JSON.parse(localStorage.getItem("ACCOUNT"));
-            let list = JSON.parse(localStorage.getItem("LISTSP"));
             setDonHang([]);
             navigate("/");
         }

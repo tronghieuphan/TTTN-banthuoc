@@ -1,4 +1,3 @@
-import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import { Tooltip } from "antd";
 import { useDispatch } from "react-redux";
@@ -8,15 +7,16 @@ import { useEffect } from "react";
 
 function CardProduct(props) {
     let moi = props.moi;
-
     const text = <span>{moi.Tensp}</span>;
     const dispatch = useDispatch();
     const handleAddStore = (obj) => {
+        dispatch(setDataSP(obj));
         localStorage.setItem("SANPHAM", JSON.stringify(obj));
     };
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     }, []);
+
     return (
         <Link
             to="/product-details"

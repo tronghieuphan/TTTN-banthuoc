@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     thuongHieu.init(
         {
             Tenth: DataTypes.STRING(25),
-            Hinhanh:DataTypes.TEXT,
+            Hinhanh: DataTypes.TEXT,
         },
         {
             sequelize,

@@ -1,7 +1,7 @@
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { Dropdown, message, Space } from "antd";
+import { Dropdown, Space } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import "./Nav.scss";
 import { useState, useEffect } from "react";

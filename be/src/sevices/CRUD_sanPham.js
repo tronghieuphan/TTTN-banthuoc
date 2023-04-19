@@ -144,17 +144,18 @@ let findSanPhamByName = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
             let name = await db.sanPham.findAll({
+                include: [{ model: db.hinhAnh }],
+                nest: true,
                 where: {
                     Tensp: {
                         [Op.substring]: data.datafind,
                     },
                 },
-                raw: true,
             });
             if (name) {
                 resolve(name);
             } else {
-                resolve("Not Found");
+                resolve([]);
             }
         } catch (e) {
             reject(e);

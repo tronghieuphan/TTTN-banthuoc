@@ -169,19 +169,6 @@ function HomePage() {
                     </div>
                 </Section>
             </div>
-            {/* <div className="section_3">
-                <Section>
-                    <p>
-                        <FcLike />
-                        THƯƠNG HIỆU NỔI TIẾNG <FcLike />
-                    </p>
-                    <div className="d-flex flex-wrap justify-content-center">
-                        {brand.map((brand) => (
-                            <Image width={200} src={brand.img} className="m-3" />
-                        ))}
-                    </div>
-                </Section>
-            </div> */}
             <div className="row w-100 justify-content-center section_4">
                 <div className="col-3">
                     <div className="d-flex">

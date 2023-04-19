@@ -1,11 +1,9 @@
 import { Link } from "react-router-dom";
 import { Tooltip } from "antd";
-import { useDispatch } from "react-redux";
-import { setDataSP } from "../../../slices/sanphamSlice";
+// import { useDispatch } from "react-redux";
 function CardProduceDiscount(props) {
     let mang = props.khuyenmai;
     const text = <span>{mang.Tensp}</span>;
-    const dispatch = useDispatch();
     const handleAddStore = (obj) => {
         localStorage.setItem("SANPHAM", JSON.stringify(obj));
     };
