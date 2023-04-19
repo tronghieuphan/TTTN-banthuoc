@@ -247,7 +247,7 @@ let findSanPham = (data) => {
             if (find) {
                 resolve(find);
             } else {
-                resolve("Not Found");
+                resolve([]);
             }
         } catch (e) {
             reject(e);
@@ -342,7 +342,7 @@ let getChiTietSanPham = (data) => {
                 },
                 include: [{ model: db.danhMuc }],
             });
-
+            console.log(danhmuc);
             let obj = {
                 id: sanpham.id,
                 Tensp: sanpham.Tensp,
