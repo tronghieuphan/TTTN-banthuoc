@@ -4,8 +4,9 @@ import InfoProduct from "./InfoProduct";
 import SliderDetail from "./SliderDetail";
 import { FcFlashOn } from "react-icons/fc";
 import sanPhamAPI from "../../services/sanPhamAPI";
+import { useSelector } from "react-redux";
 function DetailProduct() {
-    // const { thongtinsanpham } = useSelector((state) => state.sanpham);
+    const { thongtinsanpham1 } = useSelector((state) => state.sanpham);
     const thongtinsanpham = JSON.parse(localStorage.getItem("SANPHAM"));
 
     const [sp, setThongtin] = useState([]);
@@ -35,7 +36,7 @@ function DetailProduct() {
     }, []);
     useEffect(() => {
         setThongtin(thongtinsanpham);
-    }, [thongtinsanpham]);
+    }, [thongtinsanpham1]);
 
     return (
         <>

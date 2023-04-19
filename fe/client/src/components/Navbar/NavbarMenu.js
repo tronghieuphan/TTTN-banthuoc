@@ -6,7 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Nav.scss";
 import { useState, useEffect } from "react";
 import loaiSanPhamAPI from "../../services/loaisanphamAPI";
-
+import { useDispatch } from "react-redux";
+import { setDataDM } from "../../slices/danhmucSlice";
 function NavbarMenu() {
     const [tpcn, setTPCN] = useState([]);
     const [dmp, setDMP] = useState([]);
@@ -14,7 +15,7 @@ function NavbarMenu() {
     const [ttbyt, setTBYT] = useState([]);
     const [cscn, setCSCN] = useState([]);
     const navigate = useNavigate();
-
+    const dispatch = useDispatch();
     // const navigateSPCungLoai = () => {
     //     navigate('/list-card')
     // }
@@ -46,7 +47,8 @@ function NavbarMenu() {
     cscn.map((value) => arraycscn.push({ key: value.id, label: value.Tenloai }));
     const onClick = ({ key }) => {
         localStorage.setItem("MALOAI", JSON.stringify(key));
-        navigate("/list-card")
+        dispatch(setDataDM(key));
+        navigate("/list-card");
     };
     return (
         <Navbar collapseOnSelect expand="lg" style={{ backgroundColor: "#0644B5" }}>
@@ -75,11 +77,9 @@ function NavbarMenu() {
                                     onClick,
                                 }}
                             >
-                                <a onClick={(e) => console.log(e)}>
-                                    <Link to="/product-details">
-                                        <Space>DƯỢC MỸ PHẨM</Space>
-                                    </Link>
-                                </a>
+                                <Link onClick={(e) => console.log(e)}>
+                                    <Space>DƯỢC MỸ PHẨM</Space>
+                                </Link>
                             </Dropdown>
                             <Dropdown
                                 className="col"
@@ -88,11 +88,9 @@ function NavbarMenu() {
                                     onClick,
                                 }}
                             >
-                                <a onClick={(e) => console.log(e)}>
-                                    <Link to="/product-details">
-                                        <Space>CHĂM SÓC CÁ NHÂN</Space>
-                                    </Link>
-                                </a>
+                                <Link onClick={(e) => console.log(e)}>
+                                    <Space>CHĂM SÓC CÁ NHÂN</Space>
+                                </Link>
                             </Dropdown>
                             <Dropdown
                                 className="col"
@@ -101,12 +99,10 @@ function NavbarMenu() {
                                     onClick,
                                 }}
                             >
-                                <a onClick={(e) => console.log(e)}>
-                                    <Link to="/product-details">
-                                        <Space>THUỐC</Space>
-                                    </Link>
-                                </a>
-                            </Dropdown>{" "}
+                                <Link onClick={(e) => console.log(e)}>
+                                    <Space>THUỐC</Space>
+                                </Link>
+                            </Dropdown>
                             <Dropdown
                                 className="col"
                                 menu={{
@@ -114,11 +110,9 @@ function NavbarMenu() {
                                     onClick,
                                 }}
                             >
-                                <a onClick={(e) => console.log(e)}>
-                                    <Link to="/product-details">
-                                        <Space>THIẾT BỊ Y TẾ</Space>
-                                    </Link>
-                                </a>
+                                <Link onClick={(e) => console.log(e)}>
+                                    <Space>THIẾT BỊ Y TẾ</Space>
+                                </Link>
                             </Dropdown>
                         </Nav>
                     </div>

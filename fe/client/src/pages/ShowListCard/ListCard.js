@@ -5,12 +5,12 @@ import { useEffect, useState } from "react";
 import Section from "../../components/Section/Section";
 import { FcFlashOn } from "react-icons/fc";
 import "./ListCard.scss";
-
+import { useSelector } from "react-redux";
 function ListCard() {
     const maLoai = JSON.parse(localStorage.getItem("MALOAI"));
-
+    const [ml, setMaloai] = useState([]);
     const [spcungloai, setSPCungLoai] = useState([]);
-
+    const { thongtindanhmuc } = useSelector((state) => state.danhmuc);
     const getByMaLoai = async (a) => {
         const data = await sanPhamAPI.getByMaLoai(a);
         setSPCungLoai(data.data);
@@ -19,7 +19,9 @@ function ListCard() {
     useEffect(() => {
         getByMaLoai(maLoai);
     }, [maLoai]);
-
+    useEffect(() => {
+        setMaloai(thongtindanhmuc);
+    }, [thongtindanhmuc]);
     return (
         <>
             {/* <h2 className="m-3">SẢN PHẨM LOẠI</h2>

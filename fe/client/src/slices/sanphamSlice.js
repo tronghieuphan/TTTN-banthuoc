@@ -3,11 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 export const sanphamSlice = createSlice({
     name: "sanpham",
     initialState: {
-        thongtinsanpham:[]
+        thongtinsanpham1:[]
     },
     reducers: {
         setDataSP: (state,action) => {
-            state.thongtinsanpham=action.payload
+            state.thongtinsanpham1=action.payload
         },
     },
 });
