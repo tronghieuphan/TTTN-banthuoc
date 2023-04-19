@@ -32,6 +32,7 @@ let createDonDatHang = async (data) => {
                 Trangthai: 0,
                 Sdt: data.Sdt,
                 Phuong: data.Phuong,
+                Sonha: data.Sonha,
                 Quan: data.Quan,
                 Thanhpho: data.Thanhpho,
                 Ghichu: data.Ghichu,
@@ -43,18 +44,35 @@ let createDonDatHang = async (data) => {
                 listSp.map(async (a) => {
                     await db.chiTietDonDatHang.create({
                         Maddh: Maddh,
-                        Masp: a.Masp,
+                        Masp: a.id,
                         Soluong: a.Soluong,
                         Thanhtien: a.Thanhtien,
                     });
+                    let find = await db.sanPham.findOne({
+                        where: {
+                            id: a.id,
+                        },
+                    });
+                    await db.sanPham.update(
+                        {
+                            Soluongtk: find.Soluongtk - a.Soluong,
+                        },
+                        {
+                            where: {
+                                id: a.id,
+                            },
+                        }
+                    );
                 });
-            resolve({ message: "Create Successfully" });
+
+            resolve({ message: "Create Successfully", data: donhang });
         } catch (e) {
             reject(e);
         }
     });
 };
 
+//
 let getChiTietDDH = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -71,13 +89,20 @@ let getChiTietDDH = async (data) => {
                             id: e.Masp,
                         },
                         raw: true,
-                        attributes: ["Tensp", "Dongia"],
+                        attributes: ["Tensp", "Dongia", "Giakm"],
                     });
+                    let km = 0;
+                    if (a.Giakm === null) {
+                        km = a.Dongia;
+                    } else {
+                        km = a.Giakm;
+                    }
+                    console.log(km);
                     const b = {
                         ...a,
                         Masp: e.Masp,
                         Soluong: e.Soluong,
-                        Thanhtien: e.Soluong * a.Dongia,
+                        Thanhtien: e.Soluong * km,
                     };
                     return b;
                 })
@@ -125,9 +150,11 @@ let findDonDatHang = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
             let donDatHangById = await db.donDatHang.findAll({
+                include: [{ model: db.khuyenMai, attributes: ["Phantram"] }],
                 where: {
                     [Op.or]: [{ id: data.datafind }, { Sdt: data.datafind }],
                 },
+                nest: true,
                 raw: true,
             });
             if (donDatHangById) {

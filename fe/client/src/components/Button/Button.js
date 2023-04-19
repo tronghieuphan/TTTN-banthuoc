@@ -1,5 +1,8 @@
 import { Button } from "antd";
-function ButtonBuy() {
+function ButtonBuy(props) {
+    const id=props.sp;
+    console.log('id: ', id);
+
     return (
         <>
             <Button type="primary">Mua hàng</Button>

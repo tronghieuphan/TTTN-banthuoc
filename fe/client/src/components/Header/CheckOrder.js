@@ -5,21 +5,22 @@ import { TbNotes } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 import { Form, Button, Input } from "antd";
 import donDatHangAPI from "../../services/donDatHang";
-
+import { useDispatch, useSelector } from "react-redux";
+import { setDataDDH } from "../../slices/dondathangSlice";
 function CheckOrder() {
     const [show, setShow] = useState(false);
     const navigate = useNavigate();
-    const [check, setCheck] = useState([]);
+    // const [check, setCheck] = useState([]);
+    const dispatch = useDispatch();
     const handleFind = async (obj) => {
         const data = await donDatHangAPI.getAllSdt(obj);
-        setCheck(data.data);
+        dispatch(setDataDDH(data.data));
     };
 
     const handleCheck = (e) => {
-        localStorage.setItem("DONDATHANG", JSON.stringify(check));
         handleFind(e.Sdt);
-        setShow(false);
         navigate("/check");
+        setShow(false);
     };
     const handleShow = () => {
         setShow(true);

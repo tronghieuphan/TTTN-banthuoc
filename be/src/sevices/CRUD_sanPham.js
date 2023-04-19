@@ -68,12 +68,12 @@ let createSanPham = async (data) => {
 };
 
 //Xóa sản phẩm
-let deleteSanPham = async (tensp) => {
+let deleteSanPham = async (id) => {
     return new Promise(async (resolve, reject) => {
         try {
             let tensp_delete = await db.sanPham.findOne({
                 where: {
-                    Tensp: tensp,
+                    id: id,
                 },
             });
             let hinhanh = await db.hinhAnh.findAll({
@@ -170,7 +170,8 @@ let getByMaLoai = (data) => {
                 where: {
                     Maloai: data.datafind,
                 },
-                raw: true,
+                include: { model: db.hinhAnh },
+                nest: true,
             });
             if (maloai) {
                 resolve(maloai);
@@ -257,6 +258,8 @@ let getNewSanPham = () => {
     return new Promise(async (resolve, reject) => {
         try {
             let sanpham = await db.sanPham.findAll({
+                include: { model: db.hinhAnh },
+                nest: true,
                 limit: 12,
                 order: [["createdAt", "DESC"]],
             });
@@ -270,6 +273,8 @@ let getSanPhamKhuyenMai = () => {
     return new Promise(async (resolve, reject) => {
         try {
             let sanpham = await db.sanPham.findAll({
+                include: { model: db.hinhAnh },
+                nest: true,
                 limit: 5,
                 where: { Giakm: { [Op.not]: null } },
                 order: [[Sequelize.literal("RAND()")]],
@@ -285,6 +290,8 @@ let getRandomSanPham = (maloai) => {
         try {
             let sanpham = await db.sanPham.findAll({
                 order: [[Sequelize.literal("RAND()")]],
+                include: { model: db.hinhAnh },
+                nest: true,
                 limit: 5,
                 where: {
                     Maloai: maloai.Maloai,
@@ -300,6 +307,8 @@ let getRandomSanPhamTrungBay = () => {
     return new Promise(async (resolve, reject) => {
         try {
             let sanpham = await db.sanPham.findAll({
+                include: { model: db.hinhAnh },
+                nest: true,
                 order: [[Sequelize.literal("RAND()")]],
                 limit: 12,
             });
@@ -340,6 +349,7 @@ let getChiTietSanPham = (data) => {
                 Dongia: sanpham.Dongia,
                 Donviban: sanpham.Donviban,
                 Tendm: danhmuc.danhMuc.Tendm,
+                Giakm: sanpham.Giakm,
                 Loai: sanpham.loaiSanPham.Tenloai,
                 Tenxx: sanpham.xuatXu.Tenxx,
                 Quycach: sanpham.Quycach,
@@ -352,6 +362,7 @@ let getChiTietSanPham = (data) => {
         }
     });
 };
+
 module.exports = {
     createSanPham,
     getAllSanPham,

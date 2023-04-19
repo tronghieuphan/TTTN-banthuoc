@@ -4,21 +4,34 @@ import { Tooltip } from "antd";
 import { useDispatch } from "react-redux";
 import { setDataSP } from "../../../slices/sanphamSlice";
 import "./style.scss";
-import ButtonBuy from "../../Button/Button";
+import { useEffect } from "react";
 
 function CardProduct(props) {
     let moi = props.moi;
+
     const text = <span>{moi.Tensp}</span>;
     const dispatch = useDispatch();
     const handleAddStore = (obj) => {
-        dispatch(setDataSP(obj));
         localStorage.setItem("SANPHAM", JSON.stringify(obj));
     };
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }, []);
     return (
-        <Link to="/product-details" style={{textDecoration:"none", color:"#050E29"}}>
+        <Link
+            to="/product-details"
+            style={{ textDecoration: "none", color: "#050E29" }}
+            onClick={() => handleAddStore(moi)}
+        >
             <div style={{ width: "12rem" }} className="m-3 bordercard">
-                <div style={{ width: "100%", height: "150px", border: "1px solid black" }}>
-                    <img variant="top" className="w-100 " />
+                <div style={{ width: "100%", height: "200px" }}>
+                    <img
+                        variant="top"
+                        className="w-100"
+                        style={{ height: "inherit" }}
+                        src={moi?.hinhAnhs[0]?.Url}
+                        alt={moi?.hinhAnhs[0]?.Url}
+                    />
                 </div>
                 <div>
                     <Tooltip placement="top" title={text}>
@@ -26,18 +39,16 @@ function CardProduct(props) {
                     </Tooltip>
                 </div>
                 <div className="price">
-                        Giá:<br/>
-                        <span>
-                            {moi.Dongia.toLocaleString("it-IT", {
-                                style: "currency",
-                                currency: "VND",
-                            })}
-                        </span>
+                    Giá:
+                    <br />
+                    <span>
+                        {moi.Dongia.toLocaleString("it-IT", {
+                            style: "currency",
+                            currency: "VND",
+                        })}
+                    </span>
                 </div>
                 <div className="quycach">{moi.Quycach}</div>
-                <div className="text-center">
-                    <ButtonBuy />
-                </div>
             </div>
         </Link>
     );

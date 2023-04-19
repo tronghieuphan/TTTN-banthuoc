@@ -213,13 +213,37 @@ let getByNameNguoiDung = (tendangnhap) => {
     });
 };
 
+let nguoiDungDiscount = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let nguoiDungByName = await db.nguoiDung.findOne({
+                where: {
+                    Tendangnhap: data.Tendangnhap,
+                },
+                include: [{ model: db.khuyenMai }],
+                nest: true,
+            });
+            if (nguoiDungByName) {
+                resolve(nguoiDungByName.khuyenMais);
+            } else {
+                resolve("Not Found");
+            }
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
 //Tìm theo tên mình muốn
 let findNguoiDung = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
             let nguoiDungById = await db.nguoiDung.findAll({
                 where: {
-                    [Op.or]: [{ Tendangnhap: data.datafind }, { Sdt: data.datafind }],
+                    [Op.or]: [
+                        { Tendangnhap: data.datafind },
+                        { Sdt: data.datafind },
+                        { Ten: data.datafind },
+                    ],
                 },
                 raw: true,
             });
@@ -318,4 +342,5 @@ module.exports = {
     findNguoiDung,
     loginNguoiDung,
     changePassword,
+    nguoiDungDiscount,
 };

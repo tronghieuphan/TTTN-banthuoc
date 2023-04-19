@@ -25,6 +25,7 @@ function DetailProduct() {
     const data = await sanPhamAPI.getSanPhamChiTiet(obj);
     setChiTiet(data.data);
   };
+  console.log(chitiet);
   const getSanPhamLienQuan = async (obj) => {
     const data = await sanPhamAPI.getSanPhamLienQuan(obj);
     setSanPhamLienQuan(data.data);
@@ -34,16 +35,14 @@ function DetailProduct() {
   console.log(spsearch);
   const getSPByID = async (a) => {
     const data = await sanPhamAPI.getByID(a);
-    setChiTiet(data.data);
+    //setChiTiet(data.data);
+    console.log(data.data);
   };
 
   useEffect(() => {
     getChiTiet(obj);
     getSanPhamLienQuan(objloai);
-    getSPByID(keysearch);
   }, []);
-
-  console.log()
 
   return (
     <>

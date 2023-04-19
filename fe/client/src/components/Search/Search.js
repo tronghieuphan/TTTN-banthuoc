@@ -120,7 +120,7 @@ function SearchInput({ placeholder, data, props }) {
             </div>
           </div>
         </form>
-        {filteredData.length != 0 && (
+        {/* {filteredData.length != 0 && (
           // <Link to="/product-details">
           <div className="dataResult">
             {filteredData.slice(0, 30).map((value, key) => {
@@ -132,7 +132,7 @@ function SearchInput({ placeholder, data, props }) {
             })}
           </div>
           //</Link>
-        )}
+        )} */}
       </div>
     </div>
   );

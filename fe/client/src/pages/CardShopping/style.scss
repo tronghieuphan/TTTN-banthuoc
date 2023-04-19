@@ -1,0 +1,18 @@
+.ant-table
+  .ant-table-container
+  .ant-table-content
+  table
+  thead.ant-table-thead
+  .ant-table-cell {
+  background-color: #0D6EFD;
+  color: #fff;
+  font-size: 16px;
+}
+
+.ant-table{
+    overflow-y: scroll;
+    border-left: 1px solid silver;
+    border-bottom: 1px solid silver;
+    border-radius: 20px;
+
+}

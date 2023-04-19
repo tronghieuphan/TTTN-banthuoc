@@ -51,7 +51,6 @@ function NguoidungList() {
         setLoading(true);
         const data = await nguoiDungAPI.getByName(keysearch);
         setList(data.data);
-
         setLoading(false);
     };
     const handleChange = (e) => {

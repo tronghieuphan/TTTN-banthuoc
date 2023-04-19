@@ -24,6 +24,10 @@ const nguoiDungAPI = {
     },
     register:(obj)=>{
         return axios.post(`http://localhost:9000/create-nguoidung`,obj)
+    },
+    nguoidungkhuyenmai:(obj)=>{
+        return axios.post(`http://localhost:9000/nguoidung-discount`,obj)
+
     }
 };
 

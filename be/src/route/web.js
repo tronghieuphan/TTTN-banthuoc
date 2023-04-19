@@ -27,6 +27,7 @@ let initWebRotes = (app) => {
     router.put("/update-nguoidung", nguoiDungController.update_nguoiDung);
     router.post("/login-nguoidung", nguoiDungController.login_nguoiDung);
     router.post("/changepass-nguoidung", nguoiDungController.changePass_nguoiDung);
+    router.post("/nguoidung-discount", nguoiDungController.nguoiDung_Discount);
 
     //CRUD___ThuongHieu
     router.post("/create-thuonghieu", thuongHieuController.create_thuongHieu);
@@ -63,11 +64,11 @@ let initWebRotes = (app) => {
     router.get("/get-loaisanphamtbit", loaiSanPhamController.getLSP_TBIT);
     router.get("/get-loaisanphamnoibat", loaiSanPhamController.getLoaiSP_NoiBat);
 
-
     //CRUD___khuyenMai
     router.post("/create-khuyenMai", khuyenMaiController.create_khuyenMai);
     router.get("/getall-khuyenMai", khuyenMaiController.getAll_khuyenMai);
     router.get("/getbyName-khuyenMai", khuyenMaiController.getName_khuyenMai);
+    router.post("/getbyId-khuyenMai", khuyenMaiController.getID_khuyenMai);
     router.delete("/delete-khuyenMai/:tenkm", khuyenMaiController.delete_khuyenMai);
     router.put("/update-khuyenMai", khuyenMaiController.update_khuyenMai);
 

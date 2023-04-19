@@ -25,8 +25,6 @@ let getAllKhuyenMai = async () => {
 let createKhuyenMai = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            
-
             let khuyenmai = await db.khuyenMai.findOrCreate({
                 where: {
                     Tenkm: data.Tenkm,
@@ -41,8 +39,16 @@ let createKhuyenMai = async (data) => {
                     Trangthai: data.Trangthai,
                 },
             });
-            
+
             if (khuyenmai[1]) {
+                let nguoidung = await db.nguoiDung.findAll();
+                nguoidung &&
+                    nguoidung.map(async (a) => {
+                        await db.chiTietKhuyenMai.create({
+                            Makm: khuyenmai[0].id,
+                            Mand: a.id,
+                        });
+                    });
                 resolve({ message: "Create Successfully", data: khuyenmai[0] });
             } else {
                 resolve({ message: "KhuyenMai Exist" });
@@ -59,7 +65,7 @@ let deleteKhuyenMai = async (tenkm) => {
         try {
             let tenkm_delete = await db.khuyenMai.findOne({
                 where: {
-                    Tenkm: tenkm,
+                    id: tenkm,
                 },
             });
             let khuyenmainguoidung = await db.chiTietKhuyenMai.findAll({
@@ -67,6 +73,7 @@ let deleteKhuyenMai = async (tenkm) => {
                     Makm: tenkm_delete.id,
                 },
             });
+
             let khuyenmaidonhang = await db.donDatHang.findAll({
                 where: {
                     Makm: tenkm_delete.id,
@@ -74,11 +81,9 @@ let deleteKhuyenMai = async (tenkm) => {
             });
             if (khuyenmaidonhang.lenght > 0) {
                 resolve("Have DonDatHang belongs KhuyenMai");
-            } 
-            else if (khuyenmainguoidung.length > 0) {
+            } else if (khuyenmainguoidung.length > 0) {
                 resolve("Have NguoiDung belongs KhuyenMai");
-            } 
-            else {
+            } else {
                 if (tenkm_delete) {
                     await tenkm_delete.destroy();
                     resolve("Delete Successful");
@@ -86,7 +91,6 @@ let deleteKhuyenMai = async (tenkm) => {
                     resolve("KhuyenMai not exist");
                 }
             }
-            
         } catch (e) {
             reject(e);
         }
@@ -96,12 +100,14 @@ let deleteKhuyenMai = async (tenkm) => {
 let updateKhuyenMai = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let findKhuyenMai = await db.khuyenMai.findOne({
+            let find = await db.donDatHang.findAll({
                 where: {
-                    id: data.id,
+                    Makm: data.id,
                 },
             });
-            if (findKhuyenMai) {
+            if (find.length > 0) {
+                resolve({ message: "KhuyenMai Belongs DonDatHang" });
+            } else {
                 let upKm = await db.khuyenMai.update(
                     {
                         Tenkm: data.Tenkm,
@@ -118,10 +124,7 @@ let updateKhuyenMai = async (data) => {
                         },
                     }
                 );
-                
                 resolve({ message: "Update KhuyenMai Successful", data: upKm });
-            } else {
-                resolve("KhuyenMai not exist");
             }
         } catch (e) {
             reject(e);
@@ -147,6 +150,24 @@ let getByNameKhuyenMai = (data) => {
         }
     });
 };
+let getByIDKhuyenMai = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let khuyenMaiByName = await db.khuyenMai.findOne({
+                where: {
+                    id: data.id,
+                },
+            });
+            if (khuyenMaiByName) {
+                resolve(khuyenMaiByName);
+            } else {
+                resolve("Not Found");
+            }
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
 
 module.exports = {
     createKhuyenMai,
@@ -154,4 +175,5 @@ module.exports = {
     deleteKhuyenMai,
     updateKhuyenMai,
     getByNameKhuyenMai,
+    getByIDKhuyenMai,
 };

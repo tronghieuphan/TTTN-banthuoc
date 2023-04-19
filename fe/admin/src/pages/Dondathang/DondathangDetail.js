@@ -1,4 +1,5 @@
 import { Button, Table, Tooltip } from "antd";
+import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
@@ -77,6 +78,9 @@ function DonDatHangDetail() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0, transition: { duration: 0.8 } }}
             >
+                <Link to="/dondathang-list" className="m-4">
+                    <Button>Quay lại</Button>
+                </Link>
                 <div className="m-4 ">
                     <div className="bd-radius bg-content p-4 text-muted fw-bold">
                         <div className="d-flex justify-content-between">
