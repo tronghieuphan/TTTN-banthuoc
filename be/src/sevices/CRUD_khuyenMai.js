@@ -13,7 +13,7 @@ let getAllKhuyenMai = async () => {
             if (count > 0) {
                 resolve(listKhuyenMai);
             } else {
-                resolve("List null");
+                resolve([]);
             }
         } catch (e) {
             reject(e);

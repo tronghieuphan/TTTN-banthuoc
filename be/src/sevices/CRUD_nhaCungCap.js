@@ -11,7 +11,7 @@ let getAllNhaCungCap = async () => {
             if (count > 0) {
                 resolve(listNhaCungCap);
             } else {
-                resolve("List null");
+                resolve([]);
             }
         } catch (e) {
             reject(e);

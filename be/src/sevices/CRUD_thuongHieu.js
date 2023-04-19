@@ -13,7 +13,7 @@ let getAllThuongHieu = async () => {
             if (count > 0) {
                 resolve(listThuongHieu);
             } else {
-                resolve("List null");
+                resolve([]);
             }
         } catch (e) {
             reject(e);

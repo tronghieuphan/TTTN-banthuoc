@@ -57,6 +57,11 @@ function DonDatHangDetail() {
             align: "center",
         },
         {
+            title: "Giá ưu đãi",
+            dataIndex: "Giakm",
+            align: "center",
+        },
+        {
             title: "Thành tiền",
             dataIndex: "Thanhtien",
             align: "center",

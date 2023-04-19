@@ -11,7 +11,7 @@ let getAllDonDatHang = async () => {
             if (listDonDatHang.length > 0) {
                 resolve(listDonDatHang);
             } else {
-                resolve("List null");
+                resolve([]);
             }
         } catch (e) {
             reject(e);
@@ -38,6 +38,11 @@ let createDonDatHang = async (data) => {
                 Ghichu: data.Ghichu,
                 Mand: data.Mand,
                 Makm: data.Makm,
+            });
+            await db.chiTietKhuyenMai.destroy({
+                where: {
+                    [Op.and]: [{ Mand: data.Mand }, { Makm: data.Makm }],
+                },
             });
             let listSp = data.ListSP;
             listSp &&

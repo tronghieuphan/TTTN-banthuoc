@@ -226,7 +226,7 @@ let nguoiDungDiscount = (data) => {
             if (nguoiDungByName) {
                 resolve(nguoiDungByName.khuyenMais);
             } else {
-                resolve("Not Found");
+                resolve([]);
             }
         } catch (e) {
             reject(e);

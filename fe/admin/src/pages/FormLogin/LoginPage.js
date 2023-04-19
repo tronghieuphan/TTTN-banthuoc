@@ -45,6 +45,7 @@ function LoginPage() {
                 } else {
                     toast.success("Đăng nhập thành công");
                     dispatch(login(a.data.data));
+                    localStorage.setItem("ADMIN",JSON.stringify(a.data.data))
                     navigate("/home");
                 }
             }
