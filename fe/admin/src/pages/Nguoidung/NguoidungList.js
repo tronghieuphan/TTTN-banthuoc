@@ -80,7 +80,7 @@ function NguoidungList() {
             render: (Gioitinh) => (
                 <div
                     style={{
-                        width: "50px",
+                        width: "100px",
                     }}
                 >
                     {Gioitinh === true ? "Nữ" : "Nam"}
@@ -103,6 +103,15 @@ function NguoidungList() {
         {
             title: "Số điện thoại",
             dataIndex: "Sdt",
+            render: (Sdt) => (
+                <div
+                    style={{
+                        width: "100px",
+                    }}
+                >
+                    {Sdt}
+                </div>
+            ),
         },
         {
             title: "Email",
@@ -155,6 +164,15 @@ function NguoidungList() {
         {
             title: "Loại người dùng",
             dataIndex: "Loaind",
+            render: (Loaind) => (
+                <div
+                    style={{
+                        width: "100px",
+                    }}
+                >
+                    {Loaind}
+                </div>
+            ),
         },
         {
             title: "Xem",

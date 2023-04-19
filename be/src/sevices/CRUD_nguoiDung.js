@@ -125,6 +125,14 @@ let createNguoiDung_Admin = async (data) => {
             });
 
             if (nguoidung[1]) {
+                let khuyenmai = await db.khuyenMai.findAll();
+                khuyenmai &&
+                    khuyenmai.map(async (a) => {
+                        await db.chiTietKhuyenMai.create({
+                            Makm: a.id,
+                            Mand: nguoidung[0].id,
+                        });
+                    });
                 resolve({ message: "Create Successfull", data: nguoidung[0] });
             } else {
                 resolve({ result: "NguoiDung Exist" });
