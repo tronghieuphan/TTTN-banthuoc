@@ -1,6 +1,13 @@
 import logo from "../../assets/image/logo.png";
+import TawkMessengerReact from '@tawk.to/tawk-messenger-react';
+import { useRef } from 'react';
 
 function Footer() {
+    const tawkMessengerRef = useRef();
+
+  const handleMinimize = () => {
+    tawkMessengerRef.current.minimize();
+  };
     return (
         <>
             <div style={{ background: "#D4F2FF" }} className="container-fluid text-dark pt-3">
@@ -13,10 +20,10 @@ function Footer() {
                             <p className="mb-4">ThS. Trần Thị Như Ý</p>
                             <p className="mb-2 font-weight-bold">Nhóm sinh viên thực hiện</p>
                             <p className="mb-2">Phan Trọng Hiếu - DH51903543</p>
-                            <p className="mb-2">Nguyễn Thành Long - DH51903591</p>
-                            <p className="mb-2">Lưu Đình Vọng - DH51903919</p>
+                            <p className="mb-2">Nguyễn Thành Long - DH51903919</p>
+                            <p className="mb-2">Lưu Đình Vọng - DH51904922</p>
                             <p className="mb-2">Lưu Trung Lâm - DH51903286</p>
-                            <p className="mb-2">Nguyễn Cao Hùng - DH51904922</p>
+                            <p className="mb-2">Nguyễn Cao Hùng - DH51903591</p>
                         </div>
                     </div>
                 </div>
@@ -28,6 +35,18 @@ function Footer() {
                     </div>
                 </div>
             </div>
+            <div className="UI">
+        <TawkMessengerReact
+          propertyId="641196df4247f20fefe602f1"
+          widgetId="1gribamks"
+          ref={tawkMessengerRef} />
+      </div>
+      {/* cài thư viện
+      npm install '@tawk.to/tawk-messenger-react'
+      
+      tài khoản tawk
+      vong6401@gmail.com
+      Vong123456789 */}
         </>
     );
 }
