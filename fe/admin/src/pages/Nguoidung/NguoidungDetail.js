@@ -172,14 +172,10 @@ function NguoidungDetail() {
                                                 options={[
                                                     {
                                                         value: "1",
-                                                        label: "Khách hàng thành viên",
+                                                        label: "Khách hàng",
                                                     },
                                                     {
                                                         value: "2",
-                                                        label: "Khách vãng lai",
-                                                    },
-                                                    {
-                                                        value: "3",
                                                         label: "Nhân viên",
                                                     },
                                                 ]}
