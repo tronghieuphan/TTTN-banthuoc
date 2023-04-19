@@ -2,7 +2,7 @@ import express from "express";
 import db from "../models/index";
 import randomId from "./randomId";
 
-// import { Op } from "sequelize";
+import { Op } from "sequelize";
 
 //Hiển thị tất cả khuyến mãi
 let getAllKhuyenMai = async () => {
@@ -13,7 +13,7 @@ let getAllKhuyenMai = async () => {
             if (count > 0) {
                 resolve(listKhuyenMai);
             } else {
-                resolve("List null");
+                resolve([]);
             }
         } catch (e) {
             reject(e);
@@ -137,7 +137,9 @@ let getByNameKhuyenMai = (data) => {
         try {
             let khuyenMaiByName = await db.khuyenMai.findAll({
                 where: {
-                    Tenkm: data.datafind,
+                    Tenkm: {
+                        [Op.substring]: data.datafind,
+                    },
                 },
             });
             if (khuyenMaiByName) {

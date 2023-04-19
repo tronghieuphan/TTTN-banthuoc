@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faTrashAlt, faTruckDroplet } from "@fortawesome/free-solid-svg-icons";
 import { Form, Input, Select, Radio, Space, Table, Button, Popconfirm, Tooltip } from "antd";
 import { useState, useEffect } from "react";
 import addressAPI from "../../services/addressAPI";
@@ -79,9 +79,10 @@ function CartShopping() {
         setValueTT(e.target.value);
         setChiTietTT(e.target.value);
     };
-
     //LOAD DANH SÁCH
+
     const acc = JSON.parse(localStorage.getItem("ACCOUNT"));
+    //
     const [donhang, setDonHang] = useState([]);
     const handleCard = () => {
         let account = JSON.parse(localStorage.getItem("ACCOUNT"));
@@ -106,6 +107,7 @@ function CartShopping() {
     // Get api khuyen mãi
     const getKM = async (obj) => {
         const data = await nguoiDungAPI.nguoidungkhuyenmai(obj);
+        console.log("data: ", data);
         setKM(data.data);
     };
     //get api chi tiét khuyến mãi
@@ -195,16 +197,17 @@ function CartShopping() {
             Ngaydathang: today,
             Tongtien: tongtien,
             Pttt: chitietthanhtoan,
-            Sdt: acc.Sdt,
-            Phuong: acc.Phuong,
-            Quan: acc.Quan,
+            Sdt: e.Sdt,
+            Phuong: e.Phuong,
+            Quan: e.Quan,
             Sonha: e.Sonha,
-            Thanhpho: acc.Thanhpho,
+            Thanhpho: e.Thanhpho,
             Ghichu: e.Ghichu,
             Mand: acc.id,
             Makm: makhuyenmai,
             ListSP: donhang,
         };
+        console.log(obj);
         if (donhang === []) {
             toast.error("Bạn không có sản phẩm trong giỏ hàng!");
         } else if (acc.Thanhpho === null || acc.Phuong === null || acc.Quan === null) {
@@ -238,6 +241,10 @@ function CartShopping() {
     let tongtien = tong - uudai;
 
     const navigate = useNavigate();
+    const [open, setOpen] = useState(true);
+    const handleSuaThongTin = () => {
+        setOpen(!open);
+    };
     return (
         <>
             <div className="container-fluid pt-5">
@@ -253,108 +260,127 @@ function CartShopping() {
                             </div>
                             <div className="card-body">
                                 <Form onFinish={handleSubmit}>
-                                    {!acc ? (
-                                        <>
-                                            <Form.Item label="Tên khách hàng">
-                                                <Input />
-                                            </Form.Item>
-                                            <Form.Item label="Số điện thoại">
-                                                <Input />
-                                            </Form.Item>
-                                            <Form.Item
-                                                className="w-30"
-                                                name="Thanhpho"
-                                                label="Thành phố/tỉnh"
-                                            >
-                                                <Select
-                                                    className="w-100"
-                                                    showSearch
-                                                    style={{
-                                                        width: 160,
-                                                    }}
-                                                    placeholder="Chọn thành phố, tỉnh"
-                                                    optionFilterProp="children"
-                                                    onChange={onChange}
-                                                    onSearch={onSearch}
-                                                    filterOption={(input, option) =>
-                                                        (option?.label ?? "")
-                                                            .toLowerCase()
-                                                            .includes(input.toLowerCase())
-                                                    }
-                                                    options={arraycity.map((item) => ({
-                                                        value: item.name,
-                                                        label: item.name,
-                                                        id: item.code,
-                                                    }))}
-                                                />
-                                            </Form.Item>
-                                            <Form.Item
-                                                className="w-33"
-                                                name="Quan"
-                                                label="Quận/huyện"
-                                            >
-                                                <Select
-                                                    className="w-100"
-                                                    showSearch
-                                                    style={{
-                                                        width: 400,
-                                                    }}
-                                                    placeholder="Chọn quận, huyện"
-                                                    optionFilterProp="children"
-                                                    onChange={onChangeDistrict}
-                                                    onSearch={onSearch}
-                                                    filterOption={(input, option) =>
-                                                        (option?.label ?? "")
-                                                            .toLowerCase()
-                                                            .includes(input.toLowerCase())
-                                                    }
-                                                    options={arraydistrict.map((item) => ({
-                                                        value: item.name,
-                                                        label: item.name,
-                                                        id: item.code,
-                                                    }))}
-                                                />
-                                            </Form.Item>
-                                            <Form.Item
-                                                className="w-33"
-                                                name="Phuong"
-                                                label="Phường/xã"
-                                            >
-                                                <Select
-                                                    className="m-1 w-100"
-                                                    showSearch
-                                                    style={{
-                                                        width: 160,
-                                                    }}
-                                                    placeholder="Chọn phường, xã"
-                                                    optionFilterProp="children"
-                                                    onSearch={onSearch}
-                                                    filterOption={(input, option) =>
-                                                        (option?.label ?? "")
-                                                            .toLowerCase()
-                                                            .includes(input.toLowerCase())
-                                                    }
-                                                    options={arrayward.map((item) => ({
-                                                        value: item.name,
-                                                        label: item.name,
-                                                    }))}
-                                                />
-                                            </Form.Item>
-                                        </>
-                                    ) : (
-                                        ""
-                                    )}
+                                    <Form.Item
+                                        label="Tên khách hàng"
+                                        name="Ten"
+                                        initialValue={acc.Ten}
+                                    >
+                                        <Input disabled={open} />
+                                    </Form.Item>
+                                    <Form.Item
+                                        label="Số điện thoại"
+                                        name="Sdt"
+                                        initialValue={acc.Sdt}
+                                    >
+                                        <Input disabled={open} />
+                                    </Form.Item>
+                                    <Form.Item
+                                        className="w-30"
+                                        name="Thanhpho"
+                                        label="Thành phố/tỉnh"
+                                        initialValue={acc.Thanhpho}
+                                    >
+                                        <Select
+                                            className="w-100"
+                                            showSearch
+                                            style={{
+                                                width: 160,
+                                            }}
+                                            disabled={open}
+                                            placeholder="Chọn thành phố, tỉnh"
+                                            optionFilterProp="children"
+                                            onChange={onChange}
+                                            onSearch={onSearch}
+                                            filterOption={(input, option) =>
+                                                (option?.label ?? "")
+                                                    .toLowerCase()
+                                                    .includes(input.toLowerCase())
+                                            }
+                                            options={arraycity.map((item) => ({
+                                                value: item.name,
+                                                label: item.name,
+                                                id: item.code,
+                                            }))}
+                                        />
+                                    </Form.Item>
+                                    <Form.Item
+                                        className="w-33"
+                                        name="Quan"
+                                        label="Quận/huyện"
+                                        initialValue={acc.Quan}
+                                    >
+                                        <Select
+                                            className="w-100"
+                                            showSearch
+                                            style={{
+                                                width: 400,
+                                            }}
+                                            disabled={open}
+                                            placeholder="Chọn quận, huyện"
+                                            optionFilterProp="children"
+                                            onChange={onChangeDistrict}
+                                            onSearch={onSearch}
+                                            filterOption={(input, option) =>
+                                                (option?.label ?? "")
+                                                    .toLowerCase()
+                                                    .includes(input.toLowerCase())
+                                            }
+                                            options={arraydistrict.map((item) => ({
+                                                value: item.name,
+                                                label: item.name,
+                                                id: item.code,
+                                            }))}
+                                        />
+                                    </Form.Item>
+                                    <Form.Item
+                                        className="w-33"
+                                        name="Phuong"
+                                        label="Phường/xã"
+                                        initialValue={acc.Phuong}
+                                    >
+                                        <Select
+                                            className="m-1 w-100"
+                                            showSearch
+                                            style={{
+                                                width: 160,
+                                            }}
+                                            disabled={open}
+                                            placeholder="Chọn phường, xã"
+                                            optionFilterProp="children"
+                                            onSearch={onSearch}
+                                            filterOption={(input, option) =>
+                                                (option?.label ?? "")
+                                                    .toLowerCase()
+                                                    .includes(input.toLowerCase())
+                                            }
+                                            options={arrayward.map((item) => ({
+                                                value: item.name,
+                                                label: item.name,
+                                            }))}
+                                        />
+                                    </Form.Item>
+
                                     <Form.Item label="Số nhà" name="Sonha">
-                                        <Input />
+                                        <Input placeholder="VD: 180 Cao Lỗ,..." />
                                     </Form.Item>
                                     <Form.Item label="Ghi chú" name="Ghichu">
-                                        <Input />
+                                        <Input placeholder="Vui lòng ghi chú lại những gì bạn cần với cửa hàng ..." />
                                     </Form.Item>
-                                    <Form.Item className="text-center">
-                                        <Button htmlType="submit" type="primary">
-                                            MUA HÀNG
-                                        </Button>
-                                    </Form.Item>
+                                    <div className="d-flex justify-content-center">
+                                        <Form.Item className="text-center m-1">
+                                            <Button htmlType="submit" type="primary">
+                                                MUA HÀNG
+                                            </Button>
+                                        </Form.Item>
+                                        <Form.Item className="text-center m-1">
+                                            <Button
+                                                type="primary"
+                                                onClick={() => handleSuaThongTin()}
+                                            >
+                                                THAY ĐỔI THÔNG TIN GIAO HÀNG
+                                            </Button>
+                                        </Form.Item>
+                                    </div>
                                 </Form>
                             </div>
                         </div>
@@ -371,7 +397,11 @@ function CartShopping() {
                                 <Radio.Group onChange={handleChangeKM} value={valuekhuyenmai}>
                                     <Space direction="vertical">
                                         {khuyenmai.map((values) => (
-                                            <Radio value={values.id} key={values.id}>
+                                            <Radio
+                                                value={values.id}
+                                                key={values.id}
+                                                disabled={tong >= values.Dieukhoan ? false : true}
+                                            >
                                                 {values.Tenkm}
                                             </Radio>
                                         ))}

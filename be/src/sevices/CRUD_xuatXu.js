@@ -11,7 +11,7 @@ let getAllXuatXu = async () => {
             if (count > 0) {
                 resolve(listXuatXu);
             } else {
-                resolve("List null");
+                resolve([]);
             }
         } catch (e) {
             reject(e);

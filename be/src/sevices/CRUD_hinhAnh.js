@@ -11,7 +11,7 @@ let getAllHinhAnh = async () => {
             if (count > 0) {
                 resolve(listDanhMuc);
             } else {
-                resolve("List null");
+                resolve([]);
             }
         } catch (e) {
             reject(e);

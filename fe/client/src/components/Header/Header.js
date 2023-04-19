@@ -63,7 +63,7 @@ function Header() {
 
                             <div className="col">
                                 {" "}
-                                <Link to="/shopping" style={{ textDecoration: "none" }}>
+                                <Link to={setAccountLS?.id?("/shopping"):("/login")} style={{ textDecoration: "none" }}>
                                     <Card />
                                 </Link>
                             </div>

@@ -8,6 +8,8 @@ import { open, hide } from "../../slices/menuSlice";
 function Header() {
     const dispatch = useDispatch();
     const {account}= useSelector((state)=>state.user)
+    const acc= JSON.parse(localStorage.getItem("ADMIN"))
+
     const [collapsed, setCollapsed] = useState(false);
     const toggleCollapsed = () => {
         setCollapsed(!collapsed);
@@ -24,7 +26,7 @@ function Header() {
                     {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
                 </Button>
                 <div className="p-3">
-                   <AvatarMenu account={account} />
+                   <AvatarMenu account={acc} />
                 </div>
             </div>
         </>

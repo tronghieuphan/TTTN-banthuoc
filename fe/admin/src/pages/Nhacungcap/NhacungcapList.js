@@ -139,7 +139,7 @@ function NhacungcapList() {
                     <div className="bd-radius bg-content p-4 text-muted fw-bold">
                         <div className="d-flex justify-content-between">
                             <p className="fs-3 w-75">QUẢN LÝ NHÀ CUNG CẤP</p>
-                            <form action="" method="">
+                            {/* <form action="" method="">
                                 <div className="d-flex">
                                     <Input
                                         className="mx-2"
@@ -156,7 +156,7 @@ function NhacungcapList() {
                                         />
                                     </Tooltip>
                                 </div>
-                            </form>
+                            </form> */}
                         </div>
                         <Link to={nhacungcapDetailPage}>
                             <Button className="mb-2">Thêm</Button>

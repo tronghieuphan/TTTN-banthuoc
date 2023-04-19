@@ -180,13 +180,13 @@ function NguoidungList() {
                 <div className="m-4 ">
                     <div className="bd-radius bg-content p-4 text-muted fw-bold">
                         <div className="d-flex justify-content-between">
-                            <p className="fs-3" style={{ width: "30%" }}>
+                            <p className="fs-3" style={{ width: "40%" }}>
                                 QUẢN LÝ NGƯỜI DÙNG
                             </p>
                             <form action="" method="">
                                 <div className="d-flex">
                                     <p className="fst-italic fw-lighter">
-                                        Mình có thể tìm theo tên hoặc theo số điện thoại (*)
+                                        Mình có thể tìm theo tên, tên đăng nhập hoặc theo số điện thoại (*)
                                     </p>
                                     <Input
                                         className="mx-2"

@@ -5,3 +5,16 @@
     background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
+body{ 
+    height: 100vh;
+}
+.ant-table
+  .ant-table-container
+  .ant-table-content
+  table
+  thead.ant-table-thead
+  .ant-table-cell {
+  background-color: #e3e3e3;
+  color: #000000;
+}
+

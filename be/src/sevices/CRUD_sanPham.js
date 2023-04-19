@@ -22,7 +22,7 @@ let getAllSanPham = async () => {
             if (count > 0) {
                 resolve(listSanPham);
             } else {
-                resolve("List null");
+                resolve([]);
             }
         } catch (e) {
             reject(e);

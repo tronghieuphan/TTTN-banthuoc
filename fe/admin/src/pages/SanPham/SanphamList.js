@@ -197,9 +197,12 @@ function SanphamList() {
                 <div className="m-4 ">
                     <div className="bd-radius bg-content p-4 text-muted fw-bold">
                         <div className="d-flex justify-content-between">
-                            <p className="fs-3 w-75">QUẢN LÝ SẢN PHẨM</p>
+                            <p className="fs-3 w-75" style={{ width: "40%" }}>QUẢN LÝ SẢN PHẨM</p>
                             <form action="" method="">
                                 <div className="d-flex">
+                                    <p className="fst-italic fw-lighter">
+                                        Mình có thể tìm theo tên sản phẩm (*)
+                                    </p>
                                     <Input
                                         className="mx-2"
                                         placeholder="Nhập tìm kiếm"

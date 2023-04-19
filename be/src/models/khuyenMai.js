@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
             Phantram: DataTypes.INTEGER,
             Ngaybd: DataTypes.DATEONLY,
             Ngaykt: DataTypes.DATEONLY,
-            Dieukhoan: DataTypes.TEXT,
+            Dieukhoan: DataTypes.INTEGER,
             Trangthai: DataTypes.BOOLEAN,
         },
         {

@@ -64,11 +64,22 @@ function HinhanhList() {
             title: "ID",
             dataIndex: "id",
             align: "center",
-           
         },
         {
             title: "Đường dẫn",
             dataIndex: "Url",
+            render: (Url) => (
+                <div
+                    style={{
+                        overflow: "hidden",
+                        whiteSpace: "nowrap",
+                        textOverflow: "ellipsis",
+                        width: "130px",
+                    }}
+                >
+                    {Url}
+                </div>
+            ),
         },
         {
             title: "Mã sản phẩm",
