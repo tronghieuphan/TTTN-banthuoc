@@ -25,7 +25,7 @@ module.exports = {
                 type: Sequelize.DATEONLY,
             },
             Dieukhoan: {
-                type: Sequelize.STRING(8),
+                type: Sequelize.INTEGER,
             },
             Trangthai: {
                 type: Sequelize.BOOLEAN,

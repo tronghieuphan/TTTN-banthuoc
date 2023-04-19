@@ -1,6 +1,7 @@
 import express from "express";
 import db from "../models/index";
 import randomId from "./randomId";
+import { Op } from "sequelize";
 
 //Hiển thị tất cả nhà cung cấp
 let getAllNhaCungCap = async () => {
@@ -120,7 +121,9 @@ let getByNameNhaCungCap = (data) => {
         try {
             let nhaCungCapByName = await db.nhaCungCap.findAll({
                 where: {
-                    Tenncc: data.datafind,
+                    Tenncc: {
+                        [Op.substring]: data.datafind,
+                    },
                 },
             });
             if (nhaCungCapByName) {

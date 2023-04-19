@@ -355,5 +355,4 @@ module.exports = {
     getRandomSanPhamTrungBay,
     getChiTietSanPham,
     getByMaLoai,
-    
 };

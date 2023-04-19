@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     hinhAnh.init(
         {
             Url: DataTypes.TEXT,
-            Masp: DataTypes.STRING(15),
+            Masp: DataTypes.STRING(8),
         },
         {
             sequelize,
