@@ -350,7 +350,7 @@ let getChiTietSanPham = (data) => {
                 id: sanpham.id,
                 Tensp: sanpham.Tensp,
                 Tenth: sanpham.thuongHieu.Tenth,
-                Soluongtk:sanpham.Soluongtk,
+                Soluongtk: sanpham.Soluongtk,
                 Dongia: sanpham.Dongia,
                 Donviban: sanpham.Donviban,
                 Tendm: danhmuc.danhMuc.Tendm,

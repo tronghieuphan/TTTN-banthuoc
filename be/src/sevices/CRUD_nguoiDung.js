@@ -101,41 +101,56 @@ let createNguoiDung = async (data) => {
 let createNguoiDung_Admin = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let mk = await hashPasswordUser(data.Matkhau);
-
-            let nguoidung = await db.nguoiDung.findOrCreate({
+            let dieukien = await db.nguoiDung.findAll({
                 where: {
-                    Tendangnhap: data.Tendangnhap,
-                },
-                defaults: {
-                    id: randomId.randomId("ND"),
-                    Holot: data.Holot,
-                    Ten: data.Ten,
-                    Gioitinh: data.Gioitinh,
-                    Ngaysinh: data.Ngaysinh,
                     Sdt: data.Sdt,
-                    Email: data.Email,
-                    Phuong: data.Phuong,
-                    Quan: data.Quan,
-                    Thanhpho: data.Thanhpho,
-                    Tendangnhap: data.Tendangnhap,
-                    Matkhau: mk,
-                    Loaind: data.Loaind,
                 },
             });
-
-            if (nguoidung[1]) {
-                let khuyenmai = await db.khuyenMai.findAll();
-                khuyenmai &&
-                    khuyenmai.map(async (a) => {
-                        await db.chiTietKhuyenMai.create({
-                            Makm: a.id,
-                            Mand: nguoidung[0].id,
-                        });
-                    });
-                resolve({ message: "Create Successfull", data: nguoidung[0] });
+            let dieukien1 = await db.nguoiDung.findAll({
+                where: {
+                    Email: data.Email,
+                },
+            });
+            if (dieukien.length > 0) {
+                resolve({ result: "Sdt Exist" });
+            } else if (dieukien1.length > 0) {
+                resolve({ result: "Email Exist" });
             } else {
-                resolve({ result: "NguoiDung Exist" });
+                let mk = await hashPasswordUser(data.Matkhau);
+                let nguoidung = await db.nguoiDung.findOrCreate({
+                    where: {
+                        Tendangnhap: data.Tendangnhap,
+                    },
+                    defaults: {
+                        id: randomId.randomId("ND"),
+                        Holot: data.Holot,
+                        Ten: data.Ten,
+                        Gioitinh: data.Gioitinh,
+                        Ngaysinh: data.Ngaysinh,
+                        Sdt: data.Sdt,
+                        Email: data.Email,
+                        Phuong: data.Phuong,
+                        Quan: data.Quan,
+                        Thanhpho: data.Thanhpho,
+                        Tendangnhap: data.Tendangnhap,
+                        Matkhau: mk,
+                        Loaind: data.Loaind,
+                    },
+                });
+
+                if (nguoidung[1]) {
+                    let khuyenmai = await db.khuyenMai.findAll();
+                    khuyenmai &&
+                        khuyenmai.map(async (a) => {
+                            await db.chiTietKhuyenMai.create({
+                                Makm: a.id,
+                                Mand: nguoidung[0].id,
+                            });
+                        });
+                    resolve({ message: "Create Successfull", data: nguoidung[0] });
+                } else {
+                    resolve({ result: "NguoiDung Exist" });
+                }
             }
         } catch (e) {
             reject(e);

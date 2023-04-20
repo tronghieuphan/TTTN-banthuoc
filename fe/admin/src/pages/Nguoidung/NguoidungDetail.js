@@ -64,12 +64,25 @@ function NguoidungDetail() {
     };
 
     const handleCreate = async (obj) => {
-        const data = await nguoiDungAPI.create(obj);
-        console.log(data.data);
-        if (data.data.result === "NguoiDung Exist") {
-            exist();
-        } else if (data.data.message === "Create Successfull") {
-            successDialog();
+        if (obj.Tendangnhap === undefined || obj.Matkhau === undefined ||obj.Email===undefined||obj.Sdt===undefined) {
+            Swal.fire({
+                icon: "warning",
+                title: "Bạn phải nhập đầy đủ tên đăng nhập, mật khẩu, email, số điện thoại",
+                showConfirmButton: false,
+                timer: 3000,
+                customClass: {
+                    title: "fs-5 text-warning",
+                },
+            });
+        } else {
+            const data = await nguoiDungAPI.create(obj);
+            if (data.data.result === "NguoiDung Exist") {
+                exist();
+            } else if (data.data.result === "Sdt Exist") {
+                exist();
+            } else if (data.data.message === "Create Successfull") {
+                successDialog();
+            }
         }
     };
     //SỬA
