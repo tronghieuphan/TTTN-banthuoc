@@ -5,7 +5,7 @@ import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import dondathangAPI from "../../services/donDatHangAPI";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { motion } from "framer-motion";
 
 import { setDataDDH } from "../../slices/dataAdd";
@@ -33,10 +33,10 @@ function DondathangList() {
     useEffect(() => {
         getAllDDH();
     }, []);
-    const handleAddStore=(record)=>{
-        dispatch(setDataDDH(record))
-        localStorage.setItem("DONDATHANG",JSON.stringify(record))
-    }
+    const handleAddStore = (record) => {
+        dispatch(setDataDDH(record));
+        localStorage.setItem("DONDATHANG", JSON.stringify(record));
+    };
     const columns = [
         {
             title: "ID",
@@ -94,6 +94,19 @@ function DondathangList() {
                     }}
                 >
                     {Pttt}
+                </div>
+            ),
+        },
+        {
+            title: "Số nhà",
+            dataIndex: "Sonha",
+            render: (Sonha) => (
+                <div
+                    style={{
+                        width: "120px",
+                    }}
+                >
+                    {Sonha}
                 </div>
             ),
         },
@@ -193,7 +206,7 @@ function DondathangList() {
             align: "center",
             render: (record) => (
                 <Link to="/dondathang-detail">
-                    <Button className="bg-light" onClick={()=>handleAddStore(record)}>
+                    <Button className="bg-light" onClick={() => handleAddStore(record)}>
                         <FontAwesomeIcon icon={faEdit} className="text-dark" />
                     </Button>
                 </Link>
@@ -203,27 +216,28 @@ function DondathangList() {
     ];
     return (
         <>
-         <motion.div
+            <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0, transition: { duration: 0.8 } }}
             >
-            <div className="m-4 ">
-                <div className="bd-radius bg-content p-4 text-muted fw-bold">
-                    <div className="d-flex justify-content-between">
-                        <p className="fs-3 w-75">QUẢN LÝ ĐƠN ĐẶT HÀNG</p>
-                        <Search />
+                <div className="m-4 ">
+                    <div className="bd-radius bg-content p-4 text-muted fw-bold">
+                        <div className="d-flex justify-content-between">
+                            <p className="fs-3 w-75">QUẢN LÝ ĐƠN ĐẶT HÀNG</p>
+                            <Search />
+                        </div>
+                        <br />
+                        <Table
+                            columns={columns}
+                            dataSource={listddh}
+                            bordered={true}
+                            loading={loading}
+                            scroll={{ x: true }}
+                        />
                     </div>
-                    <br />
-                    <Table
-                        columns={columns}
-                        dataSource={listddh}
-                        bordered={true}
-                        loading={loading}
-                        scroll={{ x: true }}
-                    />
                 </div>
-            </div></motion.div>
+            </motion.div>
         </>
     );
 }

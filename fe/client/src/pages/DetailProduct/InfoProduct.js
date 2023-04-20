@@ -37,15 +37,22 @@ function InfoProduct(props) {
             a = JSON.parse(localStorage.getItem("LISTSP")) || [];
             let p = a.find((item) => item.id === obj.id);
             if (p) {
-                if (p.Soluong + obj.Soluong >= 5) {
+                if (p.Soluong + obj.Soluong > thongtin.Soluongtk) {
                     Swal.fire({
                         icon: "error",
-                        title: "Bạn chỉ được đặt tối đa 5 sản phẩm",
+                        title: "Hiện tại chúng tôi không thể cung cấp đủ sản phẩm cho bạn !",
                     });
-                    p.Soluong = 5;
                 } else {
-                    p.Soluong += obj.Soluong;
-                    p.Thanhtien = (p.Giakm !== null ? p.Giakm : p.Dongia) * p.Soluong;
+                    if (p.Soluong + obj.Soluong > 5) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Bạn chỉ được đặt tối đa 5 sản phẩm",
+                        });
+                        p.Soluong = 5;
+                    } else {
+                        p.Soluong += obj.Soluong;
+                        p.Thanhtien = (p.Giakm !== null ? p.Giakm : p.Dongia) * p.Soluong;
+                    }
                 }
             } else {
                 a.push(obj);
@@ -132,6 +139,10 @@ function InfoProduct(props) {
                 <p>
                     <span className="fw-bold">Công dụng: </span>
                     <span>{thongtin.Congdung}</span>
+                </p>
+                <p>
+                    <span className="fw-bold">Đang còn: </span>
+                    <span>{thongtin.Soluongtk} sản phẩm</span>
                 </p>
                 <div className="d-flex">
                     <span

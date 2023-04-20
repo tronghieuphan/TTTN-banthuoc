@@ -35,7 +35,7 @@ function LoginPage() {
         if (account.tendangnhap === "" || account.matkhau === "") {
             toast.error("Vui lòng nhập đầy đủ thông tin!");
         } else {
-            let a = await nguoiDungAPI.login(obj);
+            let a= await nguoiDungAPI.login(obj);
             console.log('a: ', a.data.data);
             if (a.data === "Fail Login") {
                 toast.error("Tài khoản không tồn tại !");

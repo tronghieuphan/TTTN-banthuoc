@@ -65,6 +65,7 @@ function SanphamDetail() {
 
     //thêm
     const handleCreate = async (obj) => {
+        console.log(obj);
         const data = await sanphamAPI.create(obj);
         console.log(data.data);
         if (data.data.message === "SanPham Exist") {
@@ -76,10 +77,11 @@ function SanphamDetail() {
     //SỬA
     const handleUpdate = async (obj) => {
         const data = await sanphamAPI.update(obj);
-        console.log("data.data.message: ", data.data.message);
-        if (data.data.message === "Update SanPham Successful") {
-            successDialog();
-        }
+        if (data.data.message === "SanPham Exits") {
+           exist();
+        } else if(data.data.message === "Update SanPham Successful") {
+           successDialog(); 
+        } 
     };
     const deleteStore = () => {
         dispatch(setDataSP([]));
@@ -330,7 +332,7 @@ function SanphamDetail() {
                                                 placeholder="Chọn thương hiệu "
                                                 optionFilterProp="children"
                                                 // onChange={onChange}
-                                                // onSearch={onSearch}  
+                                                // onSearch={onSearch}
                                                 filterOption={(input, option) =>
                                                     (option?.label ?? "")
                                                         .toLowerCase()

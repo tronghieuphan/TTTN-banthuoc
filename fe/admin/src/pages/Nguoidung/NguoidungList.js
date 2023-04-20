@@ -56,7 +56,6 @@ function NguoidungList() {
     const handleChange = (e) => {
         setValueSearch(e.target.value);
     };
-
     const columns = [
         {
             title: "ID",

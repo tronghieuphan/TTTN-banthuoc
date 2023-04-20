@@ -108,7 +108,8 @@ let initWebRotes = (app) => {
     router.get("/getall-dondathang", donDatHangController.getAll_donDatHang);
     router.delete("/delete-dondathang/:madondathang", donDatHangController.delete_donDatHang);
     router.put("/update-dondathang", donDatHangController.update_donDatHang);
-    router.get("/find-dondathang", donDatHangController.find_donDatHang);
+    router.get("/find-dondathang", donDatHangController.find_donDatHang);   
+
 
     return app.use("/", router);
 };

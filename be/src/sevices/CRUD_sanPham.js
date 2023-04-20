@@ -46,7 +46,7 @@ let createSanPham = async (data) => {
                     Quycach: data.Quycach,
                     Congdung: data.Congdung,
                     Giakm: data.Giakm,
-                    Soluongtk: data.Soluong,
+                    Soluongtk: data.Soluongtk,
                     Gianhap: data.Gianhap,
                     Trangthai: data.Trangthai,
                     Ghichu: data.Ghichu,
@@ -105,35 +105,38 @@ let updateSanPham = async (data) => {
                     id: data.id,
                 },
             });
-            if (findSanPham) {
-                let upSp = await db.sanPham.update(
-                    {
-                        Tensp: data.Tensp,
-                        Dongia: data.Dongia,
-                        Donviban: data.Donviban,
-                        Dangbaoche: data.Dangbaoche,
-                        Quycach: data.Quycach,
-                        Congdung: data.Congdung,
-                        Giakm: data.Giakm,
-                        Soluongtk: data.Soluongtk,
-                        Gianhap: data.Gianhap,
-                        Trangthai: data.Trangthai,
-                        Ghichu: data.Ghichu,
-                        Math: data.Math,
-                        Mancc: data.Mancc,
-                        Maloai: data.Maloai,
-                        Maxx: data.Maxx,
+            let findAll = await db.sanPham.findAll({
+                where: { Tensp: data.Tensp },
+            });
+            // if (findAll.length > 0) {
+            //     resolve({ message: "SanPham Exits" });
+            // } else {
+            let upSp = await db.sanPham.update(
+                {
+                    Tensp: data.Tensp,
+                    Dongia: data.Dongia,
+                    Donviban: data.Donviban,
+                    Dangbaoche: data.Dangbaoche,
+                    Quycach: data.Quycach,
+                    Congdung: data.Congdung,
+                    Giakm: data.Giakm,
+                    Soluongtk: data.Soluongtk,
+                    Gianhap: data.Gianhap,
+                    Trangthai: data.Trangthai,
+                    Ghichu: data.Ghichu,
+                    Math: data.Math,
+                    Mancc: data.Mancc,
+                    Maloai: data.Maloai,
+                    Maxx: data.Maxx,
+                },
+                {
+                    where: {
+                        id: data.id,
                     },
-                    {
-                        where: {
-                            id: data.id,
-                        },
-                    }
-                );
-                resolve({ message: "Update SanPham Successful", data: upSp });
-            } else {
-                resolve("SanPham not exist");
-            }
+                }
+            );
+            resolve({ message: "Update SanPham Successful", data: upSp });
+            // }
         } catch (e) {
             reject(e);
         }
@@ -347,6 +350,7 @@ let getChiTietSanPham = (data) => {
                 id: sanpham.id,
                 Tensp: sanpham.Tensp,
                 Tenth: sanpham.thuongHieu.Tenth,
+                Soluongtk:sanpham.Soluongtk,
                 Dongia: sanpham.Dongia,
                 Donviban: sanpham.Donviban,
                 Tendm: danhmuc.danhMuc.Tendm,

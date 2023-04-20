@@ -160,7 +160,7 @@ function CartShopping() {
             width: "100px",
             render: (Dongia) => (
                 <div>
-                    {Dongia.toLocaleString("it-IT", {
+                    {Dongia?.toLocaleString("it-IT", {
                         style: "currency",
                         currency: "VND",
                     })}
@@ -175,7 +175,7 @@ function CartShopping() {
             width: "100px",
             render: (Giakm) => (
                 <div>
-                    {Giakm.toLocaleString("it-IT", {
+                    {Giakm?.toLocaleString("it-IT", {
                         style: "currency",
                         currency: "VND",
                     })}
@@ -195,7 +195,7 @@ function CartShopping() {
             width: "100px",
             render: (Thanhtien) => (
                 <div>
-                    {Thanhtien.toLocaleString("it-IT", {
+                    {Thanhtien?.toLocaleString("it-IT", {
                         style: "currency",
                         currency: "VND",
                     })}
@@ -479,7 +479,7 @@ function CartShopping() {
                                 <div className="d-flex justify-content-between">
                                     <h6 className="font-weight-medium">Giảm giá</h6>
                                     <h6 className="font-weight-medium">
-                                        {uudai.toLocaleString("it-IT", {
+                                        {uudai?.toLocaleString("it-IT", {
                                             style: "currency",
                                             currency: "VND",
                                         })}
@@ -490,7 +490,7 @@ function CartShopping() {
                                 <div className="d-flex justify-content-between mt-2">
                                     <h5 className="font-weight-bold">TỔNG TIỀN</h5>
                                     <h5 className="font-weight-bold text-danger">
-                                        {tongtien.toLocaleString("it-IT", {
+                                        {tongtien?.toLocaleString("it-IT", {
                                             style: "currency",
                                             currency: "VND",
                                         })}

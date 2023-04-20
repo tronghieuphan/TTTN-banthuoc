@@ -26,6 +26,10 @@ let getChiTiet_donDatHang = async (req, res) => {
     let dondathang = await CRUD_donDatHang.getChiTietDDH(req.body);
     res.status(200).json(dondathang);
 };
+let checkSoluong_donDatHang= async(req,res)=>{
+    let dondathang = await CRUD_donDatHang.checkSoluong(req.body);
+    res.status(200).json(dondathang);
+}
 module.exports = {
     create_donDatHang,
     getAll_donDatHang,

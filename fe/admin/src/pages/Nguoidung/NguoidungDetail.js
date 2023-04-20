@@ -82,6 +82,7 @@ function NguoidungDetail() {
     };
     // XỬ LÝ THÊM SỬA
     const handleSubmit = (e) => {
+        console.log(e);
         Swal.fire({
             title: "BẠN CÓ MUỐN LƯU THÔNG TIN?",
             confirmButtonText: "Lưu",
