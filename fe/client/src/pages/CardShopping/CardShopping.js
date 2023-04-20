@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt} from "@fortawesome/free-solid-svg-icons";
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { Form, Input, Select, Radio, Space, Table, Button, Popconfirm, Tooltip } from "antd";
 import { useState, useEffect } from "react";
 import addressAPI from "../../services/addressAPI";
@@ -88,7 +88,7 @@ function CartShopping() {
         let account = JSON.parse(localStorage.getItem("ACCOUNT"));
         let list = JSON.parse(localStorage.getItem("LISTSP"));
         let p = [];
-        list.map((item,key) => {
+        list.map((item, key) => {
             if (account?.id === item.Mand) {
                 p.push(item);
             }
@@ -158,6 +158,14 @@ function CartShopping() {
             dataIndex: "Dongia",
             align: "center",
             width: "100px",
+            render: (Dongia) => (
+                <div>
+                    {Dongia.toLocaleString("it-IT", {
+                        style: "currency",
+                        currency: "VND",
+                    })}
+                </div>
+            ),
         },
         ,
         {
@@ -165,6 +173,14 @@ function CartShopping() {
             dataIndex: "Giakm",
             align: "center",
             width: "100px",
+            render: (Giakm) => (
+                <div>
+                    {Giakm.toLocaleString("it-IT", {
+                        style: "currency",
+                        currency: "VND",
+                    })}
+                </div>
+            ),
         },
         {
             title: "Số lượng",
@@ -177,6 +193,14 @@ function CartShopping() {
             dataIndex: "Thanhtien",
             align: "center",
             width: "100px",
+            render: (Thanhtien) => (
+                <div>
+                    {Thanhtien.toLocaleString("it-IT", {
+                        style: "currency",
+                        currency: "VND",
+                    })}
+                </div>
+            ),
         },
         {
             title: "Xóa",
@@ -454,13 +478,23 @@ function CartShopping() {
                                 </div>
                                 <div className="d-flex justify-content-between">
                                     <h6 className="font-weight-medium">Giảm giá</h6>
-                                    <h6 className="font-weight-medium">{uudai}</h6>
+                                    <h6 className="font-weight-medium">
+                                        {uudai.toLocaleString("it-IT", {
+                                            style: "currency",
+                                            currency: "VND",
+                                        })}
+                                    </h6>
                                 </div>
                             </div>
                             <div className="card-footer border-secondary bg-transparent">
                                 <div className="d-flex justify-content-between mt-2">
                                     <h5 className="font-weight-bold">TỔNG TIỀN</h5>
-                                    <h5 className="font-weight-bold text-danger">{tongtien}</h5>
+                                    <h5 className="font-weight-bold text-danger">
+                                        {tongtien.toLocaleString("it-IT", {
+                                            style: "currency",
+                                            currency: "VND",
+                                        })}
+                                    </h5>
                                 </div>
                             </div>
                         </div>

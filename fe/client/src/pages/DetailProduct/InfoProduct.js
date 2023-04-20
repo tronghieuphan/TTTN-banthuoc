@@ -11,6 +11,7 @@ function InfoProduct(props) {
     let account = JSON.parse(localStorage.getItem("ACCOUNT"));
     const thongtinsp = JSON.parse(localStorage.getItem("SANPHAM"));
     const navigate = useNavigate();
+
     let obj = {
         Mand: account?.id,
         id: thongtin?.id,
@@ -44,6 +45,7 @@ function InfoProduct(props) {
                     p.Soluong = 5;
                 } else {
                     p.Soluong += obj.Soluong;
+                    p.Thanhtien = (p.Giakm !== null ? p.Giakm : p.Dongia) * p.Soluong;
                 }
             } else {
                 a.push(obj);
