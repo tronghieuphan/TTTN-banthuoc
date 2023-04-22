@@ -33,31 +33,48 @@ function InfoProduct(props) {
     };
     let a = [];
     const handAddSp = async (obj) => {
+        console.log(obj);
         if (account?.id) {
             a = JSON.parse(localStorage.getItem("LISTSP")) || [];
             let p = a.find((item) => item.id === obj.id);
-            if (p) {
-                if (p.Soluong + obj.Soluong > thongtin.Soluongtk) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Hiện tại chúng tôi không thể cung cấp đủ sản phẩm cho bạn !",
-                    });
-                } else {
-                    if (p.Soluong + obj.Soluong > 5) {
+            if (obj.Soluong > thongtin.Soluongtk) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Hiện tại chúng tôi không thể cung cấp đủ sản phẩm cho bạn !",
+                });
+            } else {
+                if (p) {
+                    if (p.Soluong + obj.Soluong > thongtin.Soluongtk) {
                         Swal.fire({
                             icon: "error",
-                            title: "Bạn chỉ được đặt tối đa 5 sản phẩm",
+                            title: "Hiện tại chúng tôi không thể cung cấp đủ sản phẩm cho bạn !",
                         });
-                        p.Soluong = 5;
                     } else {
-                        p.Soluong += obj.Soluong;
-                        p.Thanhtien = (p.Giakm !== null ? p.Giakm : p.Dongia) * p.Soluong;
+                        if (p.Soluong + obj.Soluong > 5) {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Bạn chỉ được đặt tối đa 5 sản phẩm",
+                            });
+                            p.Soluong = 5;
+                        } else {
+                            Swal.fire({
+                                icon: "success",
+                                title: "Bạn đã cập nhập số lượng sản phẩm",
+                            });
+                            p.Soluong += obj.Soluong;
+                            p.Thanhtien = (p.Giakm !== null ? p.Giakm : p.Dongia) * p.Soluong;
+                        }
                     }
+                } else {
+                    a.push(obj);
+                    Swal.fire({
+                        icon: "success",
+                        title: "Bạn thêm sản phẩm vào giỏ hàng",
+                    });
                 }
-            } else {
-                a.push(obj);
+
+                localStorage.setItem("LISTSP", JSON.stringify(a));
             }
-            localStorage.setItem("LISTSP", JSON.stringify(a));
         } else {
             Swal.fire({
                 title: "Bạn hãy đăng nhập để được mua hàng nào ?",

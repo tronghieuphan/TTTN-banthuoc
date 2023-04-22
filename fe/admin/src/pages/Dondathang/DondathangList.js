@@ -80,7 +80,10 @@ function DondathangList() {
                         width: "100px",
                     }}
                 >
-                    {Tongtien}
+                    {Tongtien?.toLocaleString("it-IT", {
+                        style: "currency",
+                        currency: "VND",
+                    })}
                 </div>
             ),
         },

@@ -14,7 +14,6 @@ function Header() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-
     // const getAllSp = async () => {
     //     try {
     //         setLoading(true);
@@ -50,18 +49,20 @@ function Header() {
                         </Link>
                     </div>
                     <div className="col-md-4 text-right">
-                        <SearchInput placeholder="Tìm kiếm..."/>
+                        <SearchInput placeholder="Tìm kiếm..." />
                     </div>
                     <div className="col-md-5 text-right">
                         <div className="row align-items-center">
-                            <div className="col">
-                                {setAccountLS?.id?(<CheckOrder />):""}
-                            </div>
+                            <div className="col">{setAccountLS?.id ? <CheckOrder /> : ""}</div>
 
                             <div className="col">
-                                <Link to={setAccountLS?.id?("/shopping"):("/login")} style={{ textDecoration: "none" }}>
-                                    <Card />
-                                </Link>
+                                {setAccountLS?.id ? (
+                                    <Link to="/shopping" style={{ textDecoration: "none" }}>
+                                        <Card />
+                                    </Link>
+                                ) : (
+                                    ""
+                                )}
                             </div>
                             {setAccountLS ? (
                                 <div className="col">

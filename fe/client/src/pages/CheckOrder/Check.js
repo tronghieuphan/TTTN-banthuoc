@@ -40,10 +40,26 @@ function Check() {
         {
             title: "Đơn giá",
             dataIndex: "Dongia",
+            render: (Dongia) => (
+                <div>
+                    {Dongia?.toLocaleString("it-IT", {
+                        style: "currency",
+                        currency: "VND",
+                    })}
+                </div>
+            ),
         },
         {
             title: "Giá ưu đãi",
             dataIndex: "Giakm",
+            render: (Giakm) => (
+                <div>
+                    {Giakm?.toLocaleString("it-IT", {
+                        style: "currency",
+                        currency: "VND",
+                    })}
+                </div>
+            ),
         },
         {
             title: "Số lượng",
@@ -53,6 +69,14 @@ function Check() {
         {
             title: "Thành tiền",
             dataIndex: "Thanhtien",
+            render: (Thanhtien) => (
+                <div>
+                    {Thanhtien?.toLocaleString("it-IT", {
+                        style: "currency",
+                        currency: "VND",
+                    })}
+                </div>
+            ),
         },
     ];
 
@@ -74,7 +98,15 @@ function Check() {
                         {danhsach?.map((values) => {
                             return (
                                 <div key={values.id} className="m-3">
-                                    <Badge.Ribbon text={"Giảm " + (values.khuyenMai.Phantram===null?0:(values.khuyenMai.Phantram)) + "%"}>
+                                    <Badge.Ribbon
+                                        text={
+                                            "Giảm " +
+                                            (values.khuyenMai.Phantram === null
+                                                ? 0
+                                                : values.khuyenMai.Phantram) +
+                                            "%"
+                                        }
+                                    >
                                         <div
                                             style={{ width: "10rem" }}
                                             className=" bordercard"
@@ -90,7 +122,12 @@ function Check() {
                                                 <div className="title">{values.id}</div>
                                             </div>
                                             <div className="price1">
-                                                <span>{values.Tongtien}</span>
+                                                <span>
+                                                    {values?.Tongtien?.toLocaleString("it-IT", {
+                                                        style: "currency",
+                                                        currency: "VND",
+                                                    })}
+                                                </span>
                                             </div>
                                             {values.Trangthai === 0 ? (
                                                 <div className="state d-block mx-auto">

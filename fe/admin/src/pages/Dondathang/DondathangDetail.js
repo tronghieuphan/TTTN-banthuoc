@@ -55,11 +55,37 @@ function DonDatHangDetail() {
             title: "Đơn giá",
             dataIndex: "Dongia",
             align: "center",
+             render: (Dongia) => (
+                <div
+                    style={{
+                        width: "120px",
+                    }}
+                >
+                    {Dongia?.toLocaleString("it-IT", {
+                    style: "currency",
+                    currency: "VND",
+                })}
+                </div>
+            ),
+           
         },
         {
             title: "Giá ưu đãi",
             dataIndex: "Giakm",
             align: "center",
+            render: (Giakm) => (
+                <div
+                    style={{
+                        width: "120px",
+                    }}
+                >
+                    {Giakm?.toLocaleString("it-IT", {
+                    style: "currency",
+                    currency: "VND",
+                })}
+                </div>
+            ),
+           
         },
         {
             title: "Thành tiền",
@@ -71,7 +97,10 @@ function DonDatHangDetail() {
                         width: "120px",
                     }}
                 >
-                    {Thanhtien}
+                    {Thanhtien?.toLocaleString("it-IT", {
+                    style: "currency",
+                    currency: "VND",
+                })}
                 </div>
             ),
         },

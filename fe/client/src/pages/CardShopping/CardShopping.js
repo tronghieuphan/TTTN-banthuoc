@@ -245,7 +245,7 @@ function CartShopping() {
         } else {
             toast.success("Đặt hàng thành công ");
             await donDatHangAPI.create(obj);
-            setDonHang([]);
+            // setDonHang(null);
             navigate("/");
         }
     };
@@ -474,7 +474,12 @@ function CartShopping() {
                             <div className="card-body">
                                 <div className="d-flex justify-content-between mb-3 pt-1">
                                     <h6 className="font-weight-medium">Thành tiền sản phẩm</h6>
-                                    <h6 className="font-weight-medium">{tong}</h6>
+                                    <h6 className="font-weight-medium">
+                                        {tong?.toLocaleString("it-IT", {
+                                            style: "currency",
+                                            currency: "VND",
+                                        })}
+                                    </h6>
                                 </div>
                                 <div className="d-flex justify-content-between">
                                     <h6 className="font-weight-medium">Giảm giá</h6>
