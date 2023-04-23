@@ -239,6 +239,8 @@ function CartShopping() {
         } else if (acc.Thanhpho === null || acc.Phuong === null || acc.Quan === null) {
             toast.error("Vui lòng cập nhập đầy đủ thông tin cá nhân");
             navigate("/user-details");
+        } else if (e.Sdt === undefined || e.Sdt === null || e.Sdt === "") {
+            toast.warn("Vui lòng nhập số điện thoại người nhận");
         } else if (e.Sonha === undefined || e.Sonha === "") {
             toast.warn("Vui lòng điền thông tin số nhà cụ thể ");
         } else if (chitietthanhtoan === "") {

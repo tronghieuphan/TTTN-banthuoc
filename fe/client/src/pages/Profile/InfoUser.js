@@ -111,8 +111,19 @@ function InfoUser() {
     };
 
     const handleSubmit = (e) => {
-        handleUpdate(e);
-        setOpen(true);
+        if (
+            e.Sdt === "" ||
+            e.Sdt === undefined ||
+            e.Sdt === null ||
+            e.Email === "" ||
+            e.Email === undefined ||
+            e.Email === null
+        ) {
+            toast.warning("Bạn phải cập nhập đủ thông tin và email");
+        } else {
+            handleUpdate(e);
+            setOpen(true);
+        }
     };
     const handleOpen = () => {
         setOpen(false);
