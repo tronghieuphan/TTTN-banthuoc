@@ -83,18 +83,19 @@ function CartShopping() {
 
     const acc = JSON.parse(localStorage.getItem("ACCOUNT"));
     //
-    const [donhang, setDonHang] = useState([]);
+    let [donhang, setDonHang] = useState([]);
     const handleCard = () => {
         let account = JSON.parse(localStorage.getItem("ACCOUNT"));
         let list = JSON.parse(localStorage.getItem("LISTSP"));
         let p = [];
-        list.map((item, key) => {
+        list?.map((item, key) => {
             if (account?.id === item.Mand) {
                 p.push(item);
             }
         });
         setDonHang(p);
     };
+
     const [khuyenmai, setKM] = useState([]);
     // biến truyền vào cho get api khuyến mãi
     let obj = {
@@ -107,7 +108,6 @@ function CartShopping() {
     // Get api khuyen mãi
     const getKM = async (obj) => {
         const data = await nguoiDungAPI.nguoidungkhuyenmai(obj);
-        console.log("data: ", data);
         setKM(data.data);
     };
     //get api chi tiét khuyến mãi
@@ -251,6 +251,7 @@ function CartShopping() {
             navigate("/");
         }
     };
+
     //THONG TIN GIO HANG: tinh toán tien
     let tong = 0;
     donhang.forEach((item, index) => {
