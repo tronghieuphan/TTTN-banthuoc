@@ -70,16 +70,6 @@ function KhuyenmaiDetail() {
     const deleteStore = () => {
         dispatch(setDataKM([]));
     };
-    const handleReset = () => {
-        dispatch(setDataKM([]));
-        const obj = {
-            Tenkm: "",
-            Code: "",
-            Phantram: "",
-            Ngaybd: "",
-            Ngaykt: "",
-        };
-    };
 
     return (
         <>
@@ -212,15 +202,6 @@ function KhuyenmaiDetail() {
                                     <Form.Item>
                                         <Button type="primary" htmlType="submit" className="m-2">
                                             Lưu
-                                        </Button>
-                                    </Form.Item>
-                                    <Form.Item>
-                                        <Button
-                                            type="primary"
-                                            className="m-2"
-                                            onClick={handleReset}
-                                        >
-                                            Hủy
                                         </Button>
                                     </Form.Item>
                                 </div>

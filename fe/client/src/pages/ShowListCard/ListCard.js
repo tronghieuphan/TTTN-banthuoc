@@ -15,7 +15,7 @@ function ListCard() {
         const data = await sanPhamAPI.getByMaLoai(a);
         setSPCungLoai(data.data);
     };
-
+    
     useEffect(() => {
         getByMaLoai(maLoai);
     }, [maLoai]);

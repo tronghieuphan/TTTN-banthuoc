@@ -8,9 +8,8 @@ import { useSelector } from "react-redux";
 function DetailProduct() {
     const { thongtinsanpham1 } = useSelector((state) => state.sanpham);
     const thongtinsanpham = JSON.parse(localStorage.getItem("SANPHAM"));
-
     const [sp, setThongtin] = useState([]);
-    const [chitiet, setChiTiet] = useState({});
+    const [chitiet, setChiTiet] = useState([]);
     const [splienquan, setSanPhamLienQuan] = useState([]);
 
     let obj = {
@@ -33,7 +32,7 @@ function DetailProduct() {
         getChiTiet(obj);
         getSanPhamLienQuan(objloai);
         // eslint-disable-next-line
-    }, []);
+    }, [sp]);
     useEffect(() => {
         setThongtin(thongtinsanpham);
     }, [thongtinsanpham1]);

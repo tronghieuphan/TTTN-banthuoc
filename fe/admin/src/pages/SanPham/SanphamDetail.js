@@ -78,10 +78,10 @@ function SanphamDetail() {
     const handleUpdate = async (obj) => {
         const data = await sanphamAPI.update(obj);
         if (data.data.message === "SanPham Exits") {
-           exist();
-        } else if(data.data.message === "Update SanPham Successful") {
-           successDialog(); 
-        } 
+            exist();
+        } else if (data.data.message === "Update SanPham Successful") {
+            successDialog();
+        }
     };
     const deleteStore = () => {
         dispatch(setDataSP([]));
@@ -381,11 +381,6 @@ function SanphamDetail() {
                                     <Form.Item>
                                         <Button type="primary" htmlType="submit" className="m-2">
                                             Lưu
-                                        </Button>
-                                    </Form.Item>
-                                    <Form.Item>
-                                        <Button type="primary" className="m-2">
-                                            Hủy
                                         </Button>
                                     </Form.Item>
                                 </div>

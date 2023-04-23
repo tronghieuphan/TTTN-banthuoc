@@ -3,8 +3,7 @@ import { Input } from "antd";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-// import { useSelector, useDispatch } from "react-redux";
-// import { setDataListSP } from "../../slices/dondathangSlice";
+
 function InfoProduct(props) {
     let thongtin = props.thongtinsanpham;
     const [quatity, setQuatity] = useState(0);
@@ -60,6 +59,8 @@ function InfoProduct(props) {
                             Swal.fire({
                                 icon: "success",
                                 title: "Bạn đã cập nhập số lượng sản phẩm",
+                                showConfirmButton: false,
+                                timer: 1500,
                             });
                             p.Soluong += obj.Soluong;
                             p.Thanhtien = (p.Giakm !== null ? p.Giakm : p.Dongia) * p.Soluong;
@@ -70,6 +71,8 @@ function InfoProduct(props) {
                     Swal.fire({
                         icon: "success",
                         title: "Bạn thêm sản phẩm vào giỏ hàng",
+                        showConfirmButton: false,
+                        timer: 1500,
                     });
                 }
 

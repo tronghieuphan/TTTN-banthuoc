@@ -38,12 +38,7 @@ function NhacungcapDetail() {
         }
     };
     //RESET
-    const handleReset = () => {
-        dispatch(setDataNcc([]));
-        const obj = {
-            Tenncc: "",
-        };
-    };
+
     // XỬ LÝ THÊM SỬA
     const handleSubmit = (e) => {
         console.log(">>>", e);
@@ -290,15 +285,6 @@ function NhacungcapDetail() {
                                     <Form.Item>
                                         <Button type="primary" htmlType="submit" className="m-2">
                                             Lưu
-                                        </Button>
-                                    </Form.Item>
-                                    <Form.Item>
-                                        <Button
-                                            type="primary"
-                                            className="m-2"
-                                            onClick={handleReset}
-                                        >
-                                            Hủy
                                         </Button>
                                     </Form.Item>
                                 </div>

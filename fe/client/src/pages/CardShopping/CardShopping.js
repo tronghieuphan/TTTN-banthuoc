@@ -233,11 +233,12 @@ function CartShopping() {
             Makm: makhuyenmai,
             ListSP: donhang,
         };
-        console.log(obj);
-        if (donhang === []) {
+
+        if (donhang.length === 0) {
             toast.error("Bạn không có sản phẩm trong giỏ hàng!");
         } else if (acc.Thanhpho === null || acc.Phuong === null || acc.Quan === null) {
             toast.error("Vui lòng cập nhập đầy đủ thông tin cá nhân");
+            navigate("/user-details");
         } else if (e.Sonha === undefined || e.Sonha === "") {
             toast.warn("Vui lòng điền thông tin số nhà cụ thể ");
         } else if (chitietthanhtoan === "") {
@@ -245,7 +246,6 @@ function CartShopping() {
         } else {
             toast.success("Đặt hàng thành công ");
             await donDatHangAPI.create(obj);
-            // setDonHang(null);
             navigate("/");
         }
     };

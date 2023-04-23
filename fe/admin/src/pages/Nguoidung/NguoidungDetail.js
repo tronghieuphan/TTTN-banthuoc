@@ -421,11 +421,7 @@ function NguoidungDetail() {
                                             Lưu
                                         </Button>
                                     </Form.Item>
-                                    <Form.Item>
-                                        <Button type="primary" className="m-2">
-                                            Hủy
-                                        </Button>
-                                    </Form.Item>
+                                
                                 </div>
                             </Form>
                         </div>

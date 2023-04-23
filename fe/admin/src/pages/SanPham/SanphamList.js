@@ -88,6 +88,32 @@ function SanphamList() {
         {
             title: "Đơn giá",
             dataIndex: "Dongia",
+            render: (Dongia) => (
+                <div style={{ width: "150px" }}>
+                    {Dongia?.toLocaleString("it-IT", {
+                        style: "currency",
+                        currency: "VND",
+                    })}
+                </div>
+            ),
+        },
+        {
+            title: "Giá khuyến mãi",
+            dataIndex: "Giakm",
+            render: (Giakm) => (
+                <div style={{ width: "150px" }}>
+                    {Giakm
+                        ? Giakm?.toLocaleString("it-IT", {
+                              style: "currency",
+                              currency: "VND",
+                          })
+                        : 0}
+                </div>
+            ),
+        },
+        {
+            title: "Số lượng",
+            dataIndex: "Soluongtk",
         },
         {
             title: "Đơn vị bán",
@@ -137,14 +163,7 @@ function SanphamList() {
                 </Tooltip>
             ),
         },
-        {
-            title: "Giá khuyến mãi",
-            dataIndex: "Giakm",
-        },
-        {
-            title: "Số lượng",
-            dataIndex: "Soluongtk",
-        },
+
         {
             title: "Mã loại",
             dataIndex: "Maloai",
@@ -197,7 +216,9 @@ function SanphamList() {
                 <div className="m-4 ">
                     <div className="bd-radius bg-content p-4 text-muted fw-bold">
                         <div className="d-flex justify-content-between">
-                            <p className="fs-3 w-75" style={{ width: "40%" }}>QUẢN LÝ SẢN PHẨM</p>
+                            <p className="fs-3 w-75" style={{ width: "40%" }}>
+                                QUẢN LÝ SẢN PHẨM
+                            </p>
                             <form action="" method="">
                                 <div className="d-flex">
                                     <p className="fst-italic fw-lighter">
